@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-libs/tiff/tiff-3.8.2-r4.ebuild,v 1.3 2008/08/30 11:31:16 dertobi123 Exp $
 
@@ -18,6 +18,7 @@ IUSE="cxx jpeg jbig mdi zlib"
 DEPEND="jpeg? ( >=media-libs/jpeg-6b )
 	jbig? ( >=media-libs/jbigkit-1.6-r1 )
 	zlib? ( >=sys-libs/zlib-1.1.3-r2 )"
+RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P/_beta/beta}"
 
