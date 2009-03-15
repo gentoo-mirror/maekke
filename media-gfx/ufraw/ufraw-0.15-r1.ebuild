@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="contrast exif gimp gnome openmp timezone"
+IUSE="contrast exif gimp gnome lensfun openmp timezone"
 
 RDEPEND="
 	media-gfx/gtkimageview
@@ -22,7 +22,8 @@ RDEPEND="
 	exif? ( >=media-libs/libexif-0.6.13
 	        media-gfx/exiv2 )
 	gimp? ( >=media-gfx/gimp-2.0 )
-	gnome? ( gnome-base/gconf )"
+	gnome? ( gnome-base/gconf )
+	lensfun? ( media-libs/lensfun )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
@@ -41,6 +42,7 @@ src_compile() {
 		$(use_with exif exiv2) \
 		$(use_with gimp) \
 		$(use_enable gnome mime) \
+		$(use_with lensfun) \
 		$(use_enable openmp) \
 		$(use_enable timezone dst-correction)
 	emake || die "emake failed"
