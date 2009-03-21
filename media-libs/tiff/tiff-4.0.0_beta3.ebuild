@@ -13,7 +13,7 @@ SRC_URI="ftp://ftp.remotesensing.org/pub/libtiff/${MY_P}.tar.gz"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
-IUSE="cxx jpeg jbig mdi zlib"
+IUSE="cxx jbig jpeg mdi zlib"
 
 DEPEND="jpeg? ( >=media-libs/jpeg-6b )
 	jbig? ( >=media-libs/jbigkit-1.6-r1 )
@@ -24,9 +24,9 @@ S="${WORKDIR}/${P/_beta/beta}"
 
 src_compile() {
 	econf \
-		$(use_enable cxx cxx) \
-		$(use_enable jpeg) \
+		$(use_enable cxx) \
 		$(use_enable jbig) \
+		$(use_enable jpeg) \
 		$(use_enable mdi) \
 		$(use_enable zlib) \
 		--with-docdir=/usr/share/doc/${PF} \
