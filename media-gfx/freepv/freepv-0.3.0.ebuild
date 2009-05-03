@@ -8,7 +8,7 @@ DESCRIPTION="free opensource panoramic viewer"
 HOMEPAGE="http://freepv.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
-LICENSE=""
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
