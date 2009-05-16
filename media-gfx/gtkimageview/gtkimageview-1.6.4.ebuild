@@ -13,6 +13,8 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
+# tests do not work with userpriv
+RESTRICT="userpriv"
 
 DEPEND="gnome-base/gnome-common
 	>=x11-libs/gtk+-2.6"
@@ -20,15 +22,15 @@ RDEPEND="${DEPEND}"
 
 src_test() {
 	# the tests are only built, but not run by default
-	local failed=""
+	local failed="0"
 	emake check || die
 	cd "${S}"/tests
-	for i in test-* ; do
-		if [ -x ${i} ] ; then
-			./${i} || failed="1"
+	for test in test-* ; do
+		if [[ -x ${test} ]] ; then
+			./${test} || failed=$((${failed}+1))
 		fi
 	done
-	[ -n ${failed} ] && die "tests failed"
+	[[ ${failed} -gt 0 ]] && die "${failed} tests failed"
 }
 
 src_install() {
