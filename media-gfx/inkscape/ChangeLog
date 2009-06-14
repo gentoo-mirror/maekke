@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Jun 2009; Markus Meier <maekke@gentoo.org>
+  inkscape-0.47_pre21565.ebuild:
+  drop keywords of svn snapshot
+
   13 Jun 2009; Markus Meier <maekke@gentoo.org>
   -inkscape-0.47_pre21415.ebuild:
   old

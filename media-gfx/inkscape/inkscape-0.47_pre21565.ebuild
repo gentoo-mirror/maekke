@@ -20,7 +20,7 @@ HOMEPAGE="http://www.inkscape.org/"
 
 SLOT="0"
 LICENSE="GPL-2 LGPL-2.1"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="cairo dia doc gnome inkjar jabber lcms mmx nls postscript spell wmf wpg"
 RESTRICT="test"
 
