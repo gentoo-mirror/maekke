@@ -31,6 +31,7 @@ RDEPEND="
 		=x11-libs/qt-4.2.3-r1 ) )"
 DEPEND="${RDEPEND}
 	app-arch/unzip
+	dev-lang/swig
 	>=dev-util/scons-1.0"
 
 S="${WORKDIR}/${PN}"
@@ -60,10 +61,12 @@ src_configure() {
 
 src_compile() {
 	scons ${MAKEOPTS} || die "scons failed"
+	scons swig || die "scons swig failed"
 }
 
 src_install() {
 	scons install || die "scons install failed"
+	scons swig_install || die "scons swig_install failed"
 
 	if use blender; then
 		cd ../yafaray-blender
