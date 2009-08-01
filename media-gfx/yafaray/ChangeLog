@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Aug 2009; Markus Meier <maekke@gentoo.org> yafaray-0.1.1.ebuild:
+  we need to build swig-based bindings too for python
+
 *yafaray-0.1.1 (01 Aug 2009)
 
   01 Aug 2009; Markus Meier <maekke@gentoo.org> +yafaray-0.1.1.ebuild,
