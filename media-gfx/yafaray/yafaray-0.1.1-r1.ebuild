@@ -16,7 +16,7 @@ SRC_URI="http://static.yafaray.org/sources/${MY_PN}.${PV}.zip
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+blender debug qt4"
 
 RDEPEND="
@@ -55,6 +55,9 @@ user_config() {
 
 src_configure() {
 	user_config "PREFIX=\"${D}/usr\""
+	user_config "BASE_LPATH=\"/usr/$(get_libdir)/\""
+	user_config "YF_LIBOUT=\"\${PREFIX}/$(get_libdir)/\""
+	user_config "YF_PLUGINPATH=\"\${PREFIX}/$(get_libdir)/yafaray/\""
 	if use qt4; then
 		user_config "WITH_YF_QT='true'"
 		user_config "YF_QTDIR='/usr'"
