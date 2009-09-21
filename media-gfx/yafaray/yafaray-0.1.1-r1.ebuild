@@ -27,8 +27,7 @@ RDEPEND="
 	media-libs/openexr
 	sys-libs/zlib
 	blender? ( >=media-gfx/blender-2.49 )
-	qt4? ( || ( ( x11-libs/qt-gui:4 x11-libs/qt-core:4 )
-		=x11-libs/qt-4.2.3-r1 ) )"
+	qt4? ( x11-libs/qt-gui:4 x11-libs/qt-core:4 )"
 DEPEND="${RDEPEND}
 	app-arch/unzip
 	dev-lang/swig
