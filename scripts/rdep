@@ -1,0 +1,79 @@
+#!/bin/sh
+# get reverse dependencies for a specific arch from 
+# the gentoo tinderbox and print the atoms 
+# (with USE-dep syntax) out, so your arch-testing tool
+# can emerge them.
+
+REPODIR="${HOME}/cvs/gentoo-x86"
+BASE_URL="http://tinderbox.dev.gentoo.org/misc/dindex/"
+
+if [[ $# -ne 2 ]]; then
+	echo "usage:"
+	echo "	${0} arch category/package"
+	echo
+	echo "Examples: ${0} arm media-gfx/graphviz"
+	exit 1
+fi
+
+arch="${1}"
+pkg="${2}"
+
+if [[ ! -d ${REPODIR} ]]; then
+	echo "your \${REPODIR}='${REPODIR}' does not exist."
+	exit 1
+fi
+
+if [[ ! -x $(which q) ]] ; then
+	echo "you need portage-utils"
+	echo "emerge app-portage/portage-utils"
+	exit 1
+fi
+
+if [[ $(egrep "\<${arch}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]]; then
+	echo "invalid arch ${arch}"
+	exit 1
+fi
+
+if [[ ! -d ${REPODIR}/${pkg} ]]; then
+	echo "invalid package ${pkg} - do not use a version-number"
+fi
+
+tmp="$(mktemp)"
+wget -o /dev/null -O "${tmp}" "${BASE_URL}/${pkg}"
+
+last_pn=""
+# we sort it reverse, that we have the latest version in most cases the first and
+# not print the "older ones". this has some room for improvement
+for p in $(grep -v '^[B]' ${tmp} | sort -r); do
+	cpv="${p/:*/}"
+	use="${p/*:/}"
+	[[ ${use} == ${p} ]] && use=""
+	# negative use deps are !use and no -use
+	# multiple use-deps are separated by '+'
+	if [[ -n ${use} ]]; then
+		use="${use/!/-}"
+		use="${use/+/,}"
+	fi
+
+	# split up the category/package-version with q
+	declare -a qatom
+	qatom=($(qatom ${cpv}))
+	[[ ${qatom#} < 2 ]] && die "invalid atom ${cpv}"
+	category=${qatom[0]/=}
+	pn=${qatom[1]}
+	version=${qatom[2]}
+	revision=${qatom[3]}
+	[[ -n "${revision}" ]] && version="${version}-${revision}"
+
+	# make sure that the file exists, as the local or remote tree
+	# may be out of date
+	ebuild="${REPODIR}/${category}/${pn}/${pn}-${version}.ebuild"
+	if [[ -e ${ebuild} && $(egrep -H "KEYWORDS=.*( |\")\<${arch}\>" \
+			${ebuild} | wc -l) == 1 ]]; then
+		if [[ ${last_pn} != ${category}/${pn} ]]; then
+			[[ -z ${use} ]] && echo "=${cpv}" || echo "=${cpv}[${use}]"
+		fi
+	fi
+	last_pn="${category}/${pn}"
+done
+rm "${tmp}"
