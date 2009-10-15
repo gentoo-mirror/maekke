@@ -73,7 +73,7 @@ for p in $(grep -v '^[B]' ${tmp} | sort -r); do
 		if [[ ${last_pn} != ${category}/${pn} ]]; then
 			[[ -z ${use} ]] && echo "=${cpv}" || echo "=${cpv}[${use}]"
 		fi
+		last_pn="${category}/${pn}"
 	fi
-	last_pn="${category}/${pn}"
 done
 rm "${tmp}"
