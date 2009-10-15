@@ -52,7 +52,7 @@ for p in $(grep -v '^[B]' ${tmp} | sort -r); do
 	# multiple use-deps are separated by '+'
 	if [[ -n ${use} ]]; then
 		use="${use/!/-}"
-		use="${use/+/,}"
+		use="${use//+/,}"
 	fi
 
 	# split up the category/package-version with q
