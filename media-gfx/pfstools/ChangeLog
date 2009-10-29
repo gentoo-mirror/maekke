@@ -1,0 +1,10 @@
+# ChangeLog for media-gfx/pfstools
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*pfstools-1.8.1 (29 Oct 2009)
+
+  29 Oct 2009; Markus Meier <maekke@gentoo.org> +pfstools-1.8.1.ebuild,
+  +files/pfstools-1.8.1-glibc-2.10.patch, +metadata.xml:
+  initial import of pfstools, ebuild by me
+
