@@ -83,8 +83,8 @@ fi
 
 tmpfile="$(mktemp)"
 ${BUGZ} --base=https://bugs.gentoo.org get ${bugid} > ${tmpfile}
-aliases="$(grep ^CC ${tmpfile} | sed -e "s|CC          : ||g")"
-assignee="$(grep ^Assignee ${tmpfile} | sed -e "s|Assignee    : ||")"
+aliases="$(grep ^CC ${tmpfile} | sed -e "s|CC +: ||g")"
+assignee="$(grep ^Assignee ${tmpfile} | sed -e "s|Assignee +: ||")"
 rm ${tmpfile}
 
 # only accept arches, no herds/users etc
