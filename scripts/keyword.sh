@@ -68,9 +68,9 @@ for pkg in ${pkgs} ; do
 
 	cd "${REPODIR}/${category}/${pn}" || die "package ${category}/${pn} not found"
 	cvs up || die "cvs up failed"
-	repoman -d full || die "repoman full failed"
+	repoman full || die "repoman full failed"
 	ekeyword ${arches} ${pn}-${version}.ebuild || die "ebuild not found"
-	repoman -d full || die "repoman full failed"
+	repoman full || die "repoman full failed"
 	echangelog --strict "${msg}" || die "echangelog failed"
 	repoman commit -m "${msg}" || die "repoman commit failed"
 done
