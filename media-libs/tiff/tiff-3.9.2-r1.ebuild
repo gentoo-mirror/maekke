@@ -5,42 +5,40 @@
 EAPI=2
 inherit eutils libtool multilib
 
-MY_P="${P/_beta/beta}"
-
 DESCRIPTION="Library for manipulation of TIFF (Tag Image File Format) images"
 HOMEPAGE="http://www.remotesensing.org/libtiff/"
-SRC_URI="ftp://ftp.remotesensing.org/pub/libtiff/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp.remotesensing.org/pub/libtiff/${P}.tar.gz"
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
-IUSE="cxx jbig jpeg mdi opengl static-libs zlib"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~sparc-fbsd ~x86-fbsd ~x64-freebsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
+IUSE="+cxx jpeg jbig static-libs zlib"
 
-DEPEND="jpeg? ( >=media-libs/jpeg-6b )
-	jbig? ( >=media-libs/jbigkit-1.6-r1 )
-	opengl? ( virtual/opengl virtual/glu virtual/glut )
-	zlib? ( >=sys-libs/zlib-1.1.3-r2 )"
-RDEPEND="${DEPEND}"
+DEPEND="jpeg? ( >=media-libs/jpeg-6b:0 )
+	jbig? ( media-libs/jbigkit )
+	zlib? ( sys-libs/zlib )"
 
-S="${WORKDIR}/${P/_beta/beta}"
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-3.8.2-CVE-2009-2285.patch
+	elibtoolize
+}
 
 src_configure() {
 	use prefix || EPREFIX=
 	econf \
+		--disable-dependency-tracking \
 		$(use_enable cxx) \
 		$(use_enable jbig) \
 		$(use_enable jpeg) \
-		$(use_enable mdi) \
 		$(use_enable static-libs static) \
 		$(use_enable zlib) \
-		--withouth-x \
-		--with-docdir="${EPREFIX}/usr/share/doc/${PF}" \
-		--with-pic
+		--without-x \
+		--with-docdir="${EPREFIX}"/usr/share/doc/${PF}
 }
 
 src_install() {
-	make install DESTDIR="${D}" || die "make install failed"
-	dodoc README TODO VERSION
+	emake DESTDIR="${D}" install || die
+	dodoc ChangeLog README TODO
 	if ! use static-libs; then
 		find "${D}"/usr/$(get_libdir) -name '*.la' -delete || die
 	fi
