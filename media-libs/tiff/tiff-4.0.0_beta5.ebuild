@@ -14,11 +14,10 @@ SRC_URI="ftp://ftp.remotesensing.org/pub/libtiff/${MY_P}.tar.gz"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
-IUSE="cxx jbig jpeg mdi opengl static-libs zlib"
+IUSE="cxx jbig jpeg mdi static-libs zlib"
 
 DEPEND="jpeg? ( >=media-libs/jpeg-6b )
 	jbig? ( >=media-libs/jbigkit-1.6-r1 )
-	opengl? ( virtual/opengl virtual/glu virtual/glut )
 	zlib? ( >=sys-libs/zlib-1.1.3-r2 )"
 RDEPEND="${DEPEND}"
 
@@ -27,19 +26,19 @@ S="${WORKDIR}/${P/_beta/beta}"
 src_configure() {
 	use prefix || EPREFIX=
 	econf \
+		--disable-dependency-tracking \
 		$(use_enable cxx) \
 		$(use_enable jbig) \
 		$(use_enable jpeg) \
 		$(use_enable mdi) \
 		$(use_enable static-libs static) \
 		$(use_enable zlib) \
-		--withouth-x \
-		--with-docdir="${EPREFIX}/usr/share/doc/${PF}" \
-		--with-pic
+		--without-x \
+		--with-docdir="${EPREFIX}"/usr/share/doc/${PF}
 }
 
 src_install() {
-	make install DESTDIR="${D}" || die "make install failed"
+	emake DESTDIR="${D}" install || die
 	dodoc README TODO VERSION
 	if ! use static-libs; then
 		find "${D}"/usr/$(get_libdir) -name '*.la' -delete || die

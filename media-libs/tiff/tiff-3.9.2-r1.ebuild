@@ -17,6 +17,7 @@ IUSE="+cxx jpeg jbig static-libs zlib"
 DEPEND="jpeg? ( >=media-libs/jpeg-6b:0 )
 	jbig? ( media-libs/jbigkit )
 	zlib? ( sys-libs/zlib )"
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-3.8.2-CVE-2009-2285.patch
