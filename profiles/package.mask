@@ -1,2 +1,5 @@
+# live ebuilds
+=media-gfx/ufraw-9999*
+
 # masked for testing
 >=media-libs/tiff-4.0.0_beta3
