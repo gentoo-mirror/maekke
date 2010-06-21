@@ -45,9 +45,6 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install || die
 	dodoc ChangeLog README TODO
-	if ! use static-libs; then
-		find "${D}"/usr/$(get_libdir) -name '*.la' -delete || die
-	fi
 }
 
 pkg_postinst() {
