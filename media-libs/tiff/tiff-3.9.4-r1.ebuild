@@ -14,8 +14,8 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~sparc-fbsd ~x86-fbsd ~x64-freebsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE="cxx jpeg jbig static-libs zlib"
 
-RDEPEND="jpeg? ( >=media-libs/jpeg-6b:0 )
-	jbig? ( media-libs/jbigkit )
+RDEPEND="jbig? ( media-libs/jbigkit )
+	jpeg? ( >=media-libs/jpeg-6b:0 )
 	zlib? ( sys-libs/zlib )"
 DEPEND="${RDEPEND}"
 
@@ -27,10 +27,10 @@ src_configure() {
 	econf \
 		--disable-dependency-tracking \
 		$(use_enable cxx) \
-		$(use_enable zlib) \
-		$(use_enable jpeg) \
 		$(use_enable jbig) \
+		$(use_enable jpeg) \
 		$(use_enable static-libs static) \
+		$(use_enable zlib) \
 		--without-x \
 		--with-docdir="${EPREFIX}"/usr/share/doc/${PF}
 }
