@@ -18,6 +18,7 @@ if [[ $# -lt 3 ]] ; then
 	echo "          ${0} 2345 ppc =sys-kernel/vanilla-sources-2.6.25"
 	echo "          ${0} 456 \"amd64 x86 sparc\" sys-apps/baselayout-2.0.0"
 	echo "          ${0} 0 x86 media-gfx/graphviz (will generate a message w/o bug#)"
+	echo "          ${0} -m \"some bug message\+ 1234 \"amd64 arm\+ sys-apps/baselayout-2.0.0"
 	exit 1
 fi
 
@@ -31,6 +32,12 @@ fi
 if [[ ! -d ${REPODIR} ]] ; then
 	echo "your \${REPODIR}='${REPODIR}' does not exist."
 	exit 1
+fi
+
+if [[ ${1} == "-m" ]]; then
+	shift
+	bugz_message="$1"
+	shift
 fi
 
 bugid="${1}"
@@ -82,10 +89,13 @@ fi
 [[ ${bugid} == 0 ]] && echo "done, as bug# is 0" && exit 0
 
 tmpfile="$(mktemp)"
-${BUGZ} --base=https://bugs.gentoo.org get ${bugid} > ${tmpfile}
-aliases="$(grep ^CC ${tmpfile} | sed -e "s|CC +: ||g")"
-assignee="$(grep ^Assignee ${tmpfile} | sed -e "s|Assignee +: ||")"
+${BUGZ} get --base=https://bugs.gentoo.org ${bugid} > ${tmpfile}
+aliases="$(grep ^CC ${tmpfile} | awk '{ print $3 }')"
+assignee="$(grep ^Assignee ${tmpfile} | awk '{ print $3 }')"
 rm ${tmpfile}
+
+[[ -z ${assignee} ]] && die "problem with bugz: assignee empty"
+[[ -z ${aliases} ]] && die "problem with bugz: aliases empty"
 
 # only accept arches, no herds/users etc
 for alias in ${aliases} ; do
@@ -109,10 +119,10 @@ for arch in ${arches} ; do
 done
 
 if [[ ${lastarch} == "1" ]] ; then
-	bugz_message="${arches// //} stable, all arches done."
+	[[ -z ${bugz_message} ]] && bugz_message="${arches// //} stable, all arches done."
 	[[ ${assignee} != "security@gentoo.org" ]] && bugz_options="${bugz_options} --fixed"
 else
-	bugz_message="${arches// //} stable"
+	[[ -z ${bugz_message} ]] && bugz_message="${arches// //} stable"
 fi
 
 echo "running ${BUGZ} modify ${bugid} ${bugz_options} --comment=\"${bugz_message}\""
