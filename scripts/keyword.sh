@@ -79,7 +79,7 @@ for pkg in ${pkgs} ; do
 	ekeyword ${arches} ${pn}-${version}.ebuild || die "ebuild not found"
 	repoman manifest || die "repoman manifest failed"
 	repoman full || die "repoman full failed"
-	echangelog --strict "${msg}" || die "echangelog failed"
+	echangelog "${msg}" || die "echangelog failed"
 	repoman commit -m "${msg}" || die "repoman commit failed"
 done
 
