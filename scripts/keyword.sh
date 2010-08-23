@@ -77,6 +77,7 @@ for pkg in ${pkgs} ; do
 	cvs up || die "cvs up failed"
 	repoman full || die "repoman full failed"
 	ekeyword ${arches} ${pn}-${version}.ebuild || die "ebuild not found"
+	repoman manifest || die "repoman manifest failed"
 	repoman full || die "repoman full failed"
 	echangelog --strict "${msg}" || die "echangelog failed"
 	repoman commit -m "${msg}" || die "repoman commit failed"
