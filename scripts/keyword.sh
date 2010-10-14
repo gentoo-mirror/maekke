@@ -50,14 +50,6 @@ for arch in ${arches} ; do
 	[[ $(egrep "\<${arch/\~/}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]] && die "invalid arch (${arch})"
 done
 
-# commit message
-if [ ${arches:0:1} == "~" ] ; then
-	msg="add ${arches// //}"
-else
-	msg="${arches// //} stable"
-fi
-[[ ${bugid} != "0" ]] && msg="${msg}, bug #${bugid}"
-
 pkgno=0
 for pkg in ${pkgs} ; do
 	pkgno=$(( ${pkgno} + 1 ))
@@ -74,13 +66,43 @@ for pkg in ${pkgs} ; do
 	fi
 
 	cd "${REPODIR}/${category}/${pn}" || die "package ${category}/${pn} not found"
-	cvs up || die "cvs up failed"
+	cvs up -C || die "cvs up failed"
+	find . -name '.#*' -delete || die "removing .#* failed"
+	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild not found"
 	repoman full || die "repoman full failed"
-	ekeyword ${arches} ${pn}-${version}.ebuild || die "ebuild not found"
-	repoman manifest || die "repoman manifest failed"
-	repoman full || die "repoman full failed"
-	echangelog "${msg}" || die "echangelog failed"
-	repoman commit -m "${msg}" || die "repoman commit failed"
+
+	# detect which arches to commit
+	tmparches=""
+	for arch in ${arches} ; do
+		kwv=$(egrep "KEYWORDS=.*(\"| )\<${arch}\>" ${pn}-${version}.ebuild)
+		# commented out: not stabilizing stuff for non-stable arches
+		#kw=$(egrep "KEYWORDS=.*(\"| )\<${arch}\>" *.ebuild)
+		#if [[ -z ${kw} ]] ; then
+		#	echo "no stable version for ${arch}"
+		#elif [[ -z ${kwv} ]] ; then
+		if [[ -z ${kwv} ]] ; then
+			[[ -z ${tmparches} ]] && tmparches="${arch}" || tmparches="${tmparches} ${arch}"
+		fi
+	done
+
+	# commit message
+	if [ ${arches:0:1} == "~" ] ; then
+		msg="add ${arches// //}"
+	else
+		msg="${tmparches// //} stable"
+	fi
+	[[ ${bugid} != "0" ]] && msg="${msg}, bug #${bugid}"
+
+	if [[ -n ${tmparches} ]] ; then
+		ekeyword ${tmparches} ${pn}-${version}.ebuild || die "ebuild not found"
+		repoman manifest || die "repoman manifest failed"
+		repoman full || die "repoman full failed"
+		echangelog "${msg}" || die "echangelog failed"
+		repoman manifest || die "repoman manifest failed"
+		repoman commit -m "${msg}" || die "repoman commit failed"
+	else
+		echo "nothing to do here"
+	fi
 done
 
 if [[ ${arches:0:1} == "~" ]] ; then
