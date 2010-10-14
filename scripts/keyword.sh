@@ -69,16 +69,10 @@ for pkg in ${pkgs} ; do
 	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild not found"
 	repoman full || die "repoman full failed"
 
-	# detect which arches to commit
+	# detect which arches to commit (the ones w/o stable)
 	tmparches=""
 	for arch in ${arches} ; do
-		kwv=$(egrep "KEYWORDS=.*(\"| )\<${arch}\>" ${pn}-${version}.ebuild)
-		# commented out: not stabilizing stuff for non-stable arches
-		#kw=$(egrep "KEYWORDS=.*(\"| )\<${arch}\>" *.ebuild)
-		#if [[ -z ${kw} ]] ; then
-		#	echo "no stable version for ${arch}"
-		#elif [[ -z ${kwv} ]] ; then
-		if [[ -z ${kwv} ]] ; then
+		if [[ -z $(egrep "KEYWORDS=.*(\"| )\<${arch}\>" ${pn}-${version}.ebuild) ]] ; then
 			[[ -z ${tmparches} ]] && tmparches="${arch}" || tmparches="${tmparches} ${arch}"
 		fi
 	done
