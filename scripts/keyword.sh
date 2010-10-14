@@ -61,9 +61,7 @@ for pkg in ${pkgs} ; do
 	pn=${qatom[1]}
 	version=${qatom[2]}
 	revision=${qatom[3]}
-	if [ -n "${revision}" ] ; then
-		version="${version}-${revision}"
-	fi
+	[[ -n "${revision}" ]] && version="${version}-${revision}"
 
 	cd "${REPODIR}/${category}/${pn}" || die "package ${category}/${pn} not found"
 	cvs up -C || die "cvs up failed"
@@ -86,7 +84,7 @@ for pkg in ${pkgs} ; do
 	done
 
 	# commit message
-	if [ ${arches:0:1} == "~" ] ; then
+	if [[ ${arches:0:1} == "~" ]] ; then
 		msg="add ${arches// //}"
 	else
 		msg="${tmparches// //} stable"
