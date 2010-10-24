@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -22,7 +22,7 @@ DEPEND="
 	netpbm? ( media-libs/netpbm )
 	octave? ( sci-mathematics/octave )
 	openexr? ( >=media-libs/openexr-1.0 )
-	opengl? ( virtual/glut )
+	opengl? ( media-libs/freeglut )
 	tiff? ( media-libs/tiff )
 	qt3? ( >=x11-libs/qt-3.0:3 )"
 RDEPEND="${DEPEND}"

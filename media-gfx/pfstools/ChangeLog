@@ -1,6 +1,9 @@
 # ChangeLog for media-gfx/pfstools
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  24 Oct 2010; Markus Meier <maekke@gentoo.org> pfstools-1.8.1.ebuild:
+  virtual/glut -> media-libs/freeglut
 
   30 Oct 2009; Markus Meier <maekke@gentoo.org> pfstools-1.8.1.ebuild:
   add amd64 keyword
