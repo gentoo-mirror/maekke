@@ -42,7 +42,7 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${MY_P}"
 
-src_configure() {
+pkg_setup() {
 	mycmakeargs=(
 		$(cmake-utils_use_with blender-game GAMEENGINE)
 		$(cmake-utils_use_with blender-game PLAYER)
@@ -57,8 +57,6 @@ src_configure() {
 		$(cmake-utils_use_with sndfile)
 		$(cmake-utils_use_with tiff)
 	)
-
-	cmake-utils_src_configure
 }
 
 pkg_preinst(){
