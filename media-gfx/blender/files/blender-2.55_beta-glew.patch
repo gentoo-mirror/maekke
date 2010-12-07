@@ -1,0 +1,60 @@
+diff -ru blender-2.55-beta.orig/source/blender/editors/include/BIF_gl.h blender-2.55-beta/source/blender/editors/include/BIF_gl.h
+--- blender-2.55-beta.orig/source/blender/editors/include/BIF_gl.h	2010-11-16 20:35:21.000000000 +0100
++++ blender-2.55-beta/source/blender/editors/include/BIF_gl.h	2010-11-16 20:35:58.000000000 +0100
+@@ -31,7 +31,7 @@
+ #ifndef BIF_GL_H
+ #define BIF_GL_H
+ 
+-#include "../../../../extern/glew/include/GL/glew.h"
++#include <GL/glew.h>
+ 
+ 	/*
+ 	 * these should be phased out. cpack should be replaced in
+diff -ru blender-2.55-beta.orig/source/gameengine/BlenderRoutines/KX_BlenderCanvas.h blender-2.55-beta/source/gameengine/BlenderRoutines/KX_BlenderCanvas.h
+--- blender-2.55-beta.orig/source/gameengine/BlenderRoutines/KX_BlenderCanvas.h	2010-11-16 20:35:22.000000000 +0100
++++ blender-2.55-beta/source/gameengine/BlenderRoutines/KX_BlenderCanvas.h	2010-11-16 20:36:30.000000000 +0100
+@@ -33,7 +33,7 @@
+ #include <windows.h>
+ #endif 
+ 
+-#include "GL/glew.h"
++#include <GL/glew.h>
+ 
+ #include "RAS_ICanvas.h"
+ #include "RAS_Rect.h"
+diff -ru blender-2.55-beta.orig/source/gameengine/GamePlayer/common/GPC_Canvas.h blender-2.55-beta/source/gameengine/GamePlayer/common/GPC_Canvas.h
+--- blender-2.55-beta.orig/source/gameengine/GamePlayer/common/GPC_Canvas.h	2010-11-16 20:35:21.000000000 +0100
++++ blender-2.55-beta/source/gameengine/GamePlayer/common/GPC_Canvas.h	2010-11-16 20:36:09.000000000 +0100
+@@ -38,7 +38,7 @@
+ 	#include <windows.h>
+ #endif // WIN32
+ 
+-#include "GL/glew.h"
++#include <GL/glew.h>
+ 
+ #include <map>
+ 
+diff -ru blender-2.55-beta.orig/source/gameengine/Ketsji/KX_Dome.h blender-2.55-beta/source/gameengine/Ketsji/KX_Dome.h
+--- blender-2.55-beta.orig/source/gameengine/Ketsji/KX_Dome.h	2010-11-16 20:35:22.000000000 +0100
++++ blender-2.55-beta/source/gameengine/Ketsji/KX_Dome.h	2010-11-16 20:36:41.000000000 +0100
+@@ -33,7 +33,7 @@
+ #include "RAS_IRenderTools.h"
+ #include "KX_KetsjiEngine.h"
+ 
+-#include "GL/glew.h"
++#include <GL/glew.h>
+ #include <vector>
+ 
+ #include "MEM_guardedalloc.h"
+diff -ru blender-2.55-beta.orig/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h blender-2.55-beta/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h
+--- blender-2.55-beta.orig/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h	2010-11-16 20:35:21.000000000 +0100
++++ blender-2.55-beta/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h	2010-11-16 20:36:21.000000000 +0100
+@@ -29,7 +29,7 @@
+ #ifndef __RAS_GLEXTENSIONMANAGER_H__
+ #define __RAS_GLEXTENSIONMANAGER_H__
+ 
+-#include "GL/glew.h"
++#include <GL/glew.h>
+ 
+ /* Note: this used to have a lot more code, but now extension handling
+  * is done by GLEW, so it does mostly debug stuff */

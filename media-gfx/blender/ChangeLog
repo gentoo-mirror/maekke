@@ -2,6 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/ChangeLog,v 1.186 2010/11/08 22:00:56 maekke Exp $
 
+*blender-2.55_beta (07 Dec 2010)
+
+  07 Dec 2010; Markus Meier <maekke@gentoo.org> blender-2.54_beta.ebuild,
+  +blender-2.55_beta.ebuild, +files/blender-2.55_beta-eigen.patch,
+  +files/blender-2.55_beta-glew.patch:
+  bump
+
 *blender-2.54_beta (13 Nov 2010)
 
   13 Nov 2010; Markus Meier <maekke@gentoo.org> +blender-2.54_beta.ebuild,
