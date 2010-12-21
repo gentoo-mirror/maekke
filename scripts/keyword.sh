@@ -66,8 +66,8 @@ for pkg in ${pkgs} ; do
 	cd "${REPODIR}/${category}/${pn}" || die "package ${category}/${pn} not found"
 	cvs up -C || die "cvs up failed"
 	find . -name '.#*' -delete || die "removing .#* failed"
-	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild not found"
-	repoman full || die "repoman full failed"
+	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild (${pn}-${version}) not found"
+	repoman full || die "repoman full failed on non-modified tree"
 
 	# detect which arches to commit (the ones w/o stable)
 	tmparches=""
@@ -88,7 +88,7 @@ for pkg in ${pkgs} ; do
 	if [[ -n ${tmparches} ]] ; then
 		ekeyword ${tmparches} ${pn}-${version}.ebuild || die "ebuild not found"
 		repoman manifest || die "repoman manifest failed"
-		repoman full || die "repoman full failed"
+		repoman full || die "repoman full failed on modified tree"
 		echangelog "${msg}" || die "echangelog failed"
 		repoman manifest || die "repoman manifest failed"
 		repoman commit -m "${msg}" || die "repoman commit failed"
