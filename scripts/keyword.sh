@@ -141,5 +141,5 @@ else
 fi
 
 echo "running ${BUGZ} modify ${bugid} ${bugz_options} --comment=\"${bugz_message}\""
-${BUGZ} modify ${bugid}  ${bugz_options} --comment="${bugz_message}" || die "bugz failed"
+${BUGZ} modify ${bugid} ${bugz_options} --comment="${bugz_message}" || die "bugz failed"
 echo ">>> finished successfully"
