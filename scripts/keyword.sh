@@ -4,6 +4,7 @@
 REPODIR="${HOME}/cvs/gentoo-x86"
 BUGZ_USER="maekke@gentoo.org"
 BUGZ="bugz"
+BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org --user ${BUGZ_USER}"
 
 die() {
 	echo $@
@@ -104,7 +105,7 @@ fi
 [[ ${bugid} == 0 ]] && echo "done, as bug# is 0" && exit 0
 
 tmpfile="$(mktemp)"
-${BUGZ} get --base=https://bugs.gentoo.org ${bugid} > ${tmpfile}
+${BUGZ} ${BUGZ_DEFAULT_OPTS} get ${bugid} > ${tmpfile}
 aliases="$(grep ^CC ${tmpfile} | awk '{ print $3 }')"
 assignee="$(grep ^Assignee ${tmpfile} | awk '{ print $3 }')"
 rm ${tmpfile}
@@ -128,9 +129,9 @@ for bugarch in ${bugarches} ; do
 	[[ ${found} == 0 ]] && lastarch="0"
 done
 
-bugz_options="--base="https://bugs.gentoo.org" --user=${BUGZ_USER}"
+bugz_options=""
 for arch in ${arches} ; do
-	bugz_options="${bugz_options} --remove-cc=${arch}@gentoo.org"
+	bugz_options="${bugz_options} --remove-cc ${arch}@gentoo.org"
 done
 
 if [[ ${lastarch} == "1" ]] ; then
@@ -140,6 +141,7 @@ else
 	[[ -z ${bugz_message} ]] && bugz_message="${arches// //} stable"
 fi
 
-echo "running ${BUGZ} modify ${bugid} ${bugz_options} --comment=\"${bugz_message}\""
-${BUGZ} modify ${bugid} ${bugz_options} --comment="${bugz_message}" || die "bugz failed"
+echo "not running ${BUGZ} atm..."
+echo "running ${BUGZ} ${BUGZ_DEFAULT_OPTS} modify ${bugid} ${bugz_options} --comment \"${bugz_message}\""
+${BUGZ} ${BUGZ_DEFAULT_OPTS} modify ${bugid} ${bugz_options} --comment "${bugz_message}" || die "bugz failed"
 echo ">>> finished successfully"
