@@ -141,7 +141,6 @@ else
 	[[ -z ${bugz_message} ]] && bugz_message="${arches// //} stable"
 fi
 
-echo "not running ${BUGZ} atm..."
 echo "running ${BUGZ} ${BUGZ_DEFAULT_OPTS} modify ${bugid} ${bugz_options} --comment \"${bugz_message}\""
 ${BUGZ} ${BUGZ_DEFAULT_OPTS} modify ${bugid} ${bugz_options} --comment "${bugz_message}" || die "bugz failed"
 echo ">>> finished successfully"
