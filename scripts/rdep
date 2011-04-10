@@ -29,7 +29,7 @@ if [[ ! -x $(which q) ]] ; then
 	exit 1
 fi
 
-if [[ $(egrep "\<${arch}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]]; then
+if [[ $(egrep "\<${arch/\~/}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]]; then
 	echo "invalid arch ${arch}"
 	exit 1
 fi
@@ -68,7 +68,9 @@ for p in $(grep -v '^[B]' ${tmp} | sort -r); do
 	# make sure that the file exists, as the local or remote tree
 	# may be out of date
 	ebuild="${REPODIR}/${category}/${pn}/${pn}-${version}.ebuild"
-	if [[ -e ${ebuild} && $(egrep -H "KEYWORDS=.*( |\")\<${arch}\>" \
+	[[ "${arch}" != "${arch/\~/}" ]] && expr="KEYWORDS=.*\<${arch/\~/}\>" \
+		|| expr="KEYWORDS=.*( |\")\<${arch}\>"
+	if [[ -e ${ebuild} && $(egrep -H "${expr}" \
 			${ebuild} | wc -l) == 1 ]]; then
 		if [[ ${last_pn} != ${category}/${pn} ]]; then
 			[[ -z ${use} ]] && echo "=${cpv}" || echo "=${cpv}[${use}]"
