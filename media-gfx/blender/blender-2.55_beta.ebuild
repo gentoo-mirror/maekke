@@ -27,7 +27,7 @@ RDEPEND="dev-cpp/eigen
 	virtual/opengl
 	blender-game? ( >=media-libs/libsdl-1.2[joystick] )
 	bullet? ( sci-physics/bullet )
-	ffmpeg? ( >=media-video/ffmpeg-0.5[encode,theora] )
+	ffmpeg? ( >=virtual/ffmpeg-0.5[encode,theora] )
 	fftw? ( sci-libs/fftw )
 	jack? ( media-sound/jack )
 	jpeg2k? ( media-libs/openjpeg )

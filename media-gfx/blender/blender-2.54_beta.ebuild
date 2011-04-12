@@ -25,7 +25,7 @@ RDEPEND="media-libs/glew
 	virtual/jpeg
 	virtual/opengl
 	blender-game? ( >=media-libs/libsdl-1.2[joystick] )
-	ffmpeg? ( >=media-video/ffmpeg-0.5[encode,theora] )
+	ffmpeg? ( >=virtual/ffmpeg-0.5[encode,theora] )
 	fftw? ( sci-libs/fftw )
 	jack? ( media-sound/jack )
 	jpeg2k? ( media-libs/openjpeg )
