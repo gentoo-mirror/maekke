@@ -1,0 +1,13 @@
+diff -ru rawstudio-2.0.orig/src/Makefile.am rawstudio-2.0/src/Makefile.am
+--- rawstudio-2.0.orig/src/Makefile.am	2011-06-02 21:22:05.000000000 +0200
++++ rawstudio-2.0/src/Makefile.am	2011-06-02 21:22:13.000000000 +0200
+@@ -9,8 +9,7 @@
+ 
+ AM_CFLAGS =\
+ 	-Wall -fno-strict-aliasing\
+-	-DWITH_GCONF\
+-	-O4
++	-DWITH_GCONF
+ 
+ AM_CXXFLAGS = $(AM_CFLAGS)
+ 
