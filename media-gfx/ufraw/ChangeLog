@@ -1,6 +1,10 @@
 # ChangeLog for media-gfx/ufraw
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/media-gfx/ufraw/ChangeLog,v 1.79 2010/01/31 21:57:30 maekke Exp $
+
+  25 Jun 2011; Markus Meier <maekke@gentoo.org> ufraw-9999.ebuild,
+  metadata.xml:
+  sync with main tree
 
 *ufraw-9999 (07 Mar 2010)
 
