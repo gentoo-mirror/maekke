@@ -6,7 +6,7 @@ EAPI=3
 WX_GTK_VER="2.8"
 PYTHON_DEPEND="python? 2:2.6 3"
 
-inherit python cmake-utils wxwidgets versionator
+inherit python wxwidgets versionator cmake-utils
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
