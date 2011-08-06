@@ -1,0 +1,17 @@
+#############################################
+# This is a list of valid profiles for each architecture.  This file is used by
+# repoman when doing a repoman scan or repoman full.
+# DO NOT ADD PROFILES WITH A "die" or "exit" IN THEM OR IT KILLS REPOMAN
+#
+#layout:
+#arch		profile_directory				status
+
+# ARM Profiles
+arm             default/linux/arm/10.0                          stable
+arm             default/linux/arm/10.0/armv4                    dev
+arm             default/linux/arm/10.0/armv4t                   dev
+arm             default/linux/arm/10.0/armv5te                  dev
+arm             default/linux/arm/10.0/armv6j                   dev
+arm             default/linux/arm/10.0/armv7a                   dev
+
+# vim: set ts=8:
