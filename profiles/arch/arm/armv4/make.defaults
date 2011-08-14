@@ -1,12 +1,3 @@
-# Main ARM profile
-
-#ARCH="arm"
-#ACCEPT_KEYWORDS="arm"
-
 CHOST="armv4l-unknown-linux-gnu"
 CFLAGS="-O2 -pipe -march=armv4"
 CXXFLAGS="${CFLAGS}"
-
-# 2006/08/18 - Donnie Berkholz <dberkholz@gentoo.org>
-# Defaults for video drivers
-#VIDEO_CARDS="fbdev omapfb"

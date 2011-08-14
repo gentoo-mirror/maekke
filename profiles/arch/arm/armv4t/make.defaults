@@ -1,12 +1,3 @@
-# Main ARM profile
-
-#ARCH="arm"
-#ACCEPT_KEYWORDS="arm"
-
 CHOST="armv4tl-softfloat-linux-gnueabi"
 CFLAGS="-O2 -pipe -march=armv4t"
 CXXFLAGS="${CFLAGS}"
-
-# 2006/08/18 - Donnie Berkholz <dberkholz@gentoo.org>
-# Defaults for video drivers
-#VIDEO_CARDS="fbdev omapfb"
