@@ -42,9 +42,8 @@ tmp="$(mktemp)"
 wget -o /dev/null -O "${tmp}" "${BASE_URL}/${pkg}"
 
 last_pn=""
-# we sort it reverse, that we have the latest version in most cases the first and
-# not print the "older ones". this has some room for improvement
-for p in $(grep -v '^[B]' ${tmp} | sort -r); do
+
+for p in $(grep -v '^[B]' ${tmp}); do
 	cpv="${p/:*/}"
 	use="${p/*:/}"
 	[[ ${use} == ${p} ]] && use=""
@@ -72,10 +71,11 @@ for p in $(grep -v '^[B]' ${tmp} | sort -r); do
 		|| expr="KEYWORDS=.*( |\")\<${arch}\>"
 	if [[ -e ${ebuild} && $(egrep -H "${expr}" \
 			${ebuild} | wc -l) == 1 ]]; then
-		if [[ ${last_pn} != ${category}/${pn} ]]; then
-			[[ -z ${use} ]] && echo "=${cpv}" || echo "=${cpv}[${use}]"
+		slot=$(portageq metadata / ebuild ${cpv} SLOT)
+		if [[ ${last_pn} != ${category}/${pn}:${slot} ]]; then
+			[[ -z ${use} ]] && echo "=${category}/${pn}:${slot}" || echo "=${category}/${pn}:${slot}[${use}]"
 		fi
-		last_pn="${category}/${pn}"
+		last_pn="${category}/${pn}:${slot}"
 	fi
 done
 rm "${tmp}"
