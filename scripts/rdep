@@ -5,7 +5,7 @@
 # can emerge them.
 
 REPODIR="${HOME}/cvs/gentoo-x86"
-BASE_URL="http://tinderbox.dev.gentoo.org/misc/dindex/"
+BASE_URL="http://qa-reports.gentoo.org/output/genrdeps/dindex/"
 
 if [[ $# -ne 2 ]]; then
 	echo "usage:"
