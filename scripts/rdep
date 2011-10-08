@@ -73,7 +73,7 @@ for p in $(grep -v '^[B]' ${tmp}); do
 			${ebuild} | wc -l) == 1 ]]; then
 		slot=$(portageq metadata / ebuild ${cpv} SLOT)
 		if [[ ${last_pn} != ${category}/${pn}:${slot} ]]; then
-			[[ -z ${use} ]] && echo "=${category}/${pn}:${slot}" || echo "=${category}/${pn}:${slot}[${use}]"
+			[[ -z ${use} ]] && echo "${category}/${pn}:${slot}" || echo "${category}/${pn}:${slot}[${use}]"
 		fi
 		last_pn="${category}/${pn}:${slot}"
 	fi
