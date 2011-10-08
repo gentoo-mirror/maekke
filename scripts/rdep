@@ -53,7 +53,7 @@ for p in $(grep -v '^[B]' ${tmp}); do
 	# negative use deps are !use and no -use
 	# multiple use-deps are separated by '+'
 	if [[ -n ${use} ]]; then
-		use="${use/!/-}"
+		use="${use//!/-}"
 		use="${use//+/,}"
 	fi
 
