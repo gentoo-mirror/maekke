@@ -17,6 +17,8 @@ fi
 
 arch="${1}"
 pkg="${2}"
+pkg="${pkg/=/}"
+pkg="${pkg/-[0-9]*/}"
 
 if [[ ! -d ${REPODIR} ]]; then
 	echo "your \${REPODIR}='${REPODIR}' does not exist."
@@ -35,7 +37,8 @@ if [[ $(egrep "\<${arch/\~/}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]]; 
 fi
 
 if [[ ! -d ${REPODIR}/${pkg} ]]; then
-	echo "invalid package ${pkg} - do not use a version-number"
+	echo "package ${pkg} not found"
+	exit 1
 fi
 
 tmp="$(mktemp)"
