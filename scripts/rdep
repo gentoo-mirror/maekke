@@ -43,6 +43,11 @@ fi
 
 tmp="$(mktemp)"
 wget -o /dev/null -O "${tmp}" "${BASE_URL}/${pkg}"
+if [[ $? -ne 0 ]] ; then
+	echo "failed to fetch reverse deps"
+	rm "${tmp}"
+	exit 1
+fi
 
 last_pn=""
 
