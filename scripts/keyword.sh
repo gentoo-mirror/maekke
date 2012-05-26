@@ -4,7 +4,7 @@
 REPODIR="${HOME}/cvs/gentoo-x86"
 BUGZ_USER="maekke@gentoo.org"
 BUGZ="bugz"
-BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org --user ${BUGZ_USER}"
+BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org/xmlrpc.cgi --user ${BUGZ_USER}"
 
 die() {
 	echo $@
