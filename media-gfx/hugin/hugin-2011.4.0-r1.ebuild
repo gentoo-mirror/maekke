@@ -1,12 +1,12 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2011.2.0.ebuild,v 1.1 2011/10/02 21:33:47 maekke Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2011.4.0-r1.ebuild,v 1.1 2012/06/30 21:36:05 dilfridge Exp $
 
 EAPI=3
 WX_GTK_VER="2.8"
 PYTHON_DEPEND="python? 2:2.6 3"
 
-inherit python wxwidgets versionator cmake-utils
+inherit base python wxwidgets versionator cmake-utils
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
@@ -22,7 +22,7 @@ CDEPEND="
 	!!dev-util/cocom
 	app-arch/zip
 	dev-cpp/tclap
-	>=dev-libs/boost-1.35.0-r5
+	>=dev-libs/boost-1.49.0-r1
 	dev-libs/zthread
 	>=media-gfx/enblend-4.0
 	media-gfx/exiv2
@@ -39,10 +39,14 @@ CDEPEND="
 RDEPEND="${CDEPEND}
 	media-libs/exiftool"
 DEPEND="${CDEPEND}
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	python? ( >=dev-lang/swig-2.0.4 )"
 
 S=${WORKDIR}/${PN}-$(get_version_component_range 1-3)
+
+PATCHES=(
+	"${FILESDIR}/${P}"-{boost148,gcc47}.patch
+)
 
 pkg_setup() {
 	DOCS="authors.txt README TODO"
