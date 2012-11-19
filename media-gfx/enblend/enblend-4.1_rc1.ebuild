@@ -46,11 +46,11 @@ pkg_setup() {
 }
 
 src_configure() {
-	local myconf=""
+	local myconf="--with-boost-filesystem"
 	if use image-cache && use openmp; then
-		myconf="--disable-image-cache --enable-openmp"
+		myconf="${myconf} --disable-image-cache --enable-openmp"
 	else
-		myconf="$(use_enable image-cache) $(use_enable openmp)"
+		myconf="${myconf} $(use_enable image-cache) $(use_enable openmp)"
 	fi
 
 	use doc && myconf="${myconf} --with-gnuplot=$(type -p gnuplot)" \
