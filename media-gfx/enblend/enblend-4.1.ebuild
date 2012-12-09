@@ -6,7 +6,7 @@ EAPI=2
 
 inherit eutils
 
-MY_P="${PN}-enfuse-${PV/_rc/rc}-e436ceb4899a"
+MY_P="${PN}-enfuse-${PV/_rc/rc}"
 
 DESCRIPTION="Image Blending with Multiresolution Splines"
 HOMEPAGE="http://enblend.sourceforge.net/"
