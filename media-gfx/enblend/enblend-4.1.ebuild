@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/enblend/enblend-4.0.ebuild,v 1.12 2012/05/05 07:00:26 jdhore Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/enblend/enblend-4.1.ebuild,v 1.2 2012/12/11 22:33:45 maekke Exp $
 
 EAPI=2
 
@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/enblend/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 VIGRA"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="debug doc gpu +image-cache +openexr openmp"
 
 RDEPEND="
@@ -24,6 +24,7 @@ RDEPEND="
 	media-libs/plotutils[X]
 	media-libs/tiff
 	>=media-libs/vigra-1.8.0
+	sci-libs/gsl
 	virtual/jpeg
 	gpu? ( media-libs/freeglut )
 	openexr? ( >=media-libs/openexr-1.0 )"
