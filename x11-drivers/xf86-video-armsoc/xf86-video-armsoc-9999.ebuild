@@ -17,9 +17,11 @@ SLOT="0"
 KEYWORDS="~arm"
 IUSE=""
 
-DEPEND=""
+DEPEND="!x11-drivers/xf86-video-armsoc-linaro"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/0001-copy-paste-from-omap-driver-to-get-it-compiled.patch
+	"${FILESDIR}"/${PN}_compat.patch
 )
+
+XORG_CONFIGURE_OPTIONS=( "--disable-silent-rules" "--disable-selective-werror" )
