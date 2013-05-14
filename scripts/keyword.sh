@@ -46,8 +46,6 @@ arches="${2}"
 shift 2
 pkgs="$@"
 
-REPOMAN_OPTS="--include-arches "${arches//\~/}""
-
 # check if arches are sane
 for arch in ${arches} ; do
 	[[ $(egrep "\<${arch/\~/}\>" ${REPODIR}/profiles/arch.list | wc -l) == 0 ]] && die "invalid arch (${arch})"
@@ -70,7 +68,7 @@ for pkg in ${pkgs} ; do
 	cvs up -C || die "cvs up failed"
 	find . -name '.#*' -delete || die "removing .#* failed"
 	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild (${pn}-${version}) not found"
-	repoman full \${REPOMAN_OPTS} || die "repoman full failed on non-modified tree"
+	repoman full --include-arches "${arches//\~/}" || die "repoman full failed on non-modified tree"
 
 	# detect which arches to commit (the ones w/o stable)
 	tmparches=""
@@ -91,10 +89,10 @@ for pkg in ${pkgs} ; do
 	if [[ -n ${tmparches} ]] ; then
 		ekeyword ${tmparches} ${pn}-${version}.ebuild || die "ebuild not found"
 		repoman manifest || die "repoman manifest failed"
-		repoman full \${REPOMAN_OPTS} || die "repoman full failed on modified tree"
+		repoman full --include-arches "${arches//\~/}" || die "repoman full failed on modified tree"
 		echangelog "${msg}" || die "echangelog failed"
 		repoman manifest || die "repoman manifest failed"
-		repoman commit \${REPOMAN_OPTS} -m "${msg}" || die "repoman commit failed"
+		repoman commit --include-arches "${arches//\~/}" -m "${msg}" || die "repoman commit failed"
 	else
 		echo "nothing to do here"
 	fi
