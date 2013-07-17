@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 EGIT_REPO_URI="https://git.chromium.org/git/chromiumos/third_party/xf86-video-armsoc.git"
 
