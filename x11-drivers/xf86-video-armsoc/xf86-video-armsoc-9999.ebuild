@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,11 +8,11 @@ EGIT_REPO_URI="https://git.chromium.org/git/chromiumos/third_party/xf86-video-ar
 
 inherit xorg-2
 
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="xf86-video-armsoc driver from google"
+HOMEPAGE="http://git.chromium.org/gitweb/?p=chromiumos/third_party/xf86-video-armsoc.git;a=summary"
 SRC_URI=""
 
-LICENSE=""
+LICENSE="xf86-video-armsoc"
 SLOT="0"
 KEYWORDS="~arm"
 IUSE=""
