@@ -8,11 +8,11 @@ EGIT_REPO_URI="http://git.linaro.org/git-ro/arm/xorg/driver/xf86-video-armsoc.gi
 
 inherit xorg-2
 
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="Generic DDX driver for ARM SoCs; based on upstream OMAP driver."
+HOMEPAGE="https://git.linaro.org/gitweb?p=arm/xorg/driver/xf86-video-armsoc.git;a=summary"
 SRC_URI=""
 
-LICENSE=""
+LICENSE="xf86-video-armsoc-linaro"
 SLOT="0"
 KEYWORDS="~arm"
 IUSE=""
