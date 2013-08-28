@@ -61,5 +61,5 @@ src_configure() {
 
 src_compile() {
 	# forcing -j1 as every parallel compilation process needs about 1 GB RAM.
-	enable_cmake-utils_src_compile -j1
+	cmake-utils_src_compile -j1
 }
