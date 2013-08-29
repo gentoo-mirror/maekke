@@ -64,3 +64,8 @@ src_compile() {
 	# forcing -j1 as every parallel compilation process needs about 1 GB RAM.
 	cmake-utils_src_compile -j1
 }
+
+src_install() {
+	local DOCS=( AUTHORS ChangeLog NEWS README )
+	cmake-utils_src_install
+}
