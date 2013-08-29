@@ -56,17 +56,11 @@ src_configure() {
 		$(cmake-utils_use_enable openmp)
 		$(cmake-utils_use_enable gpu OPENCL)
 	)
+	CMAKE_BUILD_TYPE="Release"
 	cmake-utils_src_configure
 }
 
 src_compile() {
 	# forcing -j1 as every parallel compilation process needs about 1 GB RAM.
 	cmake-utils_src_compile -j1
-}
-
-src_install() {
-	cmake-utils_src_install
-	# NFC why nothing is installed...
-	dobin "${BUILD_DIR}"/bin/*
-	doman "${BUILD_DIR}"/src/*.1
 }
