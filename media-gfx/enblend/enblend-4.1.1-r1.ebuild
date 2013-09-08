@@ -56,7 +56,7 @@ src_configure() {
 		$(cmake-utils_use doc DOC)
 		$(cmake-utils_use_enable image-cache IMAGECACHE)
 		$(cmake-utils_use_enable openmp)
-		$(cmake-utils_use_enable gpu OPENCL)
+		$(cmake-utils_use_enable gpu)
 	)
 	CMAKE_BUILD_TYPE="Release"
 	cmake-utils_src_configure
