@@ -4,7 +4,7 @@
 
 EAPI=5
 WX_GTK_VER="2.8"
-PYTHON_COMPAT=( python{2_7,3_1,3_2,3_3} )
+PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
 inherit base python-single-r1 wxwidgets versionator cmake-utils
 
