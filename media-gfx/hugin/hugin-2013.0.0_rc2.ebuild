@@ -15,27 +15,27 @@ LICENSE="GPL-2 SIFT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-LANGS=" bg ca cs da de en_GB es fi fr hu it ja ko nl pl pt_BR ro ru sk sl sv uk zh_CN zh_TW"
+LANGS=" bg ca cs da de en_GB es eu fi fr hu it ja ko nl pl pt_BR ro ru sk sl sv uk zh_CN zh_TW"
 IUSE="lapack python sift $(echo ${LANGS//\ /\ linguas_})"
 
 CDEPEND="
 	!!dev-util/cocom
 	app-arch/zip
 	dev-cpp/tclap
-	>=dev-libs/boost-1.49.0-r1
+	>=dev-libs/boost-1.49.0-r1:=
 	dev-libs/zthread
 	>=media-gfx/enblend-4.0
 	media-gfx/exiv2
 	media-libs/freeglut
-	media-libs/glew
+	media-libs/glew:=
 	media-libs/lensfun
 	>=media-libs/libpano13-2.9.18
-	media-libs/libpng
-	media-libs/openexr
+	media-libs/libpng:0=
+	media-libs/openexr:=
 	media-libs/tiff
 	sys-libs/zlib
 	virtual/jpeg
-	x11-libs/wxGTK:2.8[X,opengl,-odbc]
+	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
 	lapack? ( virtual/lapack )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
@@ -43,6 +43,8 @@ RDEPEND="${CDEPEND}
 DEPEND="${CDEPEND}
 	virtual/pkgconfig
 	python? ( ${PYTHON_DEPS} >=dev-lang/swig-2.0.4 )"
+
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 S=${WORKDIR}/${PN}-$(get_version_component_range 1-3)
 
