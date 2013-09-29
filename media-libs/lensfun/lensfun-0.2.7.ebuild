@@ -1,12 +1,12 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/lensfun/lensfun-0.2.6.ebuild,v 1.4 2013/03/03 11:05:34 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-libs/lensfun/lensfun-0.2.7.ebuild,v 1.3 2013/04/06 10:08:14 ssuominen Exp $
 
-EAPI=4
+EAPI=5
 
-PYTHON_DEPEND="2:2.6"
+PYTHON_COMPAT=( python2_{6,7} )
 
-inherit cmake-utils multilib python
+inherit multilib python-single-r1 cmake-utils
 
 DESCRIPTION="lensfun: A library for rectifying and simulating photographic lens distortions"
 HOMEPAGE="http://lensfun.berlios.de/"
@@ -18,23 +18,18 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd6
 IUSE="doc sse sse2"
 
 RDEPEND=">=dev-libs/glib-2.28
-	media-libs/libpng:0
-	sys-libs/zlib"
+	media-libs/libpng:0=
+	sys-libs/zlib:="
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
 PATCHES=(
-	"${FILESDIR}"/${P}-auxfun.patch
-	"${FILESDIR}"/${PN}-0.2.5_p153-build.patch
-	"${FILESDIR}"/${PN}-0.2.5_p153-pc.patch
+	"${FILESDIR}"/${P}-build.patch
+	"${FILESDIR}"/${PN}-0.2.6-auxfun.patch
+	"${FILESDIR}"/${P}-memset.patch
 	)
 
 DOCS=( README docs/mounts.txt )
-
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
 
 src_configure() {
 	local mycmakeargs=(
