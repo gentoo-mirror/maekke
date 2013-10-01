@@ -80,6 +80,7 @@ for p in $(grep -v '^[B]' ${tmp}); do
 	if [[ -e ${ebuild} && $(egrep -H "${expr}" \
 			${ebuild} | wc -l) == 1 ]]; then
 		slot=$(portageq metadata / ebuild ${cpv} SLOT)
+		slot=${slot/\/*/} # kill subslot
 		if [[ ${last_pn} != ${category}/${pn}:${slot} ]]; then
 			[[ -z ${use} ]] && echo "${category}/${pn}:${slot}" || echo "${category}/${pn}:${slot}[${use}]"
 		fi
