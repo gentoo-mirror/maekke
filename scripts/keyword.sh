@@ -56,7 +56,7 @@ for pkg in ${pkgs} ; do
 	pkgno=$(( ${pkgno} + 1 ))
 	echo ">>> processing: ${pkg} (${pkgno}/$#)"
 	declare -a qatom
-	qatom=($(qatom ${pkg}))
+	qatom=($(qatom ${pkg/=/}))
 	[[ ${qatom#} < 2 ]] && die "invalid atom ${pkg}"
 	category=${qatom[0]/=}
 	pn=${qatom[1]}
