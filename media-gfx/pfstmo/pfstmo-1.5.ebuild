@@ -1,10 +1,10 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="5"
 
-inherit base
+inherit base flag-o-matic
 
 DESCRIPTION="pfstmo package contains the implementation of state-of-the-art tone
 mapping operators"
@@ -22,14 +22,16 @@ DEPEND="
 	sci-libs/gsl"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}"/${P}-auto_ptr.patch )
+PATCHES=( "${FILESDIR}"/${PN}-1.4-auto_ptr.patch )
 
 src_configure() {
+	# workaround for linking problems of pfstmo_fattal02 ...
+	has_version sci-libs/fftw[openmp] && append-ldflags -lgomp
 	econf \
 		$(use_enable debug)
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
-	dodoc AUTHORS ChangeLog README || die
+	default
+	dodoc AUTHORS ChangeLog README
 }
