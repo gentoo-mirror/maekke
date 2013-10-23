@@ -15,7 +15,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 # TODO qt4 - detection doesn't work yet
-IUSE="debug gdal imagemagick netpbm octave openexr opengl static-libs tiff"
+IUSE="debug gdal imagemagick netpbm octave openexr opengl static-libs tiff qt4"
 
 RDEPEND="
 	gdal? ( sci-libs/gdal )
@@ -25,16 +25,18 @@ RDEPEND="
 	openexr? ( >=media-libs/openexr-1.0 )
 	opengl? ( media-libs/freeglut )
 	tiff? ( media-libs/tiff )"
-DEPEND="${DEPEND}"
-#	qt4? ( x11-libs/qt-gui:4 )
+DEPEND="${DEPEND}
+	qt4? ( dev-qt/qtgui:4 )"
 
-PATCHES=( "${FILESDIR}"/${PN}-1.8.1-glibc-2.10.patch )
+PATCHES=( "${FILESDIR}"/${PN}-1.8.1-glibc-2.10.patch
+		  "${FILESDIR}"/${PN}-1.8.4-fixmoc.patch )
 
 src_configure() {
 	# TODO set current octave version --with-octversion
 	econf \
 		--disable-jpeghdr \
 		--disable-matlab \
+		
 		$(use_enable debug) \
 		$(use_enable gdal) \
 		$(use_enable imagemagick) \
@@ -44,12 +46,15 @@ src_configure() {
 		$(use_enable opengl) \
 		$(use_enable static-libs static) \
 		$(use_enable tiff) \
-		--disable-qt
-#		$(use_enable qt4 qt) \
-#		$(use_with qt4 moc moc) \
-#		$(use_with qt4 qtinclude /usr/include/qt4) \
-#		$(use_with qt4 qtlibs /usr/$(get_libdir)/qt4) \
-#		$(use_with qt4 qtdir /usr/$(get_libdir)/qt4)
+		#--disable-qt
+		--with-moc moc
+		$(use_with qt4 x)\
+		$(use_enable qt4 gui qt)\
+		#$(use_enable qt4 qt) \
+		$(use_with qt4 moc moc) \
+		#$(use_with qt4 qtinclude /usr/include/qt4) \
+		#$(use_with qt4 qtlibs /usr/$(get_libdir)/qt4) \
+		#$(use_with qt4 qtdir /usr/$(get_libdir)/qt4)
 }
 
 src_install() {
