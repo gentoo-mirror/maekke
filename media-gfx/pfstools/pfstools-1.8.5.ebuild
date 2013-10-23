@@ -1,10 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="5"
 
-inherit base multilib
+inherit base multilib autotools toolchain-funcs
 
 DESCRIPTION="${PN} package is a set of command line programs for reading,
 writing and manipulating HDR images"
@@ -14,15 +14,14 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-# TODO qt4 - detection doesn't work yet
-IUSE="debug gdal imagemagick netpbm octave openexr opengl static-libs tiff qt4"
+IUSE="debug gdal imagemagick netpbm octave openexr opengl qt4 static-libs tiff"
 
 RDEPEND="
 	gdal? ( sci-libs/gdal )
 	imagemagick? ( >=media-gfx/imagemagick-6.0 )
 	netpbm? ( media-libs/netpbm )
 	octave? ( sci-mathematics/octave )
-	openexr? ( >=media-libs/openexr-1.0 )
+	openexr? ( >=media-libs/openexr-1.0:0= )
 	opengl? ( media-libs/freeglut )
 	tiff? ( media-libs/tiff )"
 DEPEND="${DEPEND}
@@ -31,12 +30,20 @@ DEPEND="${DEPEND}
 PATCHES=( "${FILESDIR}"/${PN}-1.8.1-glibc-2.10.patch
 		  "${FILESDIR}"/${PN}-1.8.4-fixmoc.patch )
 
+src_prepare() {
+	base_src_prepare || die
+	eautoreconf
+}
+
 src_configure() {
 	# TODO set current octave version --with-octversion
+
+	export QT_CFLAGS="$($(tc-getPKG_CONFIG) QtGui --cflags)"
+	export QT_LIBS="$($(tc-getPKG_CONFIG) QtGui --libs)"
+
 	econf \
 		--disable-jpeghdr \
 		--disable-matlab \
-		
 		$(use_enable debug) \
 		$(use_enable gdal) \
 		$(use_enable imagemagick) \
@@ -46,20 +53,12 @@ src_configure() {
 		$(use_enable opengl) \
 		$(use_enable static-libs static) \
 		$(use_enable tiff) \
-		#--disable-qt
-		--with-moc moc
-		$(use_with qt4 x)\
-		$(use_enable qt4 gui qt)\
-		#$(use_enable qt4 qt) \
-		$(use_with qt4 moc moc) \
-		#$(use_with qt4 qtinclude /usr/include/qt4) \
-		#$(use_with qt4 qtlibs /usr/$(get_libdir)/qt4) \
-		#$(use_with qt4 qtdir /usr/$(get_libdir)/qt4)
+		$(use_enable qt4 qt)
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
-	dodoc AUTHORS ChangeLog README || die
+	emake DESTDIR="${D}" install
+	dodoc AUTHORS ChangeLog README
 
 	if ! use static-libs; then
 		rm "${D}"/usr/$(get_libdir)/*.la || die
