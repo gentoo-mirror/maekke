@@ -4,7 +4,7 @@
 
 EAPI=5
 
-EGIT_REPO_URI="https://git.chromium.org/git/chromiumos/third_party/xf86-video-armsoc.git"
+EGIT_REPO_URI="https://chromium.googlesource.com/chromiumos/third_party/${PN}.git"
 
 inherit xorg-2
 
