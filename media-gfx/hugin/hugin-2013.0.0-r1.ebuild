@@ -31,7 +31,7 @@ CDEPEND="
 	media-libs/freeglut
 	media-libs/glew:=
 	media-libs/lensfun
-	>=media-libs/libpano13-2.9.18
+	>=media-libs/libpano13-2.9.18:0=
 	media-libs/libpng:0=
 	media-libs/openexr:=
 	media-libs/tiff
