@@ -18,7 +18,7 @@ S=${WORKDIR}/${PN}-"$(get_version_component_range 1-3)"
 
 RDEPEND="!media-gfx/autopano-sift
 	dev-libs/libxml2
-	media-libs/libpano13
+	media-libs/libpano13:0=
 	media-libs/libpng:0=
 	media-libs/tiff:0=
 	sys-libs/zlib
