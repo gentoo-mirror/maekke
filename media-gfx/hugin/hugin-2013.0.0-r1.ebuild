@@ -1,8 +1,9 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2013.0.0.ebuild,v 1.4 2013/11/25 00:12:02 patrick Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2013.0.0-r1.ebuild,v 1.2 2013/12/08 12:11:57 jlec Exp $
 
 EAPI=5
+
 WX_GTK_VER="2.8"
 PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
@@ -34,7 +35,6 @@ CDEPEND="
 	media-libs/libpng:0=
 	media-libs/openexr:=
 	media-libs/tiff
-	sci-libs/flann
 	sys-libs/zlib
 	virtual/jpeg
 	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
