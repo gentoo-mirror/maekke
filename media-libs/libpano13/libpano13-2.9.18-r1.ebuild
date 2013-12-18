@@ -39,8 +39,3 @@ src_install() {
 		#find "${D}" -name '*.la' -delete || die
 	fi
 }
-
-pkg_postinst() {
-	ewarn "you should remerge all reverse dependencies (media-gfx/hugin and"
-	ewarn "media-gfx/autopano-sift-C) as they might not work anymore"
-}
