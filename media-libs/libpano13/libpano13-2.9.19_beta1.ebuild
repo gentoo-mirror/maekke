@@ -36,6 +36,5 @@ src_install() {
 
 	if ! use static-libs ; then
 		prune_libtool_files
-		#find "${D}" -name '*.la' -delete || die
 	fi
 }
