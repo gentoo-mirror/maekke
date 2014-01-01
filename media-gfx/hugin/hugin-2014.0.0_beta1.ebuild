@@ -1,25 +1,24 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-9999.ebuild,v 1.2 2013/11/24 17:03:45 jlec Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2013.0.0-r1.ebuild,v 1.2 2013/12/08 12:11:57 jlec Exp $
 
 EAPI=5
+
 WX_GTK_VER="2.8"
 PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 
-inherit base mercurial python-single-r1 wxwidgets versionator cmake-utils
+inherit base python-single-r1 wxwidgets versionator cmake-utils
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI=""
-EHG_REPO_URI="http://hg.code.sf.net/p/hugin/hugin"
-EHG_PROJECT="${PN}-${PN}"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2 SIFT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~x86"
 
 LANGS=" cs da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
-IUSE="lapack python sift $(echo ${LANGS//\ /\ linguas_})"
+IUSE="lapack python sift debug $(echo ${LANGS//\ /\ linguas_})"
 
 CDEPEND="
 	!!dev-util/cocom
@@ -36,7 +35,6 @@ CDEPEND="
 	media-libs/libpng:0=
 	media-libs/openexr:=
 	media-libs/tiff
-	sci-libs/flann
 	sys-libs/zlib
 	virtual/jpeg
 	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
@@ -66,6 +64,7 @@ src_prepare() {
 		-e 's:-O3::g' \
 		-i src/celeste/CMakeLists.txt || die
 	rm CMakeModules/{FindLAPACK,FindPkgConfig}.cmake || die
+
 	cmake-utils_src_prepare
 }
 
