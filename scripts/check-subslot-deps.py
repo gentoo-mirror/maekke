@@ -66,8 +66,8 @@ class CheckSubSlot:
 		m = re.search(":[0-9]*?=", pkg)
 		return m is not None
 
-	def getPackages(self, categories=None):
-		return self.dbapi.cp_all(categories=categories)
+	def getPackages(self, trees=["/usr/portage"], categories=None):
+		return self.dbapi.cp_all(categories=categories, trees=trees)
 
 	def getPackageVersions(self, cp):
 		return self.dbapi.cp_list(cp)
