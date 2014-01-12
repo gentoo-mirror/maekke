@@ -1,8 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit toolchain-funcs
 
@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND="media-libs/libpng
+RDEPEND="media-libs/libpng:0=
 	media-libs/tiff
 	virtual/jpeg"
 DEPEND="${RDEPEND}"
