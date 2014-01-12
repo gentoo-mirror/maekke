@@ -25,8 +25,7 @@ class CheckSubSlot:
 			print("%s: %s" % (cpv, " ".join(missingSubSlotDep)))
 
 	def _getDepend(self, cpv):
-		deps = self.dbapi.aux_get(cpv, ["DEPEND", "RDEPEND"])
-		deps = deps[0] + " " + deps[1]
+		deps = self.dbapi.aux_get(cpv, ["RDEPEND"])[0]
 		result = []
 		for dep in deps.split():
 			if self._isValidAtom(dep):
