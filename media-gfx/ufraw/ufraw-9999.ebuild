@@ -50,7 +50,6 @@ src_prepare() {
 
 src_configure() {
 	econf \
-		--without-cinepaint \
 		$(use_enable contrast) \
 		$(use_with fits cfitsio) \
 		$(use_with gimp) \
