@@ -1,8 +1,8 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 inherit autotools eutils fdo-mime cvs gnome2-utils
 
 DESCRIPTION="RAW Image format viewer and GIMP plugin"
@@ -15,12 +15,13 @@ KEYWORDS=""
 IUSE="contrast fits gimp gnome gtk openmp timezone"
 
 RDEPEND="dev-libs/glib:2
-	>=media-gfx/exiv2-0.11
-	virtual/jpeg
-	=media-libs/lcms-1*
+	>=media-gfx/exiv2-0.11:0=
+	media-libs/lcms:0
 	>=media-libs/lensfun-0.2.5
+	media-libs/libpng:0=
 	media-libs/tiff
-	fits? ( sci-libs/cfitsio )
+	virtual/jpeg
+	fits? ( sci-libs/cfitsio:0= )
 	gnome? ( >=gnome-base/gconf-2 )
 	gtk? ( >=x11-libs/gtk+-2.6:2
 		>=media-gfx/gtkimageview-1.5 )
@@ -28,7 +29,7 @@ RDEPEND="dev-libs/glib:2
 		>=media-gfx/gtkimageview-1.5
 		>=media-gfx/gimp-2 )"
 DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+	virtual/pkgconfig"
 
 S="${WORKDIR}/${PN}"
 
@@ -48,9 +49,6 @@ src_prepare() {
 }
 
 src_configure() {
-	local myconf
-	use gimp && myconf="--with-gtk"
-
 	econf \
 		--without-cinepaint \
 		$(use_enable contrast) \
@@ -60,7 +58,11 @@ src_configure() {
 		$(use_with gtk) \
 		$(use_enable openmp) \
 		$(use_enable timezone dst-correction) \
-		${myconf}
+		$(usex gimp --with-gtk "")
+}
+
+src_compile() {
+	emake AR="$(tc-getAR)"
 }
 
 src_install() {
