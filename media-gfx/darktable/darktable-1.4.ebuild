@@ -15,7 +15,8 @@ LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 LANGS=" cs da de el es fr it ja nl pl pt_BR pt_PT ru sq sv uk"
-IUSE="colord doc flickr geo gnome-keyring gphoto2 graphicsmagick jpeg2k kde lua
+# TODO add lua once dev-lang/lua-5.2 is unmasked
+IUSE="colord doc flickr geo gnome-keyring gphoto2 graphicsmagick jpeg2k kde
 nls opencl openmp pax_kernel +rawspeed +slideshow +squish web-services webp
 ${LANGS// / linguas_}"
 
@@ -43,7 +44,6 @@ CDEPEND="
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
 	jpeg2k? ( media-libs/openjpeg:0 )
-	lua? ( dev-lang/lua )
 	opencl? ( virtual/opencl )
 	slideshow? (
 		media-libs/libsdl
@@ -81,7 +81,6 @@ src_configure() {
 		$(cmake-utils_use_use gphoto2 CAMERA_SUPPORT)
 		$(cmake-utils_use_use graphicsmagick GRAPHICSMAGICK)
 		$(cmake-utils_use_use jpeg2k OPENJPEG)
-		$(cmake-utils_use_use lua LUA)
 		$(cmake-utils_use_use nls NLS)
 		$(cmake-utils_use_use opencl OPENCL)
 		$(cmake-utils_use_use openmp OPENMP)
@@ -90,6 +89,7 @@ src_configure() {
 		$(cmake-utils_use_build slideshow SLIDESHOW)
 		$(cmake-utils_use_use web-services GLIBJSON)
 		$(cmake-utils_use_use webp WEBP)
+		-DUSE_LUA=OFF
 		-DCUSTOM_CFLAGS=ON
 		-DINSTALL_IOP_EXPERIMENTAL=ON
 		-DINSTALL_IOP_LEGACY=ON
