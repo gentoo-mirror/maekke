@@ -25,7 +25,7 @@ CDEPEND="
 	>=dev-libs/glib-2.28:2
 	dev-libs/libxml2:2
 	gnome-base/librsvg:2
-	media-gfx/exiv2[xmp]
+	media-gfx/exiv2:0=[xmp]
 	media-libs/lcms:2
 	>=media-libs/lensfun-0.2.3
 	media-libs/libpng:0=
