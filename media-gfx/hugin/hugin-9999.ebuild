@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-9999.ebuild,v 1.2 2013/11/24 17:03:45 jlec Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-9999.ebuild,v 1.3 2014/01/12 19:45:37 maekke Exp $
 
 EAPI=5
 WX_GTK_VER="2.8"
