@@ -38,6 +38,7 @@ src_prepare() {
 src_configure() {
 	# TODO set current octave version --with-octversion
 
+	unset QTDIR
 	export QT_CFLAGS="$($(tc-getPKG_CONFIG) QtGui --cflags)"
 	export QT_LIBS="$($(tc-getPKG_CONFIG) QtGui --libs)"
 
