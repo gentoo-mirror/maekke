@@ -43,6 +43,7 @@ CDEPEND="
 RDEPEND="${CDEPEND}
 	media-libs/exiftool"
 DEPEND="${CDEPEND}
+	sys-devel/gettext
 	virtual/pkgconfig
 	python? ( ${PYTHON_DEPS} >=dev-lang/swig-2.0.4 )"
 
