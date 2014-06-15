@@ -33,6 +33,7 @@ RDEPEND="
 	gpu? ( media-libs/freeglut )"
 DEPEND="${RDEPEND}
 	>=dev-libs/boost-1.31.0:=
+	sys-apps/help2man
 	virtual/pkgconfig
 	doc? (
 		media-gfx/imagemagick
