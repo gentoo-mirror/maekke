@@ -9,8 +9,8 @@ PYTHON_COMPAT=( python2_{6,7} )
 inherit multilib python-single-r1 cmake-utils
 
 DESCRIPTION="lensfun: A library for rectifying and simulating photographic lens distortions"
-HOMEPAGE="http://lensfun.berlios.de/"
-SRC_URI="mirror://berlios/${PN}/${P}.tar.bz2"
+HOMEPAGE="http://lensfun.sourceforge.net/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="LGPL-3 CC-BY-SA-3.0" # See README for reasoning.
 SLOT="0"
