@@ -19,8 +19,7 @@ before_script:
     - tar xjf portage-${PORTAGE_VER}.tar.bz2
     - tar xJf portage-latest.tar.xz -C /usr/
     - cp portage-${PORTAGE_VER}/cnf/repos.conf /etc/portage/
-    - rsync --recursive --links --safe-links --perms --times --omit-dir-times --compress --force --whole-file --delete --stats --human-readable --timeout=180 
---exclude=/distfiles --checksum --quiet rsync://rsync.gentoo.org/gentoo-portage /usr/portage
+    - rsync --recursive --links --safe-links --perms --times --omit-dir-times --compress --force --whole-file --delete --stats --human-readable --timeout=180 --exclude=/distfiles --checksum --quiet rsync://rsync.gentoo.org/gentoo-portage /usr/portage
     - ln -s /usr/portage/profiles/base/ /etc/portage/make.profile
     - wget "http://www.gentoo.org/dtd/metadata.dtd" -O /usr/portage/distfiles/metadata.dtd
     - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/spinner.sh"
