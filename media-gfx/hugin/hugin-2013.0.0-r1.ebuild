@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2013.0.0-r1.ebuild,v 1.5 2014/02/05 11:25:22 nimiux Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-2013.0.0-r1.ebuild,v 1.6 2014/06/09 08:19:09 maekke Exp $
 
 EAPI=5
 
