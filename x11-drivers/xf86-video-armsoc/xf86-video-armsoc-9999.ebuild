@@ -24,4 +24,8 @@ PATCHES=(
 	"${FILESDIR}"/${PN}_compat.patch
 )
 
-XORG_CONFIGURE_OPTIONS=( "--disable-silent-rules" "--disable-selective-werror" )
+XORG_CONFIGURE_OPTIONS=(
+	"--disable-silent-rules"
+	"--disable-selective-werror"
+	"--with-driver=exynos"
+)
