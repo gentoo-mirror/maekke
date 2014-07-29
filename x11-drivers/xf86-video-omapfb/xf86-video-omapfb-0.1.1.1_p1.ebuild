@@ -18,7 +18,7 @@ HOMEPAGE="http://gitweb.pingu.fi/?p=xf86-video-omapfb.git;a=tree"
 DESCRIPTION="X.org driver for TI OMAP framebuffers"
 KEYWORDS="-* ~arm"
 IUSE=""
-RDEPEND=">=x11-base/xorg-server-1.0.99"
+RDEPEND=""
 DEPEND="${RDEPEND}
 	x11-proto/fontsproto
 	x11-proto/randrproto
