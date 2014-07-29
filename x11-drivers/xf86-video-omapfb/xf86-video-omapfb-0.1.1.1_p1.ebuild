@@ -9,8 +9,8 @@ XORG_EAUTORECONF="yes"
 inherit xorg-2
 
 MY_P="${P/_p*//}"
-
 MY_P_PATCH="${PN}_${PV/_p/-}"
+
 SRC_URI="mirror://debian/pool/main/x/${PN}/${PN}_${PV/_p*/}.orig.tar.gz
 	mirror://debian/pool/main/x/${PN}/${MY_P_PATCH}.diff.gz"
 HOMEPAGE="http://gitweb.pingu.fi/?p=xf86-video-omapfb.git;a=tree"
