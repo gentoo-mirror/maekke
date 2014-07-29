@@ -13,7 +13,7 @@ MY_P_PATCH="${PN}_${PV/_p/-}"
 
 SRC_URI="mirror://debian/pool/main/x/${PN}/${PN}_${PV/_p*/}.orig.tar.gz
 	mirror://debian/pool/main/x/${PN}/${MY_P_PATCH}.diff.gz"
-HOMEPAGE="http://gitweb.pingu.fi/?p=xf86-video-omapfb.git;a=tree"
+HOMEPAGE="https://packages.debian.org/source/sid/xf86-video-omapfb"
 
 DESCRIPTION="X.org driver for TI OMAP framebuffers"
 KEYWORDS="-* ~arm"
