@@ -1,17 +1,17 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/ufraw/ufraw-0.19.2.ebuild,v 1.15 2014/06/15 10:16:57 maekke Exp $
 
 EAPI=5
-inherit autotools eutils fdo-mime cvs gnome2-utils toolchain-funcs
+inherit autotools eutils fdo-mime gnome2-utils toolchain-funcs
 
 DESCRIPTION="RAW Image format viewer and GIMP plugin"
 HOMEPAGE="http://ufraw.sourceforge.net/"
-SRC_URI=""
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x64-solaris ~x86-solaris"
 IUSE="contrast fits gimp gnome gtk openmp timezone"
 
 RDEPEND="dev-libs/glib:2
@@ -30,18 +30,6 @@ RDEPEND="dev-libs/glib:2
 		>=media-gfx/gimp-2 )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
-
-S="${WORKDIR}/${PN}"
-
-src_unpack() {
-	ECVS_SERVER="ufraw.cvs.sourceforge.net:/cvsroot/${PN}"
-	ECVS_USER="anonymous"
-	ECVS_PASS=""
-	ECVS_AUTH="pserver"
-	ECVS_MODULE="${PN}"
-
-	cvs_src_unpack
-}
 
 src_prepare() {
 	epatch \
