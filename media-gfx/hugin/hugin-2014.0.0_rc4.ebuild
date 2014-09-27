@@ -57,7 +57,7 @@ pkg_setup() {
 		$(cmake-utils_use_enable lapack LAPACK)
 		$(cmake-utils_use_build python HSI)
 	)
-	python-single-r1_pkg_setup
+	use python && python-single-r1_pkg_setup
 }
 
 src_prepare() {
@@ -71,7 +71,7 @@ src_prepare() {
 
 src_install() {
 	cmake-utils_src_install
-	python_optimize
+	use python && python_optimize
 
 	for lang in ${LANGS} ; do
 		case ${lang} in
