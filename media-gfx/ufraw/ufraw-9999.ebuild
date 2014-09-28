@@ -16,7 +16,7 @@ IUSE="contrast fits gimp gnome gtk openmp timezone"
 
 RDEPEND="dev-libs/glib:2
 	>=media-gfx/exiv2-0.11:0=
-	media-libs/lcms:0
+	media-libs/lcms
 	>=media-libs/lensfun-0.2.5
 	media-libs/libpng:0=
 	media-libs/tiff
