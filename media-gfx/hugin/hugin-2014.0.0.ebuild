@@ -51,6 +51,8 @@ REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 S=${WORKDIR}/${PN}-$(get_version_component_range 1-3)
 
+PATCHES=( "${FILESDIR}"/${P}-lensfun-0.3.0.patch )
+
 pkg_setup() {
 	DOCS="authors.txt README TODO"
 	mycmakeargs=(
