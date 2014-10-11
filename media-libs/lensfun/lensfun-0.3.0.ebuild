@@ -21,7 +21,10 @@ RDEPEND=">=dev-libs/glib-2.28
 	media-libs/libpng:0=
 	sys-libs/zlib:="
 DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )"
+	doc? (
+		app-doc/doxygen
+		dev-python/docutils
+	)"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
