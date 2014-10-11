@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 
 LANGS=" cs da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
-IUSE="lapack python sift debug $(echo ${LANGS//\ /\ linguas_})"
+IUSE="debug lapack python sift $(echo ${LANGS//\ /\ linguas_})"
 
 CDEPEND="
 	!!dev-util/cocom
