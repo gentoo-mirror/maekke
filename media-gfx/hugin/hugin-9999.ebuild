@@ -3,7 +3,8 @@
 # $Header: /var/cvsroot/gentoo-x86/media-gfx/hugin/hugin-9999.ebuild,v 1.3 2014/01/12 19:45:37 maekke Exp $
 
 EAPI=5
-WX_GTK_VER="2.8"
+
+WX_GTK_VER="3.0"
 PYTHON_COMPAT=( python{2_7,3_2,3_3,3_4} )
 
 inherit base mercurial python-single-r1 wxwidgets versionator cmake-utils
@@ -38,7 +39,7 @@ CDEPEND="
 	media-libs/tiff
 	sys-libs/zlib
 	virtual/jpeg
-	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
+	x11-libs/wxGTK:3.0=[X,opengl]
 	lapack? ( virtual/lapack )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
