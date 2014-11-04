@@ -33,7 +33,8 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	epatch \
-		"${FILESDIR}"/${PN}-0.17-cfitsio-automagic.patch
+		"${FILESDIR}"/${PN}-0.17-cfitsio-automagic.patch \
+		"${FILESDIR}"/${P}-gimp.patch
 	eautoreconf
 }
 
