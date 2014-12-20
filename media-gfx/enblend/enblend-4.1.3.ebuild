@@ -20,6 +20,7 @@ IUSE="debug doc gpu image-cache openmp"
 REQUIRED_USE="openmp? ( !image-cache )"
 
 RDEPEND="
+	>=dev-libs/boost-1.31.0:=
 	media-libs/glew
 	>=media-libs/lcms-2.5:2
 	>=media-libs/libpng-1.2.43:0=
@@ -32,7 +33,6 @@ RDEPEND="
 	debug? ( dev-libs/dmalloc )
 	gpu? ( media-libs/freeglut )"
 DEPEND="${RDEPEND}
-	>=dev-libs/boost-1.31.0:=
 	sys-apps/help2man
 	virtual/pkgconfig
 	doc? (
