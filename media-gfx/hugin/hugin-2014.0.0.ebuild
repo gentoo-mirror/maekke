@@ -27,7 +27,7 @@ CDEPEND="
 	>=dev-libs/boost-1.49.0-r1:=
 	dev-libs/zthread
 	>=media-gfx/enblend-4.0
-	media-gfx/exiv2
+	media-gfx/exiv2:=
 	media-libs/freeglut
 	media-libs/glew:=
 	media-libs/lensfun
