@@ -107,7 +107,7 @@ fi
 tmpfile="$(mktemp)"
 ${BUGZ} ${BUGZ_DEFAULT_OPTS} get ${bugid} > ${tmpfile}
 aliases="$(grep ^CC ${tmpfile} | awk '{ print $3 }')"
-assignee="$(grep ^Assignee ${tmpfile} | awk '{ print $3 }')"
+assignee="$(grep ^AssignedTo ${tmpfile} | awk '{ print $3 }')"
 rm ${tmpfile}
 
 [[ -z ${assignee} ]] && die "problem with bugz: assignee empty"
