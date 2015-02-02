@@ -11,7 +11,7 @@ inherit eutils multilib python-r1 toolchain-funcs versionator
 MY_PV=$(get_version_component_range 1-2)
 
 DESCRIPTION="GObject-based wrapper around the Exiv2 library"
-HOMEPAGE="https://wiki.gnome.org/Projects/gexiv2"
+HOMEPAGE="http://trac.yorba.org/wiki/gexiv2/"
 SRC_URI="http://www.yorba.org/download/${PN}/${MY_PV}/lib${PN}_${PV}.tar.xz"
 
 LICENSE="LGPL-2.1"
