@@ -4,20 +4,18 @@
 
 EAPI=5
 
-WX_GTK_VER="3.0"
+WX_GTK_VER="2.8"
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
-inherit base mercurial python-single-r1 wxwidgets versionator cmake-utils
+inherit base python-single-r1 wxwidgets versionator cmake-utils
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI=""
-EHG_REPO_URI="http://hg.code.sf.net/p/hugin/hugin"
-EHG_PROJECT="${PN}-${PN}"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2 SIFT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~x86"
 
 LANGS=" cs da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
 IUSE="debug lapack python sift $(echo ${LANGS//\ /\ linguas_})"
@@ -41,7 +39,7 @@ CDEPEND="
 	sci-libs/fftw:=
 	sys-libs/zlib
 	virtual/jpeg:0
-	x11-libs/wxGTK:3.0=[X,opengl]
+	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
 	lapack? ( virtual/lapack )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
