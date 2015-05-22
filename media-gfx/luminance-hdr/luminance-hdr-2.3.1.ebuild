@@ -32,7 +32,7 @@ RDEPEND="
 	sci-libs/fftw:3.0[threads]
 	sci-libs/gsl
 	virtual/jpeg:0"
-DEPEND="${DEPEND}
+DEPEND="${RDEPEND}
 	test? ( dev-cpp/gtest )"
 
 DOCS=( AUTHORS BUGS Changelog README TODO )
