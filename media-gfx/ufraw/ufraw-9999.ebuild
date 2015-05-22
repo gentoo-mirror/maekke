@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,20 +14,22 @@ SLOT="0"
 KEYWORDS=""
 IUSE="contrast fits gimp gnome gtk openmp timezone"
 
-RDEPEND="dev-libs/glib:2
+REQUIRED_USE="gimp? ( gtk )"
+
+RDEPEND="
+	dev-libs/glib:2=
 	>=media-gfx/exiv2-0.11:0=
-	media-libs/lcms
-	>=media-libs/lensfun-0.2.5
+	media-libs/lcms:2=
+	>=media-libs/lensfun-0.2.5:=
 	media-libs/libpng:0=
-	media-libs/tiff
-	virtual/jpeg
+	media-libs/tiff:0=
+	virtual/jpeg:0=
 	fits? ( sci-libs/cfitsio:0= )
 	gnome? ( >=gnome-base/gconf-2 )
 	gtk? ( >=x11-libs/gtk+-2.6:2
 		>=media-gfx/gtkimageview-1.5 )
-	gimp? ( >=x11-libs/gtk+-2.6:2
-		>=media-gfx/gtkimageview-1.5
-		>=media-gfx/gimp-2 )"
+	gimp? ( >=media-gfx/gimp-2 )
+"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
@@ -57,8 +59,7 @@ src_configure() {
 		$(use_enable gnome mime) \
 		$(use_with gtk) \
 		$(use_enable openmp) \
-		$(use_enable timezone dst-correction) \
-		$(usex gimp --with-gtk "")
+		$(use_enable timezone dst-correction)
 }
 
 src_compile() {
