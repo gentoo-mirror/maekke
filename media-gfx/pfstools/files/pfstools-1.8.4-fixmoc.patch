@@ -1,0 +1,11 @@
+--- configure.ac	2011-05-20 12:34:05.000000000 +0200
++++ new_configure.ac	2013-10-23 02:11:15.108528609 +0200
+@@ -315,7 +315,7 @@
+ 
+ ## Look for MOC
+ if test -z "$QTDIR"; then
+-  MOC="moc-qt4"
++  MOC="moc"
+ else
+   MOC="$QTDIR/bin/moc"
+ fi
