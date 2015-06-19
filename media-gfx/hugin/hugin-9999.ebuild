@@ -19,13 +19,11 @@ LICENSE="GPL-2 SIFT"
 SLOT="0"
 KEYWORDS=""
 
-LANGS=" cs da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
+LANGS=" ca@valencia ca_ES cs_CZ da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
 IUSE="debug lapack python sift $(echo ${LANGS//\ /\ linguas_})"
 
 CDEPEND="
 	!!dev-util/cocom
-	app-arch/zip
-	dev-cpp/tclap
 	dev-db/sqlite:3
 	>=dev-libs/boost-1.49.0-r1:=
 	dev-libs/zthread
@@ -47,6 +45,7 @@ CDEPEND="
 RDEPEND="${CDEPEND}
 	media-libs/exiftool"
 DEPEND="${CDEPEND}
+	dev-cpp/tclap
 	sys-devel/gettext
 	virtual/pkgconfig
 	python? ( ${PYTHON_DEPS} >=dev-lang/swig-2.0.4 )"
@@ -79,8 +78,7 @@ src_install() {
 
 	for lang in ${LANGS} ; do
 		case ${lang} in
-			ca) dir=ca_ES;;
-			cs) dir=cs_CZ;;
+			ca@valencia) dir=ca_ES@valencia;;
 			*) dir=${lang};;
 		esac
 		use linguas_${lang} || rm -r "${D}"/usr/share/locale/${dir}
