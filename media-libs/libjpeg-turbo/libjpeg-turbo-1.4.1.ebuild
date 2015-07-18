@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/libjpeg-turbo/libjpeg-turbo-1.3.1.ebuild,v 1.11 2015/04/18 20:40:03 pacho Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libjpeg-turbo/libjpeg-turbo-1.4.0.ebuild,v 1.2 2015/02/09 23:50:16 polynomial-c Exp $
 
 EAPI=5
 
@@ -9,11 +9,11 @@ inherit autotools eutils java-pkg-opt-2 libtool toolchain-funcs multilib-minimal
 DESCRIPTION="MMX, SSE, and SSE2 SIMD accelerated JPEG library"
 HOMEPAGE="http://libjpeg-turbo.virtualgl.org/ http://sourceforge.net/projects/libjpeg-turbo/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz
-	mirror://debian/pool/main/libj/libjpeg8/libjpeg8_8d-2.debian.tar.gz"
+	mirror://gentoo/libjpeg8_8d-2.debian.tar.gz"
 
 LICENSE="BSD IJG"
 SLOT="0"
-KEYWORDS="alpha amd64 arm arm64 hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~x64-macos ~x86-macos"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~x64-macos ~x86-macos"
 IUSE="java static-libs"
 
 ASM_DEPEND="|| ( dev-lang/nasm dev-lang/yasm )"
@@ -38,13 +38,8 @@ MULTILIB_WRAPPED_HEADERS=( /usr/include/jconfig.h )
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-1.2.0-x32.patch #420239
 
-	if [[ -x ./configure ]]; then
-		elibtoolize
-	else
-		eautoreconf
-	fi
-
-	epunt_cxx #424689
+	# generate a new ./configure compatible with non-bash shells, #533902
+	eautoreconf
 
 	java-pkg-opt-2_src_prepare
 }
