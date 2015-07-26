@@ -4,14 +4,14 @@
 
 EAPI=5
 
-WX_GTK_VER="3.0"
+WX_GTK_VER="2.8"
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 
 inherit base python-single-r1 wxwidgets versionator cmake-utils
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SRC_URI="https://launchpad.net/${PN}/2015.0/2015.0rc3/+download/${P}.tar.bz2"
 
 LICENSE="GPL-2 SIFT"
 SLOT="0"
@@ -37,7 +37,7 @@ CDEPEND="
 	sci-libs/fftw:=
 	sys-libs/zlib
 	virtual/jpeg:0
-	x11-libs/wxGTK:3.0=[X,opengl]
+	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
 	lapack? ( virtual/lapack )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
