@@ -36,9 +36,11 @@ CDEPEND="
 	>=media-libs/vigra-1.9.0[openexr]
 	sci-libs/fftw:=
 	sys-libs/zlib
+	virtual/glu
 	virtual/jpeg:0
+	virtual/opengl
 	x11-libs/wxGTK:2.8=[X,opengl,-odbc]
-	lapack? ( virtual/lapack )
+	lapack? ( virtual/blas virtual/lapack )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
 	media-libs/exiftool"
