@@ -33,10 +33,10 @@ RDEPEND="
 	debug? ( dev-libs/dmalloc )
 	gpu? ( media-libs/freeglut )"
 DEPEND="${RDEPEND}
+	media-gfx/imagemagick
 	sys-apps/help2man
 	virtual/pkgconfig
 	doc? (
-		media-gfx/imagemagick
 		media-gfx/transfig
 		sci-visualization/gnuplot[gd]
 		virtual/latex-base
