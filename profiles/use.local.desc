@@ -1,0 +1,26 @@
+# This file is deprecated as per GLEP 56 in favor of metadata.xml. Please add
+# your descriptions to your package's metadata.xml ONLY.
+# * generated automatically using pmaint *
+
+media-gfx/darktable:colord - Support color management using x11-misc/colord
+media-gfx/darktable:flickr - Add support for uploading photos to flickr
+media-gfx/darktable:geo - Enable geotagging support
+media-gfx/darktable:graphicsmagick - Use media-gfx/graphicsmagick for image importing
+media-gfx/darktable:libsecret - Enable libsecret support to store login credentials
+media-gfx/darktable:opencl - Enable opencl support
+media-gfx/darktable:pax_kernel - Triggers paxmarking of main darktable binary
+media-gfx/darktable:rawspeed - Enable the rawspeed backend
+media-gfx/darktable:slideshow - Build the opengl slideshow viewer
+media-gfx/darktable:squish - Enable thumbnail compression via libsquish
+media-gfx/darktable:web-services - Add support for uploading photos to facebook and picasa
+media-gfx/darktable:webp - Enable WebP export support
+media-gfx/enblend:gpu - GPU support for Enblend
+media-gfx/enblend:image-cache - allow for processing of large images
+media-gfx/hugin:sift - automatically align images with media-gfx/autopano-sift or media-gfx/autopano-sift-C
+media-gfx/pfstools:gdal - build gdal programs
+media-gfx/pfstools:netpbm - build netpbm programs
+media-gfx/pfstools:octave - enable octave (sci-mathematics/octave) support
+media-gfx/ufraw:contrast - enable contrast setting option
+media-gfx/ufraw:fits - Enable support for the FITS image format through sci-libs/cfitsio
+media-gfx/ufraw:timezone - enable DST correction for file timestamps
+media-libs/libraw:demosaic - Enable support for external interpolation algorithms
