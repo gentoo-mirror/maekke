@@ -1,6 +1,6 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI=5
 
@@ -17,8 +17,8 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="media-libs/libpng:0=
-	media-libs/tiff
-	virtual/jpeg"
+	media-libs/tiff:0=
+	virtual/jpeg:0="
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${PN}"

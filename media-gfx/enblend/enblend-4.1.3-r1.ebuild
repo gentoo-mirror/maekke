@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit cmake-utils
+inherit eutils cmake-utils
 
 MY_P="${PN}-enfuse-${PV/_rc/rc}"
 
@@ -50,12 +50,14 @@ src_prepare() {
 	sed -i -e "/CXX_FLAGS/s:-O3::g" CMakeLists.txt || die
 	sed -i -e "s:doc/enblend:share/doc/${PF}:" doc/CMakeLists.txt || die
 	cmake-utils_src_prepare
+
+	epatch "${FILESDIR}"/${P}-texinfo-5-upstream.patch
+	epatch "${FILESDIR}"/${P}-texinfo-5-more.patch
 }
 
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_CXX_FLAGS_RELEASE=""
-		-DMAKEINFO_EXE="/bin/true"
 		$(cmake-utils_use_enable debug DMALLOC)
 		$(cmake-utils_use doc DOC)
 		$(cmake-utils_use_enable image-cache IMAGECACHE)
