@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/lensfun/lensfun-0.3.0.ebuild,v 1.11 2015/06/19 17:11:11 maekke Exp $
+# $Id$
 
 EAPI=5
 

@@ -4,7 +4,7 @@
 # (with USE-dep syntax) out, so your arch-testing tool
 # can emerge them.
 
-REPODIR="${HOME}/cvs/gentoo-x86"
+REPODIR="${HOME}/cvs/gentoo"
 BASE_URL="http://qa-reports.gentoo.org/output/genrdeps/dindex/"
 
 if [[ $# -ne 2 ]]; then
