@@ -17,8 +17,8 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="media-libs/libpng:0=
-	media-libs/tiff
-	virtual/jpeg"
+	media-libs/tiff:0=
+	virtual/jpeg:0="
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${PN}"
