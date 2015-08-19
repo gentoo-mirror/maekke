@@ -1,7 +1,7 @@
 #!/bin/bash
 # by {maekke,opfer}@gentoo.org
 
-REPODIR="${HOME}/cvs/gentoo-x86"
+REPODIR="${HOME}/cvs/gentoo"
 BUGZ_USER="maekke@gentoo.org"
 BUGZ="bugz"
 BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org/xmlrpc.cgi --user ${BUGZ_USER}"
@@ -60,13 +60,13 @@ for pkg in ${pkgs} ; do
 	[[ ${qatom#} < 2 ]] && die "invalid atom ${pkg}"
 	category=${qatom[0]/=}
 	pn=${qatom[1]}
+	cpn=${category}/${pn}
 	version=${qatom[2]}
 	revision=${qatom[3]}
 	[[ -n "${revision}" ]] && version="${version}-${revision}"
 
-	cd "${REPODIR}/${category}/${pn}" || die "package ${category}/${pn} not found"
-	cvs up -C || die "cvs up failed"
-	find . -name '.#*' -delete || die "removing .#* failed"
+	cd "${REPODIR}/${cpn}" || die "package ${cpn} not found"
+	git pull --rebase=preserve || die "git pull failed"
 	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild (${pn}-${version}) not found"
 	repoman full --include-arches "${arches//\~/}" || die "repoman full failed on non-modified tree"
 
@@ -80,9 +80,9 @@ for pkg in ${pkgs} ; do
 
 	# commit message
 	if [[ ${arches:0:1} == "~" ]] ; then
-		msg="add ${arches// //}"
+		msg="${cpn}: add ${arches// //}"
 	else
-		msg="${tmparches// //} stable"
+		msg="${cpn} ${tmparches// //} stable"
 	fi
 	[[ ${bugid} != "0" ]] && msg="${msg}, bug #${bugid}"
 
@@ -90,9 +90,8 @@ for pkg in ${pkgs} ; do
 		ekeyword ${tmparches} ${pn}-${version}.ebuild || die "ebuild not found"
 		repoman manifest || die "repoman manifest failed"
 		repoman full --include-arches "${arches//\~/}" || die "repoman full failed on modified tree"
-		echangelog "${msg}" || die "echangelog failed"
-		repoman manifest || die "repoman manifest failed"
 		repoman commit --include-arches "${arches//\~/}" -m "${msg}" || die "repoman commit failed"
+		git push --signed || die "git push failed"
 	else
 		echo "nothing to do here"
 	fi
