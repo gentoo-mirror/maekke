@@ -82,7 +82,7 @@ for pkg in ${pkgs} ; do
 	if [[ ${arches:0:1} == "~" ]] ; then
 		msg="${cpn}: add ${arches// //}"
 	else
-		msg="${cpn} ${tmparches// //} stable"
+		msg="${cpn}: ${tmparches// //} stable"
 	fi
 	[[ ${bugid} != "0" ]] && msg="${msg}, bug #${bugid}"
 
