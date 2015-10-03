@@ -66,7 +66,6 @@ for pkg in ${pkgs} ; do
 	[[ -n "${revision}" ]] && version="${version}-${revision}"
 
 	cd "${REPODIR}/${cpn}" || die "package ${cpn} not found"
-	git pull --rebase=preserve || die "git pull failed"
 	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild (${pn}-${version}) not found"
 	repoman full --include-arches "${arches//\~/}" || die "repoman full failed on non-modified tree"
 
@@ -91,6 +90,7 @@ for pkg in ${pkgs} ; do
 		repoman manifest || die "repoman manifest failed"
 		repoman full --include-arches "${arches//\~/}" || die "repoman full failed on modified tree"
 		repoman commit --include-arches "${arches//\~/}" -m "${msg}" || die "repoman commit failed"
+		git pull --rebase=preserve || die "git pull failed"
 		git push --signed || die "git push failed"
 	else
 		echo "nothing to do here"
