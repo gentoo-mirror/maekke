@@ -1,0 +1,22 @@
+diff -ru xf86-video-armsoc-9999.orig/src/bo_exynos.c xf86-video-armsoc-9999/src/bo_exynos.c
+--- xf86-video-armsoc-9999.orig/src/bo_exynos.c	2015-10-11 11:40:12.343087923 +0200
++++ xf86-video-armsoc-9999/src/bo_exynos.c	2015-10-11 11:51:24.233088004 +0200
+@@ -24,6 +24,7 @@
+ #include <sys/mman.h>
+ #include <assert.h>
+ #include <errno.h>
++#include <xorg-server.h>
+ #include <xf86.h>
+ #include <xf86drm.h>
+ #include <xf86drmMode.h>
+diff -ru xf86-video-armsoc-9999.orig/src/omap_dumb.c xf86-video-armsoc-9999/src/omap_dumb.c
+--- xf86-video-armsoc-9999.orig/src/omap_dumb.c	2015-10-11 11:40:12.343087923 +0200
++++ xf86-video-armsoc-9999/src/omap_dumb.c	2015-10-11 11:45:36.983087962 +0200
+@@ -26,6 +26,7 @@
+ #include <assert.h>
+ #include <errno.h>
+ 
++#include <xorg-server.h>
+ #include <xf86.h>
+ #include <xf86drm.h>
+ #include <xf86drmMode.h>

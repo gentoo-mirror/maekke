@@ -17,11 +17,13 @@ SLOT="0"
 KEYWORDS="~arm"
 IUSE=""
 
-DEPEND="!x11-drivers/xf86-video-armsoc-linaro"
+DEPEND=">=x11-libs/libdrm-2.4.30[video_cards_exynos]
+	!x11-drivers/xf86-video-armsoc-linaro"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}_compat.patch
+	"${FILESDIR}"/${PN}_xorg-server-includes.patch
 )
 
 XORG_CONFIGURE_OPTIONS=(
