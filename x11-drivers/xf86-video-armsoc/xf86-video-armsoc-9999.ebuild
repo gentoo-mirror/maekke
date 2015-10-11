@@ -23,6 +23,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}_compat.patch
+	"${FILESDIR}"/${PN}_xorg-server-includes.patch
 )
 
 XORG_CONFIGURE_OPTIONS=(
