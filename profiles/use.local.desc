@@ -17,9 +17,9 @@ media-gfx/darktable:webp - Enable WebP export support
 media-gfx/enblend:gpu - GPU support for Enblend
 media-gfx/enblend:image-cache - allow for processing of large images
 media-gfx/hugin:sift - automatically align images with media-gfx/autopano-sift or media-gfx/autopano-sift-C
-media-gfx/pfstools:gdal - build gdal programs
 media-gfx/pfstools:netpbm - build netpbm programs
 media-gfx/pfstools:octave - enable octave (sci-mathematics/octave) support
+media-gfx/pfstools:opencv - Use OpenCV library (media-libs/opencv) for pfsalign
 media-gfx/ufraw:contrast - enable contrast setting option
 media-gfx/ufraw:fits - Enable support for the FITS image format through sci-libs/cfitsio
 media-gfx/ufraw:timezone - enable DST correction for file timestamps
