@@ -4,12 +4,12 @@
 
 EAPI=5
 
-inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils
+inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils versionator
 
 DOC_PV="1.6.0"
-MY_PV="${PV/_/}"
-MY_P="${P/_/\.}"
-MY_P_S="${P/_/\~}"
+MY_PV="$(replace_version_separator 2 "")"
+MY_P="${PN}-$(replace_version_separator 2 ".")"
+MY_P_S="${PN}-$(replace_version_separator 2 "~")"
 
 DESCRIPTION="A virtual lighttable and darkroom for photographers"
 HOMEPAGE="http://www.darktable.org/"
