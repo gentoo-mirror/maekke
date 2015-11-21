@@ -36,10 +36,10 @@ src_configure() {
 		-DLIBDIR="${EPREFIX}"/usr/$(get_libdir)
 		-DSETUP_PY_INSTALL_PREFIX="${ED}"/$(python_get_sitedir)
 		-DBUILD_AUXFUN=ON
-		$(cmake-utils_use_build doc)
-		$(cmake-utils_use_build cpu_flags_x86_sse FOR_SSE)
-		$(cmake-utils_use_build cpu_flags_x86_sse2 FOR_SSE2)
-		$(cmake-utils_use_build test TESTS)
+		-DBUILD_DOC=$(usex doc ON OFF)
+		-DBUILD_FOR_SSE=$(usex cpu_flags_x86_sse ON OFF)
+		-DBUILD_FOR_SSE2=$(usex cpu_flags_x86_sse2 ON OFF)
+		-DBUILD_TESTS=$(usex test ON OFF)
 		-DBUILD_STATIC=OFF
 	)
 
