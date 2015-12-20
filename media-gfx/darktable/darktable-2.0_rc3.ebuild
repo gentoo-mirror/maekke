@@ -47,7 +47,7 @@ CDEPEND="
 	colord? ( x11-misc/colord:0= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
-	geo? ( net-libs/libsoup:2.4 )
+	geo? ( >=sci-geosciences/osm-gps-map-1.0.0 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
 	jpeg2k? ( media-libs/openjpeg:0 )
