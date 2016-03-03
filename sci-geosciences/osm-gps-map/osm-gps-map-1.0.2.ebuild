@@ -11,7 +11,7 @@ HOMEPAGE="http://nzjrs.github.com/osm-gps-map/"
 SRC_URI="https://github.com/nzjrs/${PN}/releases/download/${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="1/0.0.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+introspection"
 
@@ -26,10 +26,13 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-util/gtk-doc-am
 	gnome-base/gnome-common:3
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	!<sci-geosciences/osm-gps-map-0.7.3"
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-0.7.3-fix-docs-location.patch"
+	sed -i -e "s/DOC_MODULE=libosmgpsmap/DOC_MODULE=${PF}/" \
+		docs/reference/Makefile.am || die
 	eautoreconf
 	gnome2_src_prepare
 }

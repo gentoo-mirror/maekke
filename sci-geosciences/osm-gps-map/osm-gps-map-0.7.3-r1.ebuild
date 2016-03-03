@@ -15,7 +15,7 @@ SRC_URI="http://www.johnstowers.co.nz/files/${PN}/${P}.tar.gz
 python? ( http://www.johnstowers.co.nz/files/${PN}/python-osmgpsmap-${PV}.tar.gz )"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="0/2.0.1"
 KEYWORDS="~amd64 ~x86"
 IUSE="+introspection python"
 
@@ -51,7 +51,9 @@ src_configure() {
 
 src_prepare() {
 	epatch "${FILESDIR}/${P}-fix-docs-location.patch" \
-	       "${FILESDIR}/${P}-fix-introspection.patch"
+		"${FILESDIR}/${P}-fix-introspection.patch"
+	sed -i -e "s/DOC_MODULE=libosmgpsmap/DOC_MODULE=${PF}/" \
+		docs/reference/Makefile.am || die
 	eautoreconf
 
 	gnome2_src_prepare
