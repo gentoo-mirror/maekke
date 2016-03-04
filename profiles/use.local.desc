@@ -16,7 +16,6 @@ media-gfx/darktable:web-services - Add support for uploading photos to facebook 
 media-gfx/darktable:webp - Enable WebP export support
 media-gfx/enblend:gpu - GPU support for Enblend
 media-gfx/enblend:image-cache - allow for processing of large images
-media-gfx/hugin:boost - flag to use dev-libs/boost instead of C++11 features
 media-gfx/hugin:sift - automatically align images with media-gfx/autopano-sift or media-gfx/autopano-sift-C
 media-gfx/pfstools:netpbm - build netpbm programs
 media-gfx/pfstools:octave - enable octave (sci-mathematics/octave) support
