@@ -20,7 +20,7 @@ SLOT="0"
 KEYWORDS=""
 
 LANGS=" ca@valencia ca_ES cs_CZ da de en_GB es eu fi fr hu it ja nl pl pt_BR ro ru sk sv zh_CN zh_TW"
-IUSE="boost debug lapack python sift $(echo ${LANGS//\ /\ linguas_})"
+IUSE="debug lapack python sift $(echo ${LANGS//\ /\ linguas_})"
 
 CDEPEND="
 	!!dev-util/cocom
@@ -61,7 +61,6 @@ pkg_setup() {
 	mycmakeargs=(
 		-DBUILD_HSI=$(usex python ON OFF)
 		-DENABLE_LAPACK=$(usex lapack ON OFF)
-		-DUSE_BOOST=$(usex boost ON OFF)
 	)
 	use python && python-single-r1_pkg_setup
 }
