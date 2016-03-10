@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>graphics</herd>
+	<maintainer type="project">
+		<email>graphics@gentoo.org</email>
+		<name>Gentoo Graphics Project</name>
+	</maintainer>
 <longdescription lang="en">
 pfstools package is a set of command line programs for reading, writing and manipulating high-dynamic range (HDR) images and video frames. It includes also Qt and OpenGL HDR image viewers. pfstools can be integrated with GNU Octave or matlab, so that it can serve as a toolbox for reading and writing HDR images.
 </longdescription>
