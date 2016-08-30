@@ -16,7 +16,7 @@ SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${PV}/
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-LANGS=" ca cs da de el es fr it ja nl pl pt-BR pt-PT ru sk sq sv uk"
+LANGS=" ca cs da de el es fr he hu it ja nl pl pt-BR pt-PT ru sk sl sq sv uk"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
 IUSE="colord cups cpu_flags_x86_sse3 doc flickr geo gphoto2 graphicsmagick jpeg2k kde libsecret
 nls opencl openmp openexr pax_kernel +slideshow webp
@@ -31,7 +31,7 @@ CDEPEND="
 	dev-libs/libxml2:2
 	dev-libs/pugixml:0=
 	gnome-base/librsvg:2
-	media-gfx/exiv2:0=[xmp]
+	>=media-gfx/exiv2-0.25-r2:0=[xmp]
 	media-libs/lcms:2
 	>=media-libs/lensfun-0.2.3:0=
 	media-libs/libpng:0=
@@ -139,7 +139,7 @@ pkg_postinst() {
 	elog "please bear in mind that your edits will be preserved during this process,"
 	elog "but it will not be possible to downgrade from 2.0 to 1.6 any more."
 	echo
-	ewarn "There will not be possible to downgrade!"
+	ewarn "It will not be possible to downgrade!"
 }
 
 pkg_postrm() {
