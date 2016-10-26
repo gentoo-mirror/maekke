@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 LANGS=" ca cs da de el es fr he hu it ja nl pl pt-BR pt-PT ru sk sl sq sv uk"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
-IUSE="colord cups cpu_flags_x86_sse3 doc flickr geo gphoto2 graphicsmagick jpeg2k kde libsecret
+IUSE="colord cups cpu_flags_x86_sse3 doc flickr gphoto2 graphicsmagick jpeg2k kde libsecret
 nls opencl openmp openexr pax_kernel +slideshow webp
 ${LANGS// / l10n_}"
 
@@ -44,7 +44,6 @@ CDEPEND="
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
-	geo? ( >=sci-geosciences/osm-gps-map-1.0.0 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
 	jpeg2k? ( media-libs/openjpeg:0 )
@@ -89,7 +88,6 @@ src_configure() {
 		$(cmake-utils_use_use colord COLORD)
 		$(cmake-utils_use_build cups PRINT)
 		$(cmake-utils_use_use flickr FLICKR)
-		$(cmake-utils_use_use geo GEO)
 		$(cmake-utils_use_use gphoto2 CAMERA_SUPPORT)
 		$(cmake-utils_use_use graphicsmagick GRAPHICSMAGICK)
 		$(cmake-utils_use_use jpeg2k OPENJPEG)
@@ -101,6 +99,7 @@ src_configure() {
 		$(cmake-utils_use_use openmp OPENMP)
 		$(cmake-utils_use_build slideshow SLIDESHOW)
 		$(cmake-utils_use_use webp WEBP)
+		-DUSE_GEO=OFF
 		-DUSE_LUA=OFF
 		-DCUSTOM_CFLAGS=ON
 		-DINSTALL_IOP_EXPERIMENTAL=ON
