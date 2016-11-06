@@ -3,23 +3,26 @@
 # $Id$
 
 EAPI=5
+CMAKE_MIN_VERSION="3.0"
 
 inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils
 
 DOC_PV="1.6.0"
+MY_PV="${PV/_/}"
+MY_P="${P/_/.}"
 
 DESCRIPTION="A virtual lighttable and darkroom for photographers"
 HOMEPAGE="http://www.darktable.org/"
-SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${PV}/${P}.tar.xz
+SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_PV}/${MY_P}.tar.xz
 	doc? ( https://github.com/darktable-org/${PN}/releases/download/release-${DOC_PV}/${PN}-usermanual.pdf -> ${PN}-usermanual-${DOC_PV}.pdf )"
 
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-LANGS=" ca cs da de el es fr he hu it ja nl pl pt-BR pt-PT ru sk sl sq sv uk"
+LANGS=" af ca cs da de el es fi fr gl he hu it ja nl pl pt-BR pt-PT ro ru sk sl sq sv th uk zh-CN"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
 IUSE="colord cups cpu_flags_x86_sse3 doc flickr gphoto2 graphicsmagick jpeg2k kde libsecret
-nls opencl openmp openexr pax_kernel +slideshow webp
+nls opencl openmp openexr pax_kernel webp
 ${LANGS// / l10n_}"
 
 # sse3 support is required to build darktable
@@ -38,8 +41,10 @@ CDEPEND="
 	media-libs/tiff:0
 	net-misc/curl
 	virtual/jpeg:0
+	virtual/glu
+	virtual/opengl
 	x11-libs/cairo
-	x11-libs/gtk+:3
+	>=x11-libs/gtk+-3.14:3
 	x11-libs/pango
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
@@ -52,11 +57,6 @@ CDEPEND="
 	)
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
-	slideshow? (
-		media-libs/libsdl
-		virtual/glu
-		virtual/opengl
-	)
 	webp? ( media-libs/libwebp:0= )"
 RDEPEND="${CDEPEND}
 	x11-themes/gtk-engines:2
@@ -66,6 +66,8 @@ DEPEND="${CDEPEND}
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )"
 
+S="${WORKDIR}/${P/_/~}"
+
 pkg_pretend() {
 	if use openmp ; then
 		tc-has-openmp || die "Please switch to an openmp compatible compiler"
@@ -74,11 +76,6 @@ pkg_pretend() {
 
 src_prepare() {
 	use cpu_flags_x86_sse3 && append-flags -msse3
-
-	sed -e "s:\(/share/doc/\)darktable:\1${PF}:" \
-		-e "s:\(\${SHARE_INSTALL}/doc/\)darktable:\1${PF}:" \
-		-e "s:LICENSE::" \
-		-i doc/CMakeLists.txt || die
 
 	cmake-utils_src_prepare
 }
@@ -97,13 +94,13 @@ src_configure() {
 		$(cmake-utils_use_use opencl OPENCL)
 		$(cmake-utils_use_use openexr OPENEXR)
 		$(cmake-utils_use_use openmp OPENMP)
-		$(cmake-utils_use_build slideshow SLIDESHOW)
 		$(cmake-utils_use_use webp WEBP)
-		-DUSE_GEO=OFF
+		-DUSE_MAP=OFF
 		-DUSE_LUA=OFF
 		-DCUSTOM_CFLAGS=ON
 		-DINSTALL_IOP_EXPERIMENTAL=ON
 		-DINSTALL_IOP_LEGACY=ON
+		-DCMAKE_INSTALL_DOCDIR="/usr/share/doc/${PF}"
 	)
 	cmake-utils_src_configure
 }
