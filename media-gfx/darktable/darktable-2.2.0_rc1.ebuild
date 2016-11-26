@@ -59,7 +59,6 @@ CDEPEND="
 	openexr? ( media-libs/openexr:0= )
 	webp? ( media-libs/libwebp:0= )"
 RDEPEND="${CDEPEND}
-	x11-themes/gtk-engines:2
 	kde? ( kde-apps/kwalletd:4 )"
 DEPEND="${CDEPEND}
 	dev-util/intltool
