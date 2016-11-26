@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 CMAKE_MIN_VERSION="3.0"
 
 inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils
@@ -21,7 +21,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 LANGS=" af ca cs da de el es fi fr gl he hu it ja nl pl pt-BR pt-PT ro ru sk sl sq sv th uk zh-CN"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
-IUSE="colord cups cpu_flags_x86_sse3 doc flickr gphoto2 graphicsmagick jpeg2k kde libsecret
+IUSE="colord cups cpu_flags_x86_sse3 doc flickr geo gphoto2 graphicsmagick jpeg2k kde libsecret
 nls opencl openmp openexr pax_kernel webp
 ${LANGS// / l10n_}"
 
@@ -49,6 +49,7 @@ CDEPEND="
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
+	geo? ( >=sci-geosciences/osm-gps-map-1.1.0 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
 	jpeg2k? ( media-libs/openjpeg:0 )
@@ -81,25 +82,23 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_use colord COLORD)
-		$(cmake-utils_use_build cups PRINT)
-		$(cmake-utils_use_use flickr FLICKR)
-		$(cmake-utils_use_use gphoto2 CAMERA_SUPPORT)
-		$(cmake-utils_use_use graphicsmagick GRAPHICSMAGICK)
-		$(cmake-utils_use_use jpeg2k OPENJPEG)
-		$(cmake-utils_use_use kde KWALLET)
-		$(cmake-utils_use_use libsecret LIBSECRET)
-		$(cmake-utils_use_use nls NLS)
-		$(cmake-utils_use_use opencl OPENCL)
-		$(cmake-utils_use_use openexr OPENEXR)
-		$(cmake-utils_use_use openmp OPENMP)
-		$(cmake-utils_use_use webp WEBP)
-		-DUSE_MAP=OFF
-		-DUSE_LUA=OFF
-		-DCUSTOM_CFLAGS=ON
-		-DINSTALL_IOP_EXPERIMENTAL=ON
-		-DINSTALL_IOP_LEGACY=ON
+		-DBUILD_PRINT=$(usex cups)
 		-DCMAKE_INSTALL_DOCDIR="/usr/share/doc/${PF}"
+		-DCUSTOM_CFLAGS=ON
+		-DUSE_CAMERA_SUPPORT=$(usex gphoto2)
+		-DUSE_COLORD=$(usex colord)
+		-DUSE_FLICKR=$(usex flickr)
+		-DUSE_GRAPHICSMAGICK=$(usex graphicsmagick)
+		-DUSE_KWALLET=$(usex kde)
+		-DUSE_LIBSECRET=$(usex libsecret)
+		-DUSE_LUA=OFF
+		-DUSE_MAP=$(usex geo)
+		-DUSE_NLS=$(usex nls)
+		-DUSE_OPENCL=$(usex opencl)
+		-DUSE_OPENEXR=$(usex openexr)
+		-DUSE_OPENJPEG=$(usex jpeg2k)
+		-DUSE_OPENMP=$(usex openmp)
+		-DUSE_WEBP=$(usex webp)
 	)
 	cmake-utils_src_configure
 }
