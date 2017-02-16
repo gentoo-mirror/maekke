@@ -3,7 +3,6 @@
 # $Id$
 
 EAPI=6
-CMAKE_MIN_VERSION="3.0"
 
 inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils
 
@@ -39,6 +38,7 @@ CDEPEND="
 	>=media-libs/lensfun-0.2.3:0=
 	media-libs/libpng:0=
 	media-libs/tiff:0
+	net-libs/libsoup:2.4
 	net-misc/curl
 	virtual/jpeg:0
 	virtual/glu
