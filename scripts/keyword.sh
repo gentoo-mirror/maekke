@@ -90,12 +90,13 @@ for pkg in ${pkgs} ; do
 		repoman manifest || die "repoman manifest failed"
 		repoman full --include-arches "${arches//\~/}" || die "repoman full failed on modified tree"
 		repoman commit --include-arches "${arches//\~/}" -m "${msg}" || die "repoman commit failed"
-		git pull --rebase=preserve || die "git pull failed"
-		git push --signed || die "git push failed"
 	else
 		echo "nothing to do here"
 	fi
 done
+
+git pull --rebase=preserve || die "git pull failed"
+git push --signed || die "git push failed"
 
 if [[ ${arches:0:1} == "~" ]] ; then
 	echo "removing arches from KEYWORDREQ bug unsupported atm"
