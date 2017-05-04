@@ -1,7 +1,7 @@
 #!/bin/bash
 # by {maekke,opfer}@gentoo.org
 
-REPODIR="${HOME}/cvs/gentoo"
+REPODIR="${HOME}/git/gentoo"
 BUGZ_USER="maekke@gentoo.org"
 BUGZ="bugz"
 BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org/xmlrpc.cgi --user ${BUGZ_USER}"
