@@ -6,6 +6,8 @@ BUGZ_USER="maekke@gentoo.org"
 BUGZ="bugz"
 BUGZ_DEFAULT_OPTS="--base https://bugs.gentoo.org/xmlrpc.cgi --user ${BUGZ_USER}"
 
+FEATURES="${FEATURES} sign"
+
 die() {
 	echo $@
 	exit 1
@@ -67,6 +69,7 @@ for pkg in ${pkgs} ; do
 
 	cd "${REPODIR}/${cpn}" || die "package ${cpn} not found"
 	[[ -e ${pn}-${version}.ebuild ]] || die "ebuild (${pn}-${version}) not found"
+	git checkout HEAD . || die "git checkout HEAD failed"
 	repoman full --include-arches "${arches//\~/}" || die "repoman full failed on non-modified tree"
 
 	# detect which arches to commit (the ones w/o stable)
