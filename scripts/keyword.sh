@@ -99,7 +99,7 @@ for pkg in ${pkgs} ; do
 done
 
 git pull --rebase=preserve || die "git pull failed"
-git push --signed || die "git push failed"
+#git push --signed || die "git push failed"
 
 if [[ ${arches:0:1} == "~" ]] ; then
 	echo "removing arches from KEYWORDREQ bug unsupported atm"
