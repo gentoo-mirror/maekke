@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -19,7 +18,7 @@ DEPEND="
 	dev-libs/libconfig[cxx]
 	media-libs/giflib
 	media-libs/libpng:0=
-	media-libs/libraw
+	media-libs/libraw:=
 	media-libs/tiff:0=
 	sci-libs/cfitsio
 	sci-libs/fftw:3.0=
