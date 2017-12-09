@@ -1,0 +1,22 @@
+Only in hugin-2018.0.0/src/hugin_base/panodata: .ParseExp.cpp.swp
+diff -ru hugin-2018.0.0.orig/src/hugin_base/panodata/ParseExp.cpp hugin-2018.0.0/src/hugin_base/panodata/ParseExp.cpp
+--- hugin-2018.0.0.orig/src/hugin_base/panodata/ParseExp.cpp	2017-12-09 22:09:13.845738965 +0100
++++ hugin-2018.0.0/src/hugin_base/panodata/ParseExp.cpp	2017-12-09 22:10:53.019743694 +0100
+@@ -87,7 +87,7 @@
+         const double val = rpnStack.top();
+         rpnStack.pop();
+         const double newVal = m_function(val);
+-        if (!isinf(newVal) && !isnan(newVal))
++        if (!std::isinf(newVal) && !std::isnan(newVal))
+         {
+             rpnStack.push(newVal);
+         }
+@@ -116,7 +116,7 @@
+         const double left = rpnStack.top();
+         rpnStack.pop();
+         const double newVal = m_function(left, right);
+-        if (!isinf(newVal) && !isnan(newVal))
++        if (!std::isinf(newVal) && !std::isnan(newVal))
+         {
+             rpnStack.push(newVal);
+         }
