@@ -39,9 +39,8 @@ CDEPEND="
 	media-libs/tiff:0
 	net-libs/libsoup:2.4
 	net-misc/curl
+	sys-libs/zlib:=
 	virtual/jpeg:0
-	virtual/glu
-	virtual/opengl
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.14:3
 	x11-libs/pango
@@ -51,13 +50,9 @@ CDEPEND="
 	geo? ( >=sci-geosciences/osm-gps-map-1.1.0 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
-	jpeg2k? ( media-libs/openjpeg:0 )
+	jpeg2k? ( media-libs/openjpeg:2= )
 	libsecret? ( >=app-crypt/libsecret-0.18 )
-	opencl? (
-		sys-devel/clang:4=
-		sys-devel/llvm:4=
-		virtual/opencl
-	)
+	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
 	webp? ( media-libs/libwebp:0= )"
 RDEPEND="${CDEPEND}
@@ -68,7 +63,11 @@ RDEPEND="${CDEPEND}
 DEPEND="${CDEPEND}
 	dev-util/intltool
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+	opencl? (
+		>=sys-devel/clang-4
+		>=sys-devel/llvm-4
+	)"
 
 S="${WORKDIR}/${P/_/~}"
 
