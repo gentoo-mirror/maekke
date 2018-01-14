@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -54,8 +54,6 @@ DEPEND="${CDEPEND}
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 DOCS=( authors.txt README TODO )
-
-PATCHES=( "${FILESDIR}"/${P}-missing-std.patch )
 
 S=${WORKDIR}/${PN}-$(get_version_component_range 1-2).0
 
