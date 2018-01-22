@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -68,6 +68,8 @@ DEPEND="${CDEPEND}
 		>=sys-devel/clang-4
 		>=sys-devel/llvm-4
 	)"
+
+PATCHES=( "${FILESDIR}"/"${PN}"-find-opencl-header.patch )
 
 S="${WORKDIR}/${P/_/~}"
 
