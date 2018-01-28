@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -58,6 +58,7 @@ S=${WORKDIR}/${PN}-$(get_version_component_range 1-3)
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
+	setup-wxwidgets
 }
 
 src_configure() {
