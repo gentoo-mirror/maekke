@@ -32,7 +32,7 @@ CDEPEND="
 	media-libs/libpng:0=
 	media-libs/openexr:=
 	media-libs/tiff:0
-	>=media-libs/vigra-1.9.0[openexr]
+	>=media-libs/vigra-1.11.0[openexr]
 	sci-libs/fftw:3.0=
 	sci-libs/flann
 	sys-libs/zlib
@@ -59,6 +59,7 @@ S=${WORKDIR}/${PN}-$(get_version_component_range 1-2).0
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
+	setup-wxwidgets
 }
 
 src_configure() {
