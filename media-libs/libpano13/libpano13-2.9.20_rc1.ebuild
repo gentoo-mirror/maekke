@@ -3,7 +3,6 @@
 
 EAPI="6"
 
-# inherit versionator java-pkg-opt-2 eutils
 inherit versionator cmake-utils
 
 DESCRIPTION="Helmut Dersch's panorama toolbox library"
@@ -13,7 +12,6 @@ SRC_URI="mirror://sourceforge/panotools/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0/3"
 KEYWORDS="~amd64 ~ppc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
-#IUSE="java static-libs"
 IUSE="java"
 
 DEPEND="media-libs/libpng:0=
