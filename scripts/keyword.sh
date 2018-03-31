@@ -98,7 +98,7 @@ for pkg in ${pkgs} ; do
 	fi
 done
 
-git pull --rebase=preserve || die "git pull failed"
+git pull --rebase=preserve -S"$(git config --get user.signingkey)" || die "git pull failed"
 #git push --signed || die "git push failed"
 
 if [[ ${arches:0:1} == "~" ]] ; then
