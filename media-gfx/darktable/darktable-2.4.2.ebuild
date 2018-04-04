@@ -1,11 +1,11 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils fdo-mime pax-utils eutils
+inherit cmake-utils flag-o-matic toolchain-funcs gnome2-utils xdg-utils pax-utils eutils
 
-DOC_PV="2.2.0"
+DOC_PV="2.4.0"
 MY_PV="${PV/_/}"
 MY_P="${P/_/.}"
 
@@ -16,10 +16,10 @@ SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_P
 
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 LANGS=" ca cs da de es fr he hu it ja nl pl ru sk sl sv uk"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
-IUSE="colord cups cpu_flags_x86_sse3 doc flickr geo gphoto2 graphicsmagick jpeg2k kwallet libsecret
+IUSE="colord cups cpu_flags_x86_sse3 doc flickr geolocation gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet
 nls opencl openmp openexr pax_kernel webp
 ${LANGS// / l10n_}"
 
@@ -39,32 +39,34 @@ CDEPEND="
 	media-libs/tiff:0
 	net-libs/libsoup:2.4
 	net-misc/curl
+	sys-libs/zlib:=
 	virtual/jpeg:0
-	virtual/glu
-	virtual/opengl
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.14:3
 	x11-libs/pango
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
-	geo? ( >=sci-geosciences/osm-gps-map-1.1.0 )
+	geolocation? ( >=sci-geosciences/osm-gps-map-1.1.0 )
+	gnome-keyring? ( >=app-crypt/libsecret-0.18 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
-	jpeg2k? ( media-libs/openjpeg:0 )
-	libsecret? ( >=app-crypt/libsecret-0.18 )
+	jpeg2k? ( media-libs/openjpeg:2= )
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
 	webp? ( media-libs/libwebp:0= )"
 RDEPEND="${CDEPEND}
-	kwallet? ( || (
-		>=kde-frameworks/kwallet-5.34.0-r1
-		kde-apps/kwalletd:4
-	) )"
+	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )"
 DEPEND="${CDEPEND}
 	dev-util/intltool
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+	opencl? (
+		>=sys-devel/clang-4
+		>=sys-devel/llvm-4
+	)"
+
+PATCHES=( "${FILESDIR}"/"${PN}"-find-opencl-header.patch )
 
 S="${WORKDIR}/${P/_/~}"
 
@@ -90,9 +92,9 @@ src_configure() {
 		-DUSE_FLICKR=$(usex flickr)
 		-DUSE_GRAPHICSMAGICK=$(usex graphicsmagick)
 		-DUSE_KWALLET=$(usex kwallet)
-		-DUSE_LIBSECRET=$(usex libsecret)
+		-DUSE_LIBSECRET=$(usex gnome-keyring)
 		-DUSE_LUA=OFF
-		-DUSE_MAP=$(usex geo)
+		-DUSE_MAP=$(usex geolocation)
 		-DUSE_NLS=$(usex nls)
 		-DUSE_OPENCL=$(usex opencl)
 		-DUSE_OPENEXR=$(usex openexr)
@@ -100,6 +102,7 @@ src_configure() {
 		-DUSE_OPENMP=$(usex openmp)
 		-DUSE_WEBP=$(usex webp)
 	)
+	CMAKE_BUILD_TYPE="RELWITHDEBINFO"
 	cmake-utils_src_configure
 }
 
@@ -127,7 +130,7 @@ pkg_preinst() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 
 	elog "when updating from the currently stable 1.6 series,"
 	elog "please bear in mind that your edits will be preserved during this process,"
@@ -138,5 +141,5 @@ pkg_postinst() {
 
 pkg_postrm() {
 	gnome2_icon_cache_update
-	fdo-mime_desktop_database_update
+	xdg_desktop_database_update
 }
