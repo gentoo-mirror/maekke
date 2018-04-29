@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -14,7 +13,7 @@ SRC_URI="mirror://sourceforge/enblend/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 VIGRA"
 SLOT="0"
-KEYWORDS="amd64 ppc x86"
+KEYWORDS="amd64 x86"
 IUSE="debug doc gpu image-cache openmp"
 
 REQUIRED_USE="openmp? ( !image-cache )"
