@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -19,6 +19,7 @@ DEPEND="
 	media-libs/giflib
 	media-libs/libpng:0=
 	media-libs/libraw:=
+	media-libs/opencv:=
 	media-libs/tiff:0=
 	sci-libs/cfitsio
 	sci-libs/fftw:3.0=
