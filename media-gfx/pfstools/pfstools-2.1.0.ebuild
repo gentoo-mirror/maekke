@@ -1,20 +1,18 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI="5"
 
 inherit eutils toolchain-funcs cmake-utils
 
-DESCRIPTION="${PN} package is a set of command line programs for reading,
-writing and manipulating HDR images"
+DESCRIPTION="A set of programs for manipulating and viewing HDR images and video frames"
 HOMEPAGE="http://pfstools.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tgz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="fftw gsl imagemagick netpbm octave opencv openexr opengl qt4 static-libs tiff"
+IUSE="fftw gsl imagemagick netpbm octave opencv openexr opengl qt5 static-libs tiff"
 
 RDEPEND="
 	media-libs/libexif
@@ -30,22 +28,25 @@ RDEPEND="
 	!media-gfx/pfscalibration
 	!media-gfx/pfstmo"
 DEPEND="${DEPEND}
-	qt4? ( dev-qt/qtgui:4 )"
+	qt5? (
+		dev-qt/qtgui:5
+		dev-qt/qtwidgets:5
+	)"
 
 src_configure() {
 	local mycmakeargs=(
 		-DWITH_MATLAB=OFF
-		-DWITH_ImageMagick=$(usex imagemagick ON OFF)
-		-DWITH_FFTW=$(usex fftw ON OFF)
-		-DWITH_GSL=$(usex gsl ON OFF)
-		-DWITH_NetPBM=$(usex netpbm ON OFF)
-		-DWITH_Octave=$(usex octave ON OFF)
-		-DWITH_OpenCV=$(usex opencv ON OFF)
-		-DWITH_OpenEXR=$(usex openexr ON OFF)
-		-DWITH_pfsglview=$(usex opengl ON OFF)
-		-DWITH_QT=$(usex qt4 ON OFF)
-		-DBUILD_SHARED_LIBS=$(usex !static-libs ON OFF)
-		-DWITH_TIFF=$(usex tiff ON OFF)
+		-DWITH_ImageMagick=$(usex imagemagick)
+		-DWITH_FFTW=$(usex fftw)
+		-DWITH_GSL=$(usex gsl)
+		-DWITH_NetPBM=$(usex netpbm)
+		-DWITH_Octave=$(usex octave)
+		-DWITH_OpenCV=$(usex opencv)
+		-DWITH_OpenEXR=$(usex openexr)
+		-DWITH_pfsglview=$(usex opengl)
+		-DWITH_QT=$(usex qt5)
+		-DBUILD_SHARED_LIBS=$(usex !static-libs)
+		-DWITH_TIFF=$(usex tiff)
 	)
 	cmake-utils_src_configure || die
 }
