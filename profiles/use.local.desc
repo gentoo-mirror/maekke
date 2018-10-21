@@ -16,4 +16,3 @@ media-gfx/luminance-hdr:fits - Enable support for the FITS format
 media-gfx/ufraw:contrast - enable contrast setting option
 media-gfx/ufraw:fits - Enable support for the FITS image format through sci-libs/cfitsio
 media-gfx/ufraw:timezone - enable DST correction for file timestamps
-media-libs/libraw:demosaic - Enable support for external interpolation algorithms

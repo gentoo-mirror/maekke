@@ -5,4 +5,3 @@ media-gfx/luminance-hdr 2.4.0: Graphical user interface that provides a workflow
 media-gfx/ufraw 0.20-r1 0.22: RAW Image format viewer and GIMP plugin
 media-libs/lensfun 0.3.0 0.3.1: lensfun: A library for rectifying and simulating photographic lens distortions
 media-libs/libpano13 2.9.18 2.9.19: Helmut Dersch's panorama toolbox library
-media-libs/libraw 0.16.2: LibRaw is a library for reading RAW files obtained from digital photo cameras
