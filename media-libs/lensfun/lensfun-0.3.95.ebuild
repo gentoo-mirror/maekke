@@ -1,25 +1,25 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit multilib python-single-r1 cmake-utils
+inherit python-single-r1 cmake-utils
 
-DESCRIPTION="lensfun: A library for rectifying and simulating photographic lens distortions"
+DESCRIPTION="Library for rectifying and simulating photographic lens distortions"
 HOMEPAGE="http://lensfun.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-3 CC-BY-SA-3.0" # See README for reasoning.
-SLOT="0"
+SLOT="0/2"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~amd64-linux ~x86-linux"
 IUSE="doc cpu_flags_x86_sse cpu_flags_x86_sse2 test"
 
-RDEPEND=">=dev-libs/glib-2.28
+RDEPEND="${PYTHON_DEPS}
+	>=dev-libs/glib-2.40
 	media-libs/libpng:0=
-	sys-libs/zlib:=
-	${PYTHON_DEPS}"
+	sys-libs/zlib:="
 DEPEND="${RDEPEND}
 	doc? (
 		app-doc/doxygen
@@ -32,16 +32,22 @@ DOCS=( README.md docs/mounts.txt ChangeLog )
 
 src_configure() {
 	local mycmakeargs=(
-		-DDOCDIR="${EPREFIX}"/usr/share/doc/${PF}/html
-		-DLIBDIR="${EPREFIX}"/usr/$(get_libdir)
-		-DSETUP_PY_INSTALL_PREFIX="${ED}"/usr
-		-DBUILD_AUXFUN=ON
-		-DBUILD_DOC=$(usex doc ON OFF)
-		-DBUILD_FOR_SSE=$(usex cpu_flags_x86_sse ON OFF)
-		-DBUILD_FOR_SSE2=$(usex cpu_flags_x86_sse2 ON OFF)
-		-DBUILD_TESTS=$(usex test ON OFF)
+		-DCMAKE_INSTALL_DOCDIR="${EPREFIX}"/usr/share/doc/${PF}/html
+		-DCMAKE_INSTALL_LIBDIR="${EPREFIX}"/usr/$(get_libdir)
+		-DBUILD_LENSTOOL=ON
 		-DBUILD_STATIC=OFF
+		-DBUILD_DOC=$(usex doc)
+		-DBUILD_FOR_SSE=$(usex cpu_flags_x86_sse)
+		-DBUILD_FOR_SSE2=$(usex cpu_flags_x86_sse2)
+		-DBUILD_TESTS=$(usex test)
 	)
 
 	cmake-utils_src_configure
+}
+
+src_test() {
+	mkdir -p "${T}/db/lensfun" || die
+	cp data/db/* "${T}/db/lensfun/" || die
+
+	XDG_DATA_HOME="${T}/db" cmake-utils_src_test
 }
