@@ -6,17 +6,15 @@ EAPI=6
 WX_GTK_VER="3.0"
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
-inherit mercurial python-single-r1 wxwidgets cmake-utils eapi7-ver
+inherit python-single-r1 wxwidgets cmake-utils eapi7-ver
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI=""
-EHG_REPO_URI="http://hg.code.sf.net/p/hugin/hugin"
-EHG_PROJECT="${PN}-${PN}"
+SRC_URI="mirror://sourceforge/${PN}/${P/_/.}.tar.bz2"
 
 LICENSE="GPL-2 SIFT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 
 LANGS=" ca ca-valencia cs da de en-GB es eu fi fr hu it ja nl pl pt-BR ro ru sk sv zh-CN zh-TW"
 IUSE="debug lapack python sift $(echo ${LANGS//\ /\ l10n_})"
