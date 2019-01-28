@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 LANGS=" ca ca-valencia cs da de en-GB es eu fi fr hu it ja nl pl pt-BR ro ru sk sv zh-CN zh-TW"
-IUSE="debug lapack python sift $(echo ${LANGS//\ /\ l10n_})"
+IUSE="debug lapack python raw sift $(echo ${LANGS//\ /\ l10n_})"
 
 CDEPEND="
 	!!dev-util/cocom
@@ -44,7 +44,8 @@ CDEPEND="
 	python? ( ${PYTHON_DEPS} )
 	sift? ( media-gfx/autopano-sift-C )"
 RDEPEND="${CDEPEND}
-	media-libs/exiftool"
+	media-libs/exiftool
+	raw? ( media-gfx/dcraw )"
 DEPEND="${CDEPEND}
 	dev-cpp/tclap
 	sys-devel/gettext
@@ -60,6 +61,14 @@ S=${WORKDIR}/${PN}-$(ver_cut 1-2).0
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
 	setup-wxwidgets
+}
+
+src_prepare() {
+	sed -i \
+		-e "/COMMAND.*GZIP/d" \
+		-e "s/\.gz//g" \
+		"${S}"/doc/CMakeLists.txt || die
+	cmake-utils_src_prepare
 }
 
 src_configure() {
