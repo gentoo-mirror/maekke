@@ -63,6 +63,14 @@ pkg_setup() {
 	setup-wxwidgets
 }
 
+src_prepare() {
+	sed -i \
+		-e "/COMMAND.*GZIP/d" \
+		-e "s/\.gz//g" \
+		"${S}"/doc/CMakeLists.txt || die
+	cmake-utils_src_prepare
+}
+
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_HSI=$(usex python)
