@@ -1,11 +1,11 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils eutils flag-o-matic gnome2-utils pax-utils toolchain-funcs xdg-utils
+inherit cmake-utils flag-o-matic pax-utils toolchain-funcs xdg
 
-DOC_PV="2.2.0"
+DOC_PV="2.6.0"
 MY_PV="${PV/_/}"
 MY_P="${P/_/.}"
 
@@ -16,17 +16,19 @@ SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_P
 
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
-KEYWORDS="amd64 x86"
-LANGS=" ca cs da de es fr he hu it ja nl pl ru sk sl sv uk"
+KEYWORDS="~amd64 ~x86"
+LANGS=" ca de es fi fr hu ja nb nl pl pt-BR ru sl"
 # TODO add lua once dev-lang/lua-5.2 is unmasked
 IUSE="colord cups cpu_flags_x86_sse3 doc flickr geolocation gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet
 nls opencl openmp openexr pax_kernel webp
 ${LANGS// / l10n_}"
 
-# sse3 support is required to build darktable
-REQUIRED_USE="cpu_flags_x86_sse3"
-
-CDEPEND="
+BDEPEND="
+	dev-util/intltool
+	virtual/pkgconfig
+	nls? ( sys-devel/gettext )
+"
+COMMON_DEPEND="
 	dev-db/sqlite:3
 	dev-libs/json-glib
 	dev-libs/libxml2:2
@@ -39,9 +41,8 @@ CDEPEND="
 	media-libs/tiff:0
 	net-libs/libsoup:2.4
 	net-misc/curl
+	sys-libs/zlib:=
 	virtual/jpeg:0
-	virtual/glu
-	virtual/opengl
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.14:3
 	x11-libs/pango
@@ -52,16 +53,22 @@ CDEPEND="
 	gnome-keyring? ( >=app-crypt/libsecret-0.18 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
-	jpeg2k? ( media-libs/openjpeg:0 )
+	jpeg2k? ( media-libs/openjpeg:2= )
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
-	webp? ( media-libs/libwebp:0= )"
-RDEPEND="${CDEPEND}
-	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )"
-DEPEND="${CDEPEND}
-	dev-util/intltool
-	virtual/pkgconfig
-	nls? ( sys-devel/gettext )"
+	webp? ( media-libs/libwebp:0= )
+"
+DEPEND="${COMMON_DEPEND}
+	opencl? (
+		>=sys-devel/clang-4
+		>=sys-devel/llvm-4
+	)
+"
+RDEPEND="${COMMON_DEPEND}
+	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )
+"
+
+PATCHES=( "${FILESDIR}"/"${PN}"-find-opencl-header.patch )
 
 S="${WORKDIR}/${P/_/~}"
 
@@ -80,7 +87,6 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_PRINT=$(usex cups)
-		-DCMAKE_INSTALL_DOCDIR="/usr/share/doc/${PF}"
 		-DCUSTOM_CFLAGS=ON
 		-DUSE_CAMERA_SUPPORT=$(usex gphoto2)
 		-DUSE_COLORD=$(usex colord)
@@ -97,6 +103,7 @@ src_configure() {
 		-DUSE_OPENMP=$(usex openmp)
 		-DUSE_WEBP=$(usex webp)
 	)
+	CMAKE_BUILD_TYPE="RELWITHDEBINFO"
 	cmake-utils_src_configure
 }
 
@@ -105,7 +112,9 @@ src_install() {
 	use doc && dodoc "${DISTDIR}"/${PN}-usermanual-${DOC_PV}.pdf
 
 	for lang in ${LANGS} ; do
-		use l10n_${lang} || rm -r "${ED}"/usr/share/locale/${lang/-/_}
+		if ! use l10n_${lang}; then
+			rm -r "${ED}"/usr/share/locale/${lang/-/_} || die
+		fi
 	done
 
 	if use pax_kernel && use opencl ; then
@@ -118,22 +127,12 @@ src_install() {
 	fi
 }
 
-pkg_preinst() {
-	gnome2_icon_savelist
-}
-
 pkg_postinst() {
-	gnome2_icon_cache_update
-	xdg_desktop_database_update
+	xdg_pkg_postinst
 
 	elog "when updating from the currently stable 1.6 series,"
 	elog "please bear in mind that your edits will be preserved during this process,"
 	elog "but it will not be possible to downgrade from 2.0 to 1.6 any more."
 	echo
 	ewarn "It will not be possible to downgrade!"
-}
-
-pkg_postrm() {
-	gnome2_icon_cache_update
-	xdg_desktop_database_update
 }
