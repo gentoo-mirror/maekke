@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -12,7 +12,7 @@ SRC_URI="https://free-astro.org/download/${P}.tar.bz2"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="libav"
 
 DEPEND="
 	dev-libs/libconfig[cxx]
@@ -25,7 +25,10 @@ DEPEND="
 	sci-libs/fftw:3.0=
 	sci-libs/gsl
 	virtual/jpeg:0
-	>=x11-libs/gtk+-3.6.0:3"
+	>=x11-libs/gtk+-3.6.0:3
+	libav? ( media-video/libav:= )
+	!libav? ( media-video/ffmpeg:= )
+	"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
