@@ -40,6 +40,7 @@ PATCHES=(
 	"${FILESDIR}"/ufraw-0.17-cfitsio-automagic.patch
 	"${FILESDIR}"/ufraw-0.22-jasper-automagic.patch
 	"${FILESDIR}"/ufraw-0.22-fix-unsigned-char.patch
+	"${FILESDIR}"/${P}-exiv2-0.27.patch
 )
 
 src_unpack() {
