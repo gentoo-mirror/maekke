@@ -15,6 +15,3 @@ media-gfx/nufraw:timezone - enable DST correction for file timestamps
 media-gfx/pfstools:netpbm - build netpbm programs
 media-gfx/pfstools:octave - enable octave (sci-mathematics/octave) support
 media-gfx/pfstools:opencv - Use OpenCV library (media-libs/opencv) for pfsalign
-media-gfx/ufraw:contrast - enable contrast setting option
-media-gfx/ufraw:fits - Enable support for the FITS image format through sci-libs/cfitsio
-media-gfx/ufraw:timezone - enable DST correction for file timestamps

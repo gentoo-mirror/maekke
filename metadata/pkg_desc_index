@@ -6,7 +6,6 @@ media-gfx/multiblend 0.6.2: multiblend is a multi-level image blender for the se
 media-gfx/nufraw 0.42: A new version of the popular raw digital images manipulator ufraw.
 media-gfx/pfstools 2.1.0: A set of programs for manipulating and viewing HDR images and video frames
 media-gfx/siril 0.9.9: a free astronomical image processing software
-media-gfx/ufraw 0.20-r1 0.21 0.21-r1 0.22 9999: RAW Image format viewer and GIMP plugin
 media-libs/lensfun 0.3.2-r1 0.3.95: Library for rectifying and simulating photographic lens distortions
 media-libs/libpano13 2.9.18 2.9.19 2.9.20_rc2: Helmut Dersch's panorama toolbox library
 x11-drivers/xf86-video-armsoc 9999: xf86-video-armsoc driver from google
