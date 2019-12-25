@@ -135,9 +135,9 @@ src_install() {
 pkg_postinst() {
 	xdg_pkg_postinst
 
-	elog "when updating from the currently stable 1.6 series,"
+	elog "when updating a major version,"
 	elog "please bear in mind that your edits will be preserved during this process,"
-	elog "but it will not be possible to downgrade from 2.0 to 1.6 any more."
+	elog "but it will not be possible to downgrade any more."
 	echo
 	ewarn "It will not be possible to downgrade!"
 }
