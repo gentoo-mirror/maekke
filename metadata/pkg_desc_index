@@ -1,6 +1,6 @@
 media-gfx/darktable 2.6.2 2.6.3 3.0.0 9999: A virtual lighttable and darkroom for photographers
 media-gfx/enblend 4.2.0_p20161007-r1: Image Blending with Multiresolution Splines
-media-gfx/hugin 2019.0.0 2019.2.0_rc3 9999: GUI for the creation & processing of panoramic images
+media-gfx/hugin 2019.0.0 2019.2.0 9999: GUI for the creation & processing of panoramic images
 media-gfx/luminance-hdr 2.4.0: Graphical user interface that provides a workflow for HDR imaging
 media-gfx/multiblend 0.6.2: A multi-level image blender for the seamless blending of panoramic images
 media-gfx/nufraw 0.42: A new version of the popular raw digital images manipulator ufraw.
