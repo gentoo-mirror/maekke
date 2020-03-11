@@ -84,6 +84,8 @@ pkg_pretend() {
 src_prepare() {
 	use cpu_flags_x86_sse3 && append-flags -msse3
 
+	sed -i -e 's:/appdata:/metainfo:g' data/CMakeLists.txt || die
+
 	cmake-utils_src_prepare
 }
 
