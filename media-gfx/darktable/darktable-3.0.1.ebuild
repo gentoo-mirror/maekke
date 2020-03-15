@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils flag-o-matic pax-utils toolchain-funcs xdg
+inherit cmake flag-o-matic pax-utils toolchain-funcs xdg
 
 DOC_PV="3.0.0"
 MY_PV="${PV/_/}"
@@ -86,7 +86,7 @@ src_prepare() {
 
 	sed -i -e 's:/appdata:/metainfo:g' data/CMakeLists.txt || die
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -109,11 +109,11 @@ src_configure() {
 		-DUSE_WEBP=$(usex webp)
 	)
 	CMAKE_BUILD_TYPE="RELWITHDEBINFO"
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	use doc && dodoc "${DISTDIR}"/${PN}-usermanual-${DOC_PV}.pdf
 
 	if use nls ; then
