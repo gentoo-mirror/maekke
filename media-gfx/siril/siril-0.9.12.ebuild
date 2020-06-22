@@ -1,13 +1,13 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit autotools
 
 DESCRIPTION="a free astronomical image processing software"
-HOMEPAGE="https://free-astro.org/index.php/Siril"
-SRC_URI="https://free-astro.org/download/${P}.tar.bz2"
+HOMEPAGE="https://www.siril.org/"
+SRC_URI="https://gitlab.com/free-astro/siril/-/archive/${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-3"
 SLOT="0"
