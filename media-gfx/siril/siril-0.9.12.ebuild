@@ -12,7 +12,7 @@ SRC_URI="https://gitlab.com/free-astro/siril/-/archive/${PV}/${P}.tar.bz2"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="libav"
+IUSE=""
 
 DEPEND="
 	dev-libs/libconfig[cxx]
@@ -21,13 +21,12 @@ DEPEND="
 	media-libs/libraw:=
 	media-libs/opencv:=
 	media-libs/tiff:0=
+	media-video/ffmpeg:=
 	sci-libs/cfitsio
 	sci-libs/fftw:3.0=
 	sci-libs/gsl
 	virtual/jpeg:0
 	>=x11-libs/gtk+-3.6.0:3
-	libav? ( media-video/libav:= )
-	!libav? ( media-video/ffmpeg:= )
 	"
 RDEPEND="${DEPEND}"
 
