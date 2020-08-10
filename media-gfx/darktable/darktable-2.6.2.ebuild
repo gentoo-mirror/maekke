@@ -1,9 +1,9 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit cmake-utils flag-o-matic pax-utils toolchain-funcs xdg
+inherit cmake flag-o-matic pax-utils toolchain-funcs xdg
 
 DOC_PV="2.6.0"
 MY_PV="${PV/_/}"
@@ -86,7 +86,7 @@ pkg_pretend() {
 src_prepare() {
 	use cpu_flags_x86_sse3 && append-flags -msse3
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -109,11 +109,11 @@ src_configure() {
 		-DUSE_WEBP=$(usex webp)
 	)
 	CMAKE_BUILD_TYPE="RELWITHDEBINFO"
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	use doc && dodoc "${DISTDIR}"/${PN}-usermanual-${DOC_PV}.pdf
 
 	if use nls ; then
