@@ -8,12 +8,9 @@ PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit python-single-r1 wxwidgets cmake-utils eapi7-ver xdg
 
-MY_PV="$(ver_cut 1-2)_$(ver_cut 4-5)"
-MY_P="${PN}-${MY_PV}"
-
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2+ BSD BSD-2 MIT wxWinLL-3 ZLIB FDL-1.2"
 SLOT="0"
