@@ -1,13 +1,16 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit autotools fdo-mime gnome2-utils toolchain-funcs
+inherit autotools gnome2-utils toolchain-funcs xdg-utils
+
+MY_PV="$(ver_cut 1-2)-$(ver_cut 3)"
+MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="A new version of the popular raw digital images manipulator ufraw."
 HOMEPAGE="http://matteolucarelli.altervista.org/nufraw/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -39,13 +42,9 @@ PATCHES=(
 	"${FILESDIR}"/ufraw-0.17-cfitsio-automagic.patch
 	"${FILESDIR}"/ufraw-0.22-jasper-automagic.patch
 	"${FILESDIR}"/ufraw-0.22-fix-unsigned-char.patch
-	"${FILESDIR}"/${P}-exiv2-0.27.patch
 )
 
-src_unpack() {
-	# work around https://sourceforge.net/p/nufraw/tickets/3/
-	nonfatal unpack ${A}
-}
+S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
 	default
@@ -54,7 +53,7 @@ src_prepare() {
 
 src_configure() {
 	econf \
-		--disable-jasper
+		--disable-jasper \
 		$(use_enable contrast) \
 		$(use_with fits cfitsio) \
 		$(use_with gimp) \
@@ -81,15 +80,15 @@ pkg_preinst() {
 
 pkg_postinst() {
 	if use gnome; then
-		fdo-mime_mime_database_update
-		fdo-mime_desktop_database_update
+		xdg_mimeinfo_database_update
+		xdg_desktop_database_update
 		gnome2_gconf_install
 	fi
 }
 
 pkg_postrm() {
 	if use gnome; then
-		fdo-mime_desktop_database_update
-		fdo-mime_mime_database_update
+		xdg_mimeinfo_database_update
+		xdg_desktop_database_update
 	fi
 }
