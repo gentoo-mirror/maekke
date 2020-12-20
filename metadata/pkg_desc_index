@@ -3,6 +3,7 @@ media-gfx/enblend 4.2.0_p20161007-r1: Image Blending with Multiresolution Spline
 media-gfx/hugin 2019.2.0 2020.0.0-r1 9999: GUI for the creation & processing of panoramic images
 media-gfx/luminance-hdr 2.4.0: Graphical user interface that provides a workflow for HDR imaging
 media-gfx/multiblend 0.6.2: A multi-level image blender for the seamless blending of panoramic images
+media-gfx/nufraw 0.43.3: A new version of the popular raw digital images manipulator ufraw.
 media-gfx/pfstools 2.1.0: A set of programs for manipulating and viewing HDR images and video frames
 media-gfx/siril 0.9.12: a free astronomical image processing software
 media-libs/lensfun 0.3.2-r1 0.3.95: Library for rectifying and simulating photographic lens distortions
