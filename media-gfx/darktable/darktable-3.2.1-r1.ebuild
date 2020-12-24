@@ -3,26 +3,28 @@
 
 EAPI=7
 
-inherit cmake flag-o-matic toolchain-funcs xdg
+LUA_COMPAT=( lua5-3 )
 
-DOC_PV="2.6.0"
+inherit cmake flag-o-matic lua-single toolchain-funcs xdg
+
+DOC_PV="3.0.0"
 MY_PV="${PV/_/}"
 MY_P="${P/_/.}"
 
 DESCRIPTION="A virtual lighttable and darkroom for photographers"
 HOMEPAGE="https://www.darktable.org/"
 SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_PV}/${MY_P}.tar.xz
-	https://dev.gentoo.org/~asturm/distfiles/${P}-gcc9.patch.tar.xz
 	doc? ( https://github.com/darktable-org/${PN}/releases/download/release-${DOC_PV}/${PN}-usermanual.pdf -> ${PN}-usermanual-${DOC_PV}.pdf )"
 
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
-KEYWORDS="amd64 x86"
-LANGS=" ca cs de es fi fr hu ja nb nl pl pt-BR ru sl"
-# TODO add lua once dev-lang/lua-5.2 is unmasked
+KEYWORDS="amd64 ~arm64"
+LANGS=" de es fr he it pl pt-BR ru sl"
 IUSE="colord cups cpu_flags_x86_sse3 doc flickr geolocation gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet
-nls opencl openmp openexr webp
-${LANGS// / l10n_}"
+	lto lua nls opencl openmp openexr system-lua tools webp
+	${LANGS// / l10n_}"
+
+REQUIRED_USE="system-lua? ( lua ${LUA_REQUIRED_USE} )"
 
 BDEPEND="
 	dev-util/intltool
@@ -33,7 +35,7 @@ COMMON_DEPEND="
 	dev-db/sqlite:3
 	dev-libs/json-glib
 	dev-libs/libxml2:2
-	dev-libs/pugixml:0=
+	>=dev-libs/pugixml-1.8:0=
 	gnome-base/librsvg:2
 	>=media-gfx/exiv2-0.25-r2:0=[xmp]
 	media-libs/lcms:2
@@ -45,7 +47,7 @@ COMMON_DEPEND="
 	sys-libs/zlib:=
 	virtual/jpeg:0
 	x11-libs/cairo
-	>=x11-libs/gtk+-3.14:3
+	>=x11-libs/gtk+-3.22:3
 	x11-libs/pango
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
@@ -57,6 +59,7 @@ COMMON_DEPEND="
 	jpeg2k? ( media-libs/openjpeg:2= )
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:0= )
+	system-lua? ( ${LUA_DEPS} )
 	webp? ( media-libs/libwebp:0= )
 "
 DEPEND="${COMMON_DEPEND}
@@ -71,35 +74,54 @@ RDEPEND="${COMMON_DEPEND}
 
 PATCHES=(
 	"${FILESDIR}"/"${PN}"-find-opencl-header.patch
-	"${WORKDIR}"/"${P}"-gcc9.patch
-	"${FILESDIR}"/"${P}"-exiv2-0.27.patch
+	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
+	"${FILESDIR}"/${PN}-3.0.2_jsonschema-automagic.patch
 )
 
 S="${WORKDIR}/${P/_/~}"
 
 pkg_pretend() {
-	if use openmp ; then
-		tc-has-openmp || die "Please switch to an openmp compatible compiler"
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		# Bug #695658
+		if tc-is-gcc; then
+			test-flags-CC -floop-block &> /dev/null || \
+				die "Please switch to a gcc version built with USE=graphite"
+		fi
+
+		if use openmp ; then
+			tc-has-openmp || die "Please switch to an openmp compatible compiler"
+		fi
 	fi
 }
 
 src_prepare() {
 	use cpu_flags_x86_sse3 && append-flags -msse3
 
+	sed -i -e 's:/appdata:/metainfo:g' data/CMakeLists.txt || die
+
 	cmake_src_prepare
 }
 
 src_configure() {
+	# As of darktable-3.2.1, AVIF support is not compatible with >=media-libs/libavif-0.8.0; see Bug #751352.
+	# GMIC support mostly works but there are several problems with the media-gfx/gmic ebuilds currently
+	# in the tree, and the package itself has got no maintainer.
 	local mycmakeargs=(
+		-DBUILD_CURVE_TOOLS=$(usex tools)
+		-DBUILD_NOISE_TOOLS=$(usex tools)
 		-DBUILD_PRINT=$(usex cups)
 		-DCUSTOM_CFLAGS=ON
+		-DDONT_USE_INTERNAL_LUA=$(usex system-lua)
+		-DRAWSPEED_ENABLE_LTO=$(usex lto)
+		-DUSE_AVIF=no
 		-DUSE_CAMERA_SUPPORT=$(usex gphoto2)
 		-DUSE_COLORD=$(usex colord)
 		-DUSE_FLICKR=$(usex flickr)
+		-DUSE_GMIC=no
 		-DUSE_GRAPHICSMAGICK=$(usex graphicsmagick)
 		-DUSE_KWALLET=$(usex kwallet)
 		-DUSE_LIBSECRET=$(usex gnome-keyring)
-		-DUSE_LUA=OFF
+		-DUSE_LUA=$(usex lua)
 		-DUSE_MAP=$(usex geolocation)
 		-DUSE_NLS=$(usex nls)
 		-DUSE_OPENCL=$(usex opencl)
@@ -128,9 +150,11 @@ src_install() {
 pkg_postinst() {
 	xdg_pkg_postinst
 
-	elog "when updating from the currently stable 1.6 series,"
+	elog
+	elog "When updating a major version,"
 	elog "please bear in mind that your edits will be preserved during this process,"
-	elog "but it will not be possible to downgrade from 2.0 to 1.6 any more."
-	echo
+	elog "but it will not be possible to downgrade any more."
+	elog
 	ewarn "It will not be possible to downgrade!"
+	ewarn
 }
