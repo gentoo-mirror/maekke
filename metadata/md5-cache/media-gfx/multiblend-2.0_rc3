@@ -8,6 +8,6 @@ KEYWORDS=~amd64
 LICENSE=GPL-2
 RDEPEND=media-libs/libpng:0= media-libs/tiff:0= virtual/jpeg:0=
 SLOT=0
-SRC_URI=http://horman.net/multiblend/multiblend0.6.2.tar.gz
+SRC_URI=http://horman.net/multiblend/multiblend2.0rc3.tar.gz
 _eclasses_=toolchain-funcs	24921b57d6561d87cbef4916a296ada4	multilib	d410501a125f99ffb560b0c523cd3d1e
-_md5_=d50e42193c1d6d1a959fd0f0bfc3a6e4
+_md5_=a302bd2d0372d37abc596539fc312621
