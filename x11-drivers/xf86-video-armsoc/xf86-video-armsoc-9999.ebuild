@@ -1,12 +1,11 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=7
 
 EGIT_REPO_URI="https://chromium.googlesource.com/chromiumos/third_party/${PN}.git"
 
-inherit xorg-2
+inherit xorg-3
 
 DESCRIPTION="xf86-video-armsoc driver from google"
 HOMEPAGE="http://git.chromium.org/gitweb/?p=chromiumos/third_party/xf86-video-armsoc.git;a=summary"
