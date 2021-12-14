@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 LUA_COMPAT=( lua5-3 )
 
@@ -18,15 +18,15 @@ if [[ ${PV} == *9999 ]]; then
 
 	LANGS=" af ca cs da de el es fi fr gl he hu it ja nb nl pl pt-BR pt-PT ro ru sk sl sq sv th uk zh-CN zh-TW"
 else
-	DOC_PV="3.4.0"
+	DOC_PV="3.6"
 	MY_PV="${PV/_/}"
 	MY_P="${P/_/.}"
 
 	SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_PV}/${MY_P}.tar.xz
-		doc? ( https://github.com/darktable-org/${PN}/releases/download/release-${DOC_PV}/${PN}-usermanual.pdf -> ${PN}-usermanual-${DOC_PV}.pdf )"
+		doc? ( https://docs.darktable.org/usermanual/${DOC_PV}/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.pdf )"
 
 	KEYWORDS="amd64 arm64 -x86"
-	LANGS=" af cs de es fi fr he hu it pl pt-BR ru sk sl"
+	LANGS=" af de eo es fr he hu it nl pt-BR ru sl uk"
 fi
 
 IUSE="avif colord cups cpu_flags_x86_sse3 doc flickr geolocation gmic gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet
@@ -58,7 +58,7 @@ DEPEND="dev-db/sqlite:3
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.22:3
 	x11-libs/pango
-	avif? ( >=media-libs/libavif-0.8.2 )
+	avif? ( >=media-libs/libavif-0.8.2:= )
 	colord? ( x11-libs/colord-gtk:0= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
@@ -70,15 +70,17 @@ DEPEND="dev-db/sqlite:3
 	jpeg2k? ( media-libs/openjpeg:2= )
 	lua? ( ${LUA_DEPS} )
 	opencl? ( virtual/opencl )
-	openexr? ( <media-libs/openexr-3.0.0:0= )
+	openexr? ( media-libs/openexr:= )
 	webp? ( media-libs/libwebp:0= )"
 RDEPEND="${DEPEND}
 	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-find-opencl-header.patch
+	"${FILESDIR}"/${PN}-3.0.0_find-opencl-header.patch
 	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
+	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
+	"${FILESDIR}"/${PN}-3.6.1_openexr.patch
 )
 
 S="${WORKDIR}/${P/_/~}"
@@ -91,9 +93,7 @@ pkg_pretend() {
 				die "Please switch to a gcc version built with USE=graphite"
 		fi
 
-		if use openmp ; then
-			tc-has-openmp || die "Please switch to an openmp compatible compiler"
-		fi
+		use openmp && tc-check-openmp
 	fi
 }
 
