@@ -32,7 +32,7 @@ else
 		)"
 
 	KEYWORDS="~amd64 ~arm64 -x86"
-	LANGS=" de eo es fi fr he hu it ja pl pt-BR sl uk zh-CN"
+	LANGS=" de eo es fi fr he hu it ja nl pl pt-BR sl uk zh-CN"
 fi
 
 IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
