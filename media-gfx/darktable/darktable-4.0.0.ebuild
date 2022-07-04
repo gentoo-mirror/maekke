@@ -18,7 +18,7 @@ if [[ ${PV} == *9999 ]]; then
 
 	LANGS=" af ca cs da de el es fi fr gl he hu it ja nb nl pl pt-BR pt-PT ro ru sk sl sq sv th uk zh-CN zh-TW"
 else
-	DOC_PV=$(ver_cut 1-2)
+	DOC_PV="3.8"
 	MY_PV="${PV/_/}"
 	MY_P="${P/_/.}"
 
@@ -32,7 +32,7 @@ else
 		)"
 
 	KEYWORDS="~amd64 ~arm64 -x86"
-	LANGS=" de eo es fi fr he hu it ja nl pl pt-BR sl uk zh-CN"
+	LANGS=" cs de eo es fi fr he hu it ja nl pt-BR ru sl tr uk zh-CN"
 fi
 
 IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
@@ -47,6 +47,7 @@ BDEPEND="dev-util/intltool
 	nls? ( sys-devel/gettext )
 	test? ( >=dev-python/jsonschema-3.2.0 )"
 DEPEND="dev-db/sqlite:3
+	dev-libs/icu:=
 	dev-libs/json-glib
 	dev-libs/libxml2:2
 	>=dev-libs/pugixml-1.8:0=
@@ -54,12 +55,12 @@ DEPEND="dev-db/sqlite:3
 	>=media-gfx/exiv2-0.25-r2:0=[xmp]
 	media-libs/lcms:2
 	>=media-libs/lensfun-0.2.3:0=
+	media-libs/libjpeg-turbo:=
 	media-libs/libpng:0=
 	media-libs/tiff:0
 	net-libs/libsoup:2.4
 	net-misc/curl
 	sys-libs/zlib:=
-	virtual/jpeg:0
 	x11-libs/cairo
 	>=x11-libs/gtk+-3.22:3
 	x11-libs/pango
@@ -87,7 +88,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
-	"${FILESDIR}"/${PN}-3.6.1_openexr.patch
+	#"${FILESDIR}"/${PN}-3.6.1_openexr.patch
 	"${FILESDIR}"/${PN}-3.8.0_libs-deps-automagic.patch
 )
 
@@ -106,6 +107,7 @@ pkg_pretend() {
 }
 
 pkg_setup() {
+	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
 	use lua && lua-single_pkg_setup
 }
 
@@ -147,7 +149,6 @@ src_configure() {
 		-DUSE_WEBP=$(usex webp)
 		-DWANT_JSON_VALIDATION=$(usex test)
 	)
-	CMAKE_BUILD_TYPE="RELWITHDEBINFO"
 	cmake_src_configure
 }
 
