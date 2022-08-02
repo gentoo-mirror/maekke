@@ -13,11 +13,7 @@ media-gfx/darktable:midi - Support using MIDI input devices such as Behringer X-
 media-gfx/darktable:opencl - Enable opencl support
 media-gfx/darktable:tools - Install tools for generating base curves and noise profiles
 media-gfx/hugin:sift - automatically align images with media-gfx/autopano-sift-C
-media-gfx/luminance-hdr:fits - Enable support for the FITS format
 media-gfx/nufraw:contrast - enable contrast setting option
 media-gfx/nufraw:fits - Enable support for the FITS image format through sci-libs/cfitsio
 media-gfx/nufraw:timezone - enable DST correction for file timestamps
-media-gfx/pfstools:netpbm - build netpbm programs
-media-gfx/pfstools:octave - enable octave (sci-mathematics/octave) support
-media-gfx/pfstools:opencv - Use OpenCV library (media-libs/opencv) for pfsalign
 media-libs/libpano13:suitesparse - Use Sparse Levenberg Marquardt algorithm instead of dense Levenberg Marquardt algorithm
