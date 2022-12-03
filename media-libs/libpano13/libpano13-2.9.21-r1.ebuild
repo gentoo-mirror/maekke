@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/panotools/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0/3"
 KEYWORDS="~amd64 ~arm64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos"
-IUSE="java suitesparse"
+IUSE="java static-libs suitesparse"
 
 DEPEND="media-libs/libpng:0=
 	media-libs/tiff:0
@@ -30,4 +30,12 @@ src_configure() {
 		-DUSE_SPARSE_LEVMAR=$(usex suitesparse)
 	)
 	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+
+	if ! use static-libs ; then
+		find "${D}" -name "*.a" -type f -delete || die
+	fi
 }
