@@ -20,7 +20,6 @@ LANGS=" ca ca-valencia cs da de en-GB es eu fi fr hu it ja nl pl pt-BR ro ru sk 
 IUSE="debug lapack python raw sift $(echo ${LANGS//\ /\ l10n_})"
 
 CDEPEND="
-	!!dev-util/cocom
 	dev-db/sqlite:3
 	dev-libs/boost:=
 	dev-libs/zthread
@@ -28,6 +27,7 @@ CDEPEND="
 	media-gfx/exiv2:=
 	media-libs/freeglut
 	media-libs/glew:=
+	media-libs/libjpeg-turbo:=
 	>=media-libs/libpano13-2.9.19_beta1:0=
 	media-libs/libpng:0=
 	media-libs/openexr:0=
@@ -37,7 +37,6 @@ CDEPEND="
 	sci-libs/flann
 	sys-libs/zlib
 	virtual/glu
-	virtual/jpeg:0
 	virtual/opengl
 	x11-libs/wxGTK:${WX_GTK_VER}=[X,opengl]
 	lapack? ( virtual/blas virtual/lapack )
