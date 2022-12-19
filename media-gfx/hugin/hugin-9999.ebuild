@@ -4,7 +4,7 @@
 EAPI=7
 
 WX_GTK_VER="3.0-gtk3"
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit mercurial python-single-r1 wxwidgets cmake xdg
 
@@ -30,10 +30,10 @@ CDEPEND="
 	media-libs/freeglut
 	media-libs/glew:=
 	media-libs/libjpeg-turbo:=
-	>=media-libs/libpano13-2.9.19_beta1:0=
-	media-libs/libpng:0=
+	>=media-libs/libpano13-2.9.19_beta1:=
+	media-libs/libpng:=
 	media-libs/openexr:=
-	media-libs/tiff:0
+	media-libs/tiff:=
 	>=media-libs/vigra-1.11.1-r5[openexr]
 	sci-libs/fftw:3.0=
 	sci-libs/flann
