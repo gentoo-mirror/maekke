@@ -4,7 +4,7 @@
 EAPI=7
 
 WX_GTK_VER="3.0-gtk3"
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit mercurial python-single-r1 wxwidgets cmake xdg
 
@@ -22,7 +22,6 @@ LANGS=" ca ca-valencia cs da de en-GB es eu fi fr hu it ja nl pl pt-BR ro ru sk 
 IUSE="debug lapack python raw sift $(echo ${LANGS//\ /\ l10n_})"
 
 CDEPEND="
-	!!dev-util/cocom
 	dev-db/sqlite:3
 	dev-libs/boost:=
 	dev-libs/zthread
@@ -30,16 +29,16 @@ CDEPEND="
 	media-gfx/exiv2:=
 	media-libs/freeglut
 	media-libs/glew:=
-	>=media-libs/libpano13-2.9.19_beta1:0=
-	media-libs/libpng:0=
+	media-libs/libjpeg-turbo:=
+	>=media-libs/libpano13-2.9.19_beta1:=
+	media-libs/libpng:=
 	media-libs/openexr:=
-	media-libs/tiff:0
+	media-libs/tiff:=
 	>=media-libs/vigra-1.11.1-r5[openexr]
 	sci-libs/fftw:3.0=
 	sci-libs/flann
 	sys-libs/zlib
 	virtual/glu
-	virtual/jpeg:0
 	virtual/opengl
 	x11-libs/wxGTK:${WX_GTK_VER}=[X,opengl]
 	lapack? ( virtual/blas virtual/lapack )
