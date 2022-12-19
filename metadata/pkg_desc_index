@@ -1,10 +1,10 @@
 media-gfx/darktable 3.8.0-r3 3.8.1-r1 4.0.0 9999: A virtual lighttable and darkroom for photographers
 media-gfx/enblend 4.2.0_p20161007-r1: Image Blending with Multiresolution Splines
-media-gfx/hugin 2021.0.0 2022.0_beta1 9999: GUI for the creation & processing of panoramic images
+media-gfx/hugin 2021.0.0-r1 2022.0.0 9999: GUI for the creation & processing of panoramic images
 media-gfx/multiblend 2.0_rc3: A multi-level image blender for the seamless blending of panoramic images
 media-gfx/nufraw 0.43.3: A new version of the popular raw digital images manipulator ufraw.
 media-gfx/siril 0.9.12: a free astronomical image processing software
 media-libs/lensfun 0.3.2-r1 0.3.95: Library for rectifying and simulating photographic lens distortions
-media-libs/libpano13 2.9.20-r1 2.9.21-r1: Helmut Dersch's panorama toolbox library
+media-libs/libpano13 2.9.20-r1 2.9.21-r2: Helmut Dersch's panorama toolbox library
 x11-drivers/xf86-video-armsoc 9999: xf86-video-armsoc driver from google
 x11-drivers/xf86-video-armsoc-linaro 9999: Generic DDX driver for ARM SoCs; based on upstream OMAP driver.
