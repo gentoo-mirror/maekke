@@ -25,38 +25,46 @@ else
 	SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_PV}/${MY_P}.tar.xz
 		doc? (
 			https://docs.darktable.org/usermanual/${DOC_PV}/en/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.en.pdf
-			l10n_de? ( https://docs.darktable.org/usermanual/${DOC_PV}/de/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.de.pdf )
-			l10n_fr? ( https://docs.darktable.org/usermanual/${DOC_PV}/fr/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.fr.pdf )
-			l10n_pt-BR? ( https://docs.darktable.org/usermanual/${DOC_PV}/pt_br/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.pt_br.pdf )
 			l10n_uk? ( https://docs.darktable.org/usermanual/${DOC_PV}/uk/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.uk.pdf )
 		)"
 
-	KEYWORDS="amd64 arm64 -x86"
-	LANGS=" de eo es fi fr he hu it ja pl pt-BR sl uk zh-CN"
+	KEYWORDS="amd64 ~arm64 -x86"
+	LANGS=" cs de eo es fi fr he hu it ja nl pt-BR ru sl tr uk zh-CN"
 fi
 
-IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic gnome-keyring gphoto2 graphicsmagick jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
+IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic gnome-keyring gphoto2 graphicsmagick heif jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
 	${LANGS// / l10n_}"
 
 REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
 
 RESTRICT="!test? ( test )"
 
+# It is sometimes requested, by both users and certain devs, to have sys-devel/gcc[graphite]
+# in BDEPEND. This has not been done *on purpose*, for the following reason:
+#  - darktable can also be built with sys-devel/clang so we'd have to have that, as an alternative,
+#    in BDEPEND too
+#  - there are at least two darktable dependencies (media-libs/mesa and virtual/rust) which
+#    by default pull in sys-devel/clang
+#  - as a result of the above, for most gcc users adding the above to BDEPEND is a no-op
+#    (and curiously enough, empirical observations suggest current versions of Portage are
+#    more likely to pull in Clang to build darktable with than to request enabling USE=graphite
+#    on GCC; that might be a bug though)
 BDEPEND="dev-util/intltool
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
 	test? ( >=dev-python/jsonschema-3.2.0 )"
 DEPEND="dev-db/sqlite:3
+	dev-libs/icu:=
 	dev-libs/json-glib
 	dev-libs/libxml2:2
-	>=dev-libs/pugixml-1.8:0=
+	>=dev-libs/pugixml-1.8:=
 	gnome-base/librsvg:2
-	>=media-gfx/exiv2-0.25-r2:0=[xmp]
+	>=media-gfx/exiv2-0.25-r2:=[xmp]
 	media-libs/lcms:2
-	>=media-libs/lensfun-0.2.3:0=
+	>=media-libs/lensfun-0.2.3:=
 	media-libs/libjpeg-turbo:=
-	media-libs/libpng:0=
-	media-libs/tiff:0
+	media-libs/libpng:=
+	media-libs/tiff:=
 	net-libs/libsoup:2.4
 	net-misc/curl
 	sys-libs/zlib:=
@@ -64,7 +72,7 @@ DEPEND="dev-db/sqlite:3
 	>=x11-libs/gtk+-3.22:3
 	x11-libs/pango
 	avif? ( >=media-libs/libavif-0.8.2:= )
-	colord? ( x11-libs/colord-gtk:0= )
+	colord? ( x11-libs/colord-gtk:= )
 	cups? ( net-print/cups )
 	flickr? ( media-libs/flickcurl )
 	gamepad? ( media-libs/libsdl2 )
@@ -73,12 +81,13 @@ DEPEND="dev-db/sqlite:3
 	gnome-keyring? ( >=app-crypt/libsecret-0.18 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
+	heif? ( media-libs/libheif:= )
 	jpeg2k? ( media-libs/openjpeg:2= )
 	lua? ( ${LUA_DEPS} )
 	midi? ( media-libs/portmidi )
 	opencl? ( virtual/opencl )
 	openexr? ( media-libs/openexr:= )
-	webp? ( media-libs/libwebp:0= )"
+	webp? ( media-libs/libwebp:= )"
 RDEPEND="${DEPEND}
 	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )"
 
@@ -87,8 +96,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
-	"${FILESDIR}"/${PN}-3.6.1_openexr.patch
-	"${FILESDIR}"/${PN}-3.8.0_libs-deps-automagic.patch
+	"${FILESDIR}"/${PN}-4.0.1_libs-deps-automagic.patch
 )
 
 S="${WORKDIR}/${P/_/~}"
@@ -97,8 +105,11 @@ pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		# Bug #695658
 		if tc-is-gcc; then
-			test-flags-CC -floop-block &> /dev/null || \
-				die "Please switch to a gcc version built with USE=graphite"
+			if ! test-flags-CC -floop-block &> /dev/null; then
+				eerror "Building ${PN} with GCC requires Graphite support."
+				eerror "Please switch to a version of sys-devel/gcc built with USE=graphite, or use a different compiler."
+				die "Selected compiler is sys-devel/gcc[-graphite]"
+			fi
 		fi
 
 		use openmp && tc-check-openmp
