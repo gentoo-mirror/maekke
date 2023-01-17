@@ -92,7 +92,6 @@ RDEPEND="${DEPEND}
 	kwallet? ( >=kde-frameworks/kwallet-5.34.0-r1 )"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-3.0.0_find-opencl-header.patch
 	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
@@ -156,6 +155,7 @@ src_configure() {
 		-DUSE_OPENMP=$(usex openmp)
 		-DUSE_PORTMIDI=$(usex midi)
 		-DUSE_SDL2=$(usex gamepad)
+		-DAUTODETECT_SDL2=OFF
 		-DUSE_WEBP=$(usex webp)
 		-DWANT_JSON_VALIDATION=$(usex test)
 	)
