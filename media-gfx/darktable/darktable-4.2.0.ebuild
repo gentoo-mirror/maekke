@@ -155,6 +155,7 @@ src_configure() {
 		-DUSE_OPENMP=$(usex openmp)
 		-DUSE_PORTMIDI=$(usex midi)
 		-DUSE_SDL2=$(usex gamepad)
+		-DAUTODETECT_SDL2=OFF
 		-DUSE_WEBP=$(usex webp)
 		-DWANT_JSON_VALIDATION=$(usex test)
 	)
