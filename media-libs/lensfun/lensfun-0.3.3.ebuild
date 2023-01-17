@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{9..10} )
 inherit python-single-r1 cmake
 
 DESCRIPTION="Library for rectifying and simulating photographic lens distortions"
@@ -12,7 +12,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3 CC-BY-SA-3.0" # See README for reasoning.
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~loong ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux"
 IUSE="doc cpu_flags_x86_sse cpu_flags_x86_sse2 test"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
@@ -34,10 +34,14 @@ DEPEND="${RDEPEND}"
 
 DOCS=( README.md docs/mounts.txt ChangeLog )
 
+PATCHES=(
+	"${FILESDIR}/${PN}-0.3.2-warnings.patch"
+)
+
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_DOCDIR="${EPREFIX}"/usr/share/doc/${PF}/html
-		-DSETUP_PY_INSTALL_PREFIX="${ED}"/usr
+		-DSETUP_PY_INSTALL_PREFIX=/usr
 		-DBUILD_LENSTOOL=ON
 		-DBUILD_STATIC=OFF
 		-DBUILD_DOC=$(usex doc)
