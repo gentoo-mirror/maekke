@@ -1,46 +1,38 @@
-From b1338eb12dd672ce373f61cec681af99d8b2c7df Mon Sep 17 00:00:00 2001
+From c89256437bcc4b35d413c8ae6d00a24b796caf04 Mon Sep 17 00:00:00 2001
 From: Markus Meier <maekke@gentoo.org>
 Date: Sat, 14 Jan 2023 14:56:46 +0100
-Subject: [PATCH] add and wire AUTODETECT_SDL2 and USE_SDL2 options
-
-AUTODETECT_SDL2 with default ON is there to keep current behavior
-USE_SDL2 to control SDL2 explicit behavior for distributions
+Subject: [PATCH] add USE_SDL2 option to control SDL2 package usage
 
 https://gitweb.gentoo.org/repo/gentoo.git/tree/media-gfx/darktable/files/darktable-4.2.0_libs-deps-automagic.patch
 ---
- DefineOptions.cmake     | 2 ++
- src/libs/CMakeLists.txt | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ DefineOptions.cmake     | 1 +
+ src/libs/CMakeLists.txt | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/DefineOptions.cmake b/DefineOptions.cmake
-index 59ea1e3d5..24210473e 100644
+index 59ea1e3d5..9266766f2 100644
 --- a/DefineOptions.cmake
 +++ b/DefineOptions.cmake
-@@ -42,6 +42,8 @@ option(USE_GMIC "Use G'MIC image processing framework." ON)
+@@ -42,6 +42,7 @@ option(USE_GMIC "Use G'MIC image processing framework." ON)
  option(USE_ICU "Use ICU - International Components for Unicode." ON)
  option(USE_GAME "Build 1st April easter egg game" ON)
  option(FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." OFF)
-+option(AUTODETECT_SDL2 "Autodetect SDL2 support" ON)
-+option(USE_SDL2 "Enable SDL2 support" OFF)
++option(USE_SDL2 "Enable SDL2 support" ON)
  
  if (USE_OPENCL)
      option(TESTBUILD_OPENCL_PROGRAMS "Test-compile opencl programs (needs llvm and clang 3.9+)" ON)
 diff --git a/src/libs/CMakeLists.txt b/src/libs/CMakeLists.txt
-index 20a5f0eff..50caf6f27 100644
+index 20a5f0eff..9052ebda3 100644
 --- a/src/libs/CMakeLists.txt
 +++ b/src/libs/CMakeLists.txt
-@@ -92,7 +92,13 @@ if(PortMidi_FOUND)
+@@ -92,7 +92,9 @@ if(PortMidi_FOUND)
    target_link_libraries (midi ${PortMidi_LIBRARY})
  endif()
  
 -find_package(SDL2)
-+if (AUTODETECT_SDL2)
++if (USE_SDL2)
 +  find_package(SDL2)
 +endif()
-+if (USE_SDL2)
-+  find_package(SDL2 REQUIRED)
-+endif()
-+
  if(SDL2_FOUND)
    add_definitions("-DHAVE_SDL")
    set(MODULES ${MODULES} gamepad)
