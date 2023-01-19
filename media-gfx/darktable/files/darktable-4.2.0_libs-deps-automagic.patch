@@ -1,13 +1,13 @@
-From c89256437bcc4b35d413c8ae6d00a24b796caf04 Mon Sep 17 00:00:00 2001
+From 1e2eea45ba79412ed2d7a80dbc8388ccec93af09 Mon Sep 17 00:00:00 2001
 From: Markus Meier <maekke@gentoo.org>
 Date: Sat, 14 Jan 2023 14:56:46 +0100
 Subject: [PATCH] add USE_SDL2 option to control SDL2 package usage
 
 https://gitweb.gentoo.org/repo/gentoo.git/tree/media-gfx/darktable/files/darktable-4.2.0_libs-deps-automagic.patch
 ---
- DefineOptions.cmake     | 1 +
- src/libs/CMakeLists.txt | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ DefineOptions.cmake     |  1 +
+ src/libs/CMakeLists.txt | 22 ++++++++++++----------
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/DefineOptions.cmake b/DefineOptions.cmake
 index 59ea1e3d5..9266766f2 100644
@@ -22,20 +22,38 @@ index 59ea1e3d5..9266766f2 100644
  if (USE_OPENCL)
      option(TESTBUILD_OPENCL_PROGRAMS "Test-compile opencl programs (needs llvm and clang 3.9+)" ON)
 diff --git a/src/libs/CMakeLists.txt b/src/libs/CMakeLists.txt
-index 20a5f0eff..9052ebda3 100644
+index 20a5f0eff..272968061 100644
 --- a/src/libs/CMakeLists.txt
 +++ b/src/libs/CMakeLists.txt
-@@ -92,7 +92,9 @@ if(PortMidi_FOUND)
+@@ -92,16 +92,18 @@ if(PortMidi_FOUND)
    target_link_libraries (midi ${PortMidi_LIBRARY})
  endif()
  
 -find_package(SDL2)
-+if (USE_SDL2)
+-if(SDL2_FOUND)
+-  add_definitions("-DHAVE_SDL")
+-  set(MODULES ${MODULES} gamepad)
+-  add_library(gamepad MODULE "tools/gamepad.c")
+-  if(TARGET SDL2::SDL2)
+-    target_link_libraries(gamepad SDL2::SDL2)
+-  else()
+-    include_directories(${SDL2_INCLUDE_DIRS})
+-    target_link_libraries(gamepad ${SDL2_LIBRARIES})
++if(USE_SDL2)
 +  find_package(SDL2)
-+endif()
- if(SDL2_FOUND)
-   add_definitions("-DHAVE_SDL")
-   set(MODULES ${MODULES} gamepad)
++  if(SDL2_FOUND)
++    add_definitions("-DHAVE_SDL")
++    set(MODULES ${MODULES} gamepad)
++    add_library(gamepad MODULE "tools/gamepad.c")
++    if(TARGET SDL2::SDL2)
++      target_link_libraries(gamepad SDL2::SDL2)
++    else()
++      include_directories(${SDL2_INCLUDE_DIRS})
++      target_link_libraries(gamepad ${SDL2_LIBRARIES})
++    endif()
+   endif()
+ endif()
+ 
 -- 
 2.38.2
 
