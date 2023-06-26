@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -25,14 +25,17 @@ else
 	SRC_URI="https://github.com/darktable-org/${PN}/releases/download/release-${MY_PV}/${MY_P}.tar.xz
 		doc? (
 			https://docs.darktable.org/usermanual/${DOC_PV}/en/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.en.pdf
-			l10n_uk? ( https://docs.darktable.org/usermanual/${DOC_PV}/uk/${PN}_user_manual.pdf -> ${PN}-usermanual-${DOC_PV}.uk.pdf )
+			l10n_uk? (
+				https://docs.darktable.org/usermanual/${DOC_PV}/uk/${PN}_user_manual.pdf
+					-> ${PN}-usermanual-${DOC_PV}.uk.pdf
+			)
 		)"
 
-	KEYWORDS="~amd64 ~arm64 -x86"
+	KEYWORDS="amd64 ~arm64 -x86"
 	LANGS=" cs de es fi fr he hu it ja nl pl pt-BR ru sl sq tr uk zh-CN zh-TW"
 fi
 
-IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic gnome-keyring gphoto2 graphicsmagick heif jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
+IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc flickr gamepad geolocation gmic keyring gphoto2 graphicsmagick heif jpeg2k kwallet lto lua midi nls opencl openmp openexr test tools webp
 	${LANGS// / l10n_}"
 
 REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
@@ -78,7 +81,7 @@ DEPEND="dev-db/sqlite:3
 	gamepad? ( media-libs/libsdl2 )
 	geolocation? ( >=sci-geosciences/osm-gps-map-1.1.0 )
 	gmic? ( media-gfx/gmic )
-	gnome-keyring? ( >=app-crypt/libsecret-0.18 )
+	keyring? ( >=app-crypt/libsecret-0.18 )
 	gphoto2? ( media-libs/libgphoto2:= )
 	graphicsmagick? ( media-gfx/graphicsmagick )
 	heif? ( media-libs/libheif:= )
@@ -95,6 +98,9 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.2_cmake-march-autodetection.patch
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
+	"${FILESDIR}"/${PN}-4.2.1_cmake-musl.patch
+	# patch by ArchLinux
+	"${FILESDIR}"/${P}-exiv2-0.28.patch # bug 906466
 )
 
 S="${WORKDIR}/${P/_/~}"
@@ -136,6 +142,8 @@ src_configure() {
 		-DCUSTOM_CFLAGS=ON
 		-DDONT_USE_INTERNAL_LUA=ON
 		-DRAWSPEED_ENABLE_LTO=$(usex lto)
+		-DRAWSPEED_ENABLE_WERROR=OFF
+		-DRAWSPEED_MUSL_SYSTEM=$(usex elibc_musl)
 		-DTESTBUILD_OPENCL_PROGRAMS=OFF
 		-DUSE_AVIF=$(usex avif)
 		-DUSE_CAMERA_SUPPORT=$(usex gphoto2)
@@ -144,7 +152,7 @@ src_configure() {
 		-DUSE_GMIC=$(usex gmic)
 		-DUSE_GRAPHICSMAGICK=$(usex graphicsmagick)
 		-DUSE_KWALLET=$(usex kwallet)
-		-DUSE_LIBSECRET=$(usex gnome-keyring)
+		-DUSE_LIBSECRET=$(usex keyring)
 		-DUSE_LUA=$(usex lua)
 		-DUSE_MAP=$(usex geolocation)
 		-DUSE_NLS=$(usex nls)
