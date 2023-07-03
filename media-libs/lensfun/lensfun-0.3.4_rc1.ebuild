@@ -13,7 +13,7 @@ S="${WORKDIR}/${P/_rc/-RC}"
 
 LICENSE="LGPL-3 CC-BY-SA-3.0" # See README for reasoning.
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~loong ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux"
 IUSE="doc cpu_flags_x86_sse cpu_flags_x86_sse2 test"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
@@ -34,11 +34,11 @@ BDEPEND="
 "
 
 DOCS=( README.md docs/mounts.txt ChangeLog )
+PATCHES=( "${FILESDIR}/${P}_python.patch" )
 
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_DOCDIR="${EPREFIX}"/usr/share/doc/${PF}/html
-		-DSETUP_PY_INSTALL_PREFIX=/usr
 		-DBUILD_LENSTOOL=ON
 		-DBUILD_STATIC=OFF
 		-DBUILD_DOC=$(usex doc)
@@ -58,5 +58,7 @@ src_test() {
 
 src_install() {
 	cmake_src_install
+	python_moduleinto lensfun
+	python_domodule "${BUILD_DIR}"/apps/lensfun/__init__.py
 	python_optimize
 }
