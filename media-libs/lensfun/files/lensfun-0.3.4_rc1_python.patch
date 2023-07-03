@@ -1,0 +1,27 @@
+diff -ru lensfun-0.3.4-RC1.orig/apps/CMakeLists.txt lensfun-0.3.4-RC1/apps/CMakeLists.txt
+--- lensfun-0.3.4-RC1.orig/apps/CMakeLists.txt	2023-07-03 22:08:51.275590471 +0200
++++ lensfun-0.3.4-RC1/apps/CMakeLists.txt	2023-07-03 22:09:35.124594218 +0200
+@@ -23,17 +23,13 @@
+ 
+ FIND_PROGRAM(PYTHON "python3")
+ IF(PYTHON)
+-    SET(SETUP_PY_IN "${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in")
+-    SET(SETUP_PY    "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
+     SET(DEPS_IN     "${CMAKE_CURRENT_SOURCE_DIR}/lensfun/__init__.py.in")
+     SET(DEPS        "${CMAKE_CURRENT_BINARY_DIR}/lensfun/__init__.py")
+     SET(OUTPUT      "${CMAKE_CURRENT_BINARY_DIR}/build/timestamp")
+ 
+-    CONFIGURE_FILE(${SETUP_PY_IN} ${SETUP_PY})
+     CONFIGURE_FILE(${DEPS_IN} ${DEPS})
+ 
+     ADD_CUSTOM_COMMAND(OUTPUT ${OUTPUT}
+-                       COMMAND ${PYTHON} ${SETUP_PY} build
+                        COMMAND ${CMAKE_COMMAND} -E touch ${OUTPUT}
+                        DEPENDS ${DEPS_IN})
+ 
+@@ -42,5 +38,4 @@
+     IF(NOT DEFINED SETUP_PY_INSTALL_PREFIX)
+       SET(SETUP_PY_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+     ENDIF()
+-    INSTALL(CODE "execute_process(COMMAND ${PYTHON} ${SETUP_PY} install --prefix=\$ENV{DESTDIR}${SETUP_PY_INSTALL_PREFIX})")
+ ENDIF(PYTHON)

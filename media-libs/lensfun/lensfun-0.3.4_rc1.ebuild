@@ -34,11 +34,11 @@ BDEPEND="
 "
 
 DOCS=( README.md docs/mounts.txt ChangeLog )
+PATCHES=( "${FILESDIR}/${P}_python.patch" )
 
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_DOCDIR="${EPREFIX}"/usr/share/doc/${PF}/html
-		-DSETUP_PY_INSTALL_PREFIX=/usr
 		-DBUILD_LENSTOOL=ON
 		-DBUILD_STATIC=OFF
 		-DBUILD_DOC=$(usex doc)
@@ -58,5 +58,7 @@ src_test() {
 
 src_install() {
 	cmake_src_install
+	python_moduleinto lensfun
+	python_domodule "${BUILD_DIR}"/apps/lensfun/__init__.py
 	python_optimize
 }
