@@ -5,6 +5,6 @@ media-gfx/multiblend 2.0_rc3: A multi-level image blender for the seamless blend
 media-gfx/nufraw 0.43.3: A new version of the popular raw digital images manipulator ufraw.
 media-gfx/siril 0.9.12: a free astronomical image processing software
 media-libs/lensfun 0.3.4_rc1: Library for rectifying and simulating photographic lens distortions
-media-libs/libpano13 2.9.20-r3 2.9.21-r1 2.9.21-r2 2.9.22_rc2: Helmut Dersch's panorama toolbox library
+media-libs/libpano13 2.9.20-r3 2.9.21-r1 2.9.21-r2 2.9.22: Helmut Dersch's panorama toolbox library
 x11-drivers/xf86-video-armsoc 9999: xf86-video-armsoc driver from google
 x11-drivers/xf86-video-armsoc-linaro 9999: Generic DDX driver for ARM SoCs; based on upstream OMAP driver.
