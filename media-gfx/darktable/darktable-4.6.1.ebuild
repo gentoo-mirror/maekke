@@ -3,6 +3,7 @@
 
 EAPI=8
 
+CMAKE_BUILD_TYPE="Release"
 LUA_COMPAT=( lua5-4 )
 
 inherit cmake flag-o-matic lua-single toolchain-funcs xdg
@@ -19,7 +20,7 @@ if [[ ${PV} == *9999 ]]; then
 	LANGS=" af ca cs da de el es fi fr gl he hu it ja nb nl pl pt-BR pt-PT ro ru sk sl sq sv th uk zh-CN zh-TW"
 else
 	#DOC_PV=$(ver_cut 1-2)
-	DOC_PV="4.4"
+	DOC_PV="4.6"
 	MY_PV="${PV/_/}"
 	MY_P="${P/_/.}"
 
@@ -32,8 +33,8 @@ else
 			)
 		)"
 
-	KEYWORDS="amd64 ~arm64 -x86"
-	LANGS=" cs de es fi fr hu it ja nl pl pt-BR ru sl sq uk zh-CN zh-TW"
+	KEYWORDS="~amd64 ~arm64 -x86"
+	LANGS=" cs de es fi fr hu it ja nl pl pt-BR ru sl sq tr uk zh-CN zh-TW"
 fi
 
 IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi nls opencl openmp openexr test tools webp
