@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 inherit python-single-r1 cmake
 
 DESCRIPTION="Library for rectifying and simulating photographic lens distortions"
@@ -65,4 +65,5 @@ src_install() {
 	cmake_src_install
 	python_fix_shebang "${ED}"/usr/bin
 	python_optimize
+	rm -r "${D}/$(python_get_sitedir)"/*.egg-info || die
 }
