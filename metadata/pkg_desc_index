@@ -6,5 +6,3 @@ media-gfx/nufraw 0.43.3: A new version of the popular raw digital images manipul
 media-gfx/siril 0.9.12: a free astronomical image processing software
 media-libs/lensfun 0.3.4_rc1 0.3.4: Library for rectifying and simulating photographic lens distortions
 media-libs/libpano13 2.9.20-r3 2.9.21-r1 2.9.21-r2 2.9.22: Helmut Dersch's panorama toolbox library
-x11-drivers/xf86-video-armsoc 9999: xf86-video-armsoc driver from google
-x11-drivers/xf86-video-armsoc-linaro 9999: Generic DDX driver for ARM SoCs; based on upstream OMAP driver.
