@@ -10,5 +10,5 @@ LICENSE=GPL-3
 RDEPEND=dev-libs/libconfig[cxx] media-libs/giflib media-libs/libpng:0= media-libs/libraw:= media-libs/opencv:= media-libs/tiff:0= media-video/ffmpeg:= sci-libs/cfitsio sci-libs/fftw:3.0= sci-libs/gsl virtual/jpeg:0 >=x11-libs/gtk+-3.6.0:3
 SLOT=0
 SRC_URI=https://gitlab.com/free-astro/siril/-/archive/0.9.12/siril-0.9.12.tar.bz2
-_eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	f9d71a6efe9d083aec750dd13968e169	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6
+_eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	f9d71a6efe9d083aec750dd13968e169	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	35f9bf6198bb538e28dcdea5fda274f2
 _md5_=dfe43bcc229b86c379fc0871cf2d9809
