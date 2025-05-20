@@ -1,13 +1,11 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LUA_COMPAT=( lua5-4 )
 
-LLVM_COMPAT=( 17 18 19 )
-
-inherit cmake flag-o-matic lua-single toolchain-funcs xdg llvm-r1
+inherit cmake flag-o-matic lua-single toolchain-funcs xdg
 
 DESCRIPTION="A virtual lighttable and darkroom for photographers"
 HOMEPAGE="https://www.darktable.org/"
@@ -39,7 +37,7 @@ else
 	LANGS=" cs de es fi fr ja nl pt-BR sl sq uk zh-CN zh-TW"
 fi
 
-IUSE="avif +clang colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi opencl openmp openexr test tools webp
+IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi opencl openmp openexr test tools webp
 	${LANGS// / l10n_}"
 
 REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
@@ -55,20 +53,14 @@ RESTRICT="!test? ( test )"
 #    (and curiously enough, empirical observations suggest current versions of Portage are
 #    more likely to pull in Clang to build darktable with than to request enabling USE=graphite
 #    on GCC; that might be a bug though)
-BDEPEND="$(llvm_gen_dep '
-		clang? (
-			llvm-core/clang:${LLVM_SLOT}
-			llvm-core/lld:${LLVM_SLOT}
-		)
-	')
-	dev-util/intltool
+BDEPEND="dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig
 	test? ( >=dev-python/jsonschema-3.2.0 )"
 DEPEND="dev-db/sqlite:3
 	dev-libs/icu:=
 	dev-libs/json-glib
-	dev-libs/libxml2:2
+	dev-libs/libxml2:2=
 	>=dev-libs/pugixml-1.8:=
 	gnome-base/librsvg:2
 	>=media-gfx/exiv2-0.25-r2:=[xmp]
@@ -110,7 +102,7 @@ PATCHES=(
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
 		# Bug #695658
-		if ! use clang && tc-is-gcc; then
+		if tc-is-gcc; then
 			if ! test-flags-CC -floop-block &> /dev/null; then
 				eerror "Building ${PN} with GCC requires Graphite support."
 				eerror "Please switch to a version of sys-devel/gcc built with USE=graphite, or use a different compiler."
@@ -138,23 +130,6 @@ src_prepare() {
 
 src_configure() {
 	CMAKE_BUILD_TYPE="Release"
-
-	if use clang; then
-		einfo "Enforcing the use of clang due to USE=+clang ..."
-
-		local version_clang=$(clang --version 2>/dev/null | grep -F -- 'clang version' | awk '{ print $3 }')
-		[[ -n ${version_clang} ]] && version_clang=$(ver_cut 1 "${version_clang}")
-		[[ -z ${version_clang} ]] && die "Failed to read clang version!"
-
-		CC=${CHOST}-clang-${version_clang}
-		CXX=${CHOST}-clang++-${version_clang}
-	elif ! use clang && ! tc-is-gcc ; then
-		einfo "Enforcing the use of gcc due to USE=-clang ..."
-
-		CC=${CHOST}-gcc
-		CXX=${CHOST}-g++
-	fi
-
 	local mycmakeargs=(
 		-DBUILD_CURVE_TOOLS=$(usex tools)
 		-DBUILD_NOISE_TOOLS=$(usex tools)
