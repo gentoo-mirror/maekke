@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -13,7 +13,7 @@ S="${WORKDIR}/${P/_/~}"
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
 
-if [[ ${PV} == *9999 ]]; then
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/darktable-org/${PN}.git"
 
@@ -33,11 +33,11 @@ else
 			)
 		)"
 
-	KEYWORDS="amd64 ~arm64 -x86"
-	LANGS=" cs de es fi fr hu it ja nl pl pt-BR ru sl sq uk zh-CN zh-TW"
+	KEYWORDS="~amd64 ~arm64 -x86"
+	LANGS=" cs de es fi fr ja nl pt-BR sl sq uk zh-CN zh-TW"
 fi
 
-IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi nls opencl openmp openexr test tools webp
+IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi opencl openmp openexr test tools webp
 	${LANGS// / l10n_}"
 
 REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
@@ -54,13 +54,13 @@ RESTRICT="!test? ( test )"
 #    more likely to pull in Clang to build darktable with than to request enabling USE=graphite
 #    on GCC; that might be a bug though)
 BDEPEND="dev-util/intltool
+	sys-devel/gettext
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )
 	test? ( >=dev-python/jsonschema-3.2.0 )"
 DEPEND="dev-db/sqlite:3
 	dev-libs/icu:=
 	dev-libs/json-glib
-	dev-libs/libxml2:2
+	dev-libs/libxml2:2=
 	>=dev-libs/pugixml-1.8:=
 	gnome-base/librsvg:2
 	>=media-gfx/exiv2-0.25-r2:=[xmp]
@@ -97,7 +97,9 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
 	"${FILESDIR}"/${PN}-4.2.1_cmake-musl.patch
-	"${FILESDIR}"/${PN}-4.8.0_fix-has-attribute-musl.patch
+
+	"${FILESDIR}/${PN}-5.0.1-no-Werror.patch"
+	"${FILESDIR}/${PN}-5.0.1-fix-c-linkage-gcc-15.patch"
 )
 
 pkg_pretend() {
@@ -135,7 +137,8 @@ src_configure() {
 		-DBUILD_CURVE_TOOLS=$(usex tools)
 		-DBUILD_NOISE_TOOLS=$(usex tools)
 		-DBUILD_PRINT=$(usex cups)
-		-DCUSTOM_CFLAGS=ON
+		-DCUSTOM_CFLAGS=ON # honor user choice
+		-DRAWSPEED_MARCH= # honor user choice #946892
 		-DDONT_USE_INTERNAL_LUA=ON
 		-DRAWSPEED_ENABLE_LTO=$(usex lto)
 		-DRAWSPEED_ENABLE_WERROR=OFF
@@ -152,7 +155,6 @@ src_configure() {
 		-DUSE_LIBSECRET=$(usex keyring)
 		-DUSE_LUA=$(usex lua)
 		-DUSE_MAP=$(usex geolocation)
-		-DUSE_NLS=$(usex nls)
 		-DUSE_OPENCL=$(usex opencl)
 		-DUSE_OPENEXR=$(usex openexr)
 		-DUSE_OPENJPEG=$(usex jpeg2k)
@@ -173,13 +175,11 @@ src_install() {
 		use l10n_uk && dodoc "${DISTDIR}"/${PN}-usermanual-${DOC_PV}.uk.pdf
 	fi
 
-	if use nls; then
-		for lang in ${LANGS} ; do
-			if ! use l10n_${lang}; then
-				rm -r "${ED}"/usr/share/locale/${lang/-/_} || die
-			fi
-		done
-	fi
+	for lang in ${LANGS} ; do
+		if ! use l10n_${lang}; then
+			rm -r "${ED}"/usr/share/locale/${lang/-/_} || die
+		fi
+	done
 }
 
 pkg_postinst() {
