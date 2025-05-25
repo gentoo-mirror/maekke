@@ -23,7 +23,10 @@ DEPEND="media-libs/libpng:=
 	suitesparse? ( sci-libs/suitesparse )"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-gcc15.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-gcc15.patch"
+	"${FILESDIR}/${P}-fabs-sqrt.patch"
+)
 
 pkg_setup() {
 	java-pkg-opt-2_pkg_setup
