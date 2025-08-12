@@ -4,6 +4,7 @@
 EAPI=8
 
 LUA_COMPAT=( lua5-4 )
+: "${CMAKE_BUILD_TYPE:=ReleaseWithAsserts}"
 
 inherit cmake flag-o-matic lua-single toolchain-funcs xdg
 
@@ -13,7 +14,7 @@ S="${WORKDIR}/${P/_/~}"
 LICENSE="GPL-3 CC-BY-3.0"
 SLOT="0"
 
-if [[ ${PV} == *9999 ]]; then
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/darktable-org/${PN}.git"
 
@@ -34,7 +35,7 @@ else
 		)"
 
 	KEYWORDS="~amd64 ~arm64 -x86"
-	LANGS=" cs de es fi fr ja nl pt-BR sl sq uk zh-CN zh-TW"
+	LANGS=" cs de es fi fr hu it ja nl pt-BR ru sl sq uk zh-CN zh-TW"
 fi
 
 IUSE="avif colord cpu_flags_x86_avx cpu_flags_x86_sse3 cups doc gamepad geolocation keyring gphoto2 graphicsmagick heif jpeg2k jpegxl kwallet lto lua midi opencl openmp openexr test tools webp
@@ -97,6 +98,9 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.4.0_jsonschema-automagic.patch
 	"${FILESDIR}"/${PN}-3.4.1_libxcf-cmake.patch
 	"${FILESDIR}"/${PN}-4.2.1_cmake-musl.patch
+
+	"${FILESDIR}/${PN}-5.0.1-no-Werror.patch"
+	#"${FILESDIR}/${PN}-5.0.1-fix-c-linkage-gcc-15.patch"
 )
 
 pkg_pretend() {
@@ -129,12 +133,12 @@ src_prepare() {
 }
 
 src_configure() {
-	CMAKE_BUILD_TYPE="Release"
 	local mycmakeargs=(
 		-DBUILD_CURVE_TOOLS=$(usex tools)
 		-DBUILD_NOISE_TOOLS=$(usex tools)
 		-DBUILD_PRINT=$(usex cups)
-		-DCUSTOM_CFLAGS=ON
+		-DCUSTOM_CFLAGS=ON # honor user choice
+		-DRAWSPEED_MARCH= # honor user choice #946892
 		-DDONT_USE_INTERNAL_LUA=ON
 		-DRAWSPEED_ENABLE_LTO=$(usex lto)
 		-DRAWSPEED_ENABLE_WERROR=OFF
