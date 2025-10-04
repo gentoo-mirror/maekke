@@ -4,21 +4,18 @@
 EAPI=8
 
 WX_GTK_VER="3.2-gtk3"
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} python3_{13,14}t )
 
-inherit mercurial python-single-r1 wxwidgets cmake xdg toolchain-funcs
+inherit python-single-r1 wxwidgets cmake xdg toolchain-funcs
 
 DESCRIPTION="GUI for the creation & processing of panoramic images"
 HOMEPAGE="http://hugin.sf.net"
-SRC_URI=""
-EHG_REPO_URI="http://hg.code.sf.net/p/hugin/hugin"
-EHG_PROJECT="${PN}-${PN}"
+SRC_URI="https://downloads.sourceforge.net/${PN}/${P/_/}.tar.bz2"
 
-S=${WORKDIR}/${PN}-$(ver_cut 1-2).0
-
+S="${WORKDIR}/${PN}-2025.0.0"
 LICENSE="GPL-2+ BSD BSD-2 MIT wxWinLL-3 ZLIB FDL-1.2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 LANGS=" ca ca-valencia cs da de en-GB es eu fi fr hu it ja nl pl pt-BR ro ru sk sv zh-CN zh-TW"
 IUSE="debug lapack python raw sift $(echo ${LANGS//\ /\ l10n_})"
@@ -35,7 +32,7 @@ CDEPEND="
 	media-libs/libpng:=
 	media-libs/openexr:=
 	media-libs/tiff:=
-	>=media-libs/vigra-1.11.1-r5[openexr]
+	>=media-libs/vigra-1.11.1-r5[openexr,tiff]
 	sci-libs/fftw:3.0=
 	sci-libs/flann
 	sys-libs/zlib
@@ -68,6 +65,10 @@ pkg_setup() {
 }
 
 src_prepare() {
+	sed -i \
+		-e "/COMMAND.*GZIP/d" \
+		-e "s/\.gz//g" \
+		"${S}"/doc/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -75,6 +76,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_HSI=$(usex python)
 		-DENABLE_LAPACK=$(usex lapack)
+		-DBUILD_WITH_EGL=yes
 	)
 	setup-wxwidgets
 	cmake_src_configure
