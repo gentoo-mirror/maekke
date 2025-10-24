@@ -5,4 +5,4 @@ media-gfx/multiblend 2.0_rc3: A multi-level image blender for the seamless blend
 media-gfx/nufraw 0.43.3: A new version of the popular raw digital images manipulator ufraw.
 media-gfx/siril 0.9.12: a free astronomical image processing software
 media-libs/lensfun 0.3.4_rc1 0.3.4: Library for rectifying and simulating photographic lens distortions
-media-libs/libpano13 2.9.22 2.9.22-r1 2.9.23_rc1: Helmut Dersch's panorama toolbox library
+media-libs/libpano13 2.9.22 2.9.22-r1 2.9.23: Helmut Dersch's panorama toolbox library
